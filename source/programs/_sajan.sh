@@ -119,7 +119,6 @@ sajan_tools-update() {
   brew upgrade
   npm update -g
   echo -e "${GREEN}All tools are updated , enjoy using sajan !"
-
 }
 
 sajan_tools-install() {
@@ -130,5 +129,4 @@ sajan_tools-install() {
   brew install git
   brew install composer
   echo -e "${GREEN}All tools are installed , enjoy using sajan !"
-
 }
