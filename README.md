@@ -6,6 +6,8 @@ Its aim is to automate some multiline commands
 ## Requirements 
 
 Sajan is tested on MacOs 
+Sajan uses tools like git , npm , node , composer.  For us brew is the best tool
+to install these so we require brew.  If you dont have it you can install it via sajan.
 
 ## Installation
 

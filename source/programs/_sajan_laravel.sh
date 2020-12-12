@@ -28,10 +28,10 @@ sajan_laravel() {
 
 sajan_laravel_test(){
   if ! composer -V >/dev/null 2>&1; then
-    echo -e "${RED}Composer not installed"
+    echo -e "${RED}Composer is not installed on your computer"
     return 0
   else
-    echo -e "${INFOCOLOR}Composer installed"
+    echo -e "${INFOCOLOR}Composer is found on your computer"
     return 1
   fi
 }

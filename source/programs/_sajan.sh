@@ -5,7 +5,7 @@ declare ERRORCOLOR='\033[1;101m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=0.4-alfa
+declare VERSION=0.5-alfa
 
 ################################################################################
 # VERSION                                                                      #
@@ -26,7 +26,10 @@ Help() {
   echo
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
-  echo -e "  ${GREEN}test                ${NC}Test if all tools needed for sajan are present"
+  echo -e "  ${GREEN}tools-check         ${NC}Check if all tools needed for sajan are present"
+  echo -e "  ${GREEN}tools-update        ${NC}Update tools used by sajan"
+  echo -e "  ${GREEN}tools-install       ${NC}Install the tools used by sajan"
+
   echo
   echo -e "${YELLOW}Programs:"
   echo -e "  ${GREEN}laravel             ${NC}Execute Laravel actions"
@@ -80,7 +83,19 @@ sajan_self-update() {
   exit
 }
 
-sajan_test() {
+sajan_brew_test() {
+  if ! brew --version >/dev/null 2>&1; then
+    echo -e "${RED}Brew is not installed on your computer"
+    return 0
+  else
+    echo -e "${INFOCOLOR}Brew is found on your computer"
+    return 1
+  fi
+}
+
+sajan_tools-check() {
+  sajan_brew_test
+  BREWOK=$?
   sajan_git_test
   GITOK=$?
   sajan_laravel_test
@@ -90,11 +105,30 @@ sajan_test() {
   sajan_webpack_test
   WEBPACKOK=$?
 
-  ALLOK=$(($GITOK + $LARAVELOK + $PHPSTORMOK + $WEBPACKOK))
+  ALLOK=$(($BREWOK + $GITOK + $LARAVELOK + $PHPSTORMOK + $WEBPACKOK))
 
-  if [[ $ALLOK == 4 ]]; then
+  if [[ $ALLOK == 5 ]]; then
     echo -e "${GREEN}All tools are set , enjoy sajan !"
   else
     echo -e "${ERRORCOLOR}Not all tools are set , review the red lines "
   fi
+}
+
+sajan_tools-update() {
+  echo -e "${INFOCOLOR}Start updating toolset , brew , npm , git , node "
+  brew upgrade
+  npm update -g
+  echo -e "${GREEN}All tools are updated , enjoy using sajan !"
+
+}
+
+sajan_tools-install() {
+  echo -e "${INFOCOLOR}Installing sayan toolset , brew , node , npm , git , composer "
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  brew install npm
+  brew install node
+  brew install git
+  brew install composer
+  echo -e "${GREEN}All tools are installed , enjoy using sajan !"
+
 }

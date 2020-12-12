@@ -24,10 +24,10 @@ sajan_git() {
 
 sajan_git_test() {
   if ! git --version >/dev/null 2>&1; then
-    echo -e "${RED}Git not installed"
+    echo -e "${RED}Git is not installed on your computer"
     return 0
   else
-    echo -e "${INFOCOLOR}Git installed"
+    echo -e "${INFOCOLOR}Git is found on your computer"
     return 1
   fi
 }
