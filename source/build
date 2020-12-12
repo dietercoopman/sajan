@@ -6,7 +6,3 @@ shc -f deploy.sh
 mv deploy.sh.x ../bin/sajan
 rm deploy.sh.x.c
 rm deploy.sh
-pause 2
-git add .
-git commit -m "new build"
-git push;
