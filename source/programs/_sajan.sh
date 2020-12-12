@@ -76,7 +76,7 @@ sajan_self-update() {
   curl -s https://raw.githubusercontent.com/dietercoopman/sajan/master/bin/sajan -o sajan
   mv sajan /usr/local/bin
   chmod +x /usr/local/bin/sajan
-  echo "Sajan has been updated to version $VERSION"
+  echo -e "${GREEN}Sajan${NC} has been updated to version ${YELLOW}$VERSION${NC}"
   exit
 }
 
