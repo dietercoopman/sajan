@@ -26,7 +26,7 @@ Help() {
   echo
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
-  echo -e "  ${GREEN}test                ${NC}Test is all tools needed for sajan are present"
+  echo -e "  ${GREEN}test                ${NC}Test if all tools needed for sajan are present"
   echo
   echo -e "${YELLOW}Programs:"
   echo -e "  ${GREEN}laravel             ${NC}Execute Laravel actions"
@@ -66,7 +66,7 @@ Info() {
             JJJJJJJJJJASPERJJJJJJJJJJJJANAJJJJJJJJJJJ
             JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
 ${NC}
-${GREEN}Sajan${NC} is a light tool to automize some web development tasks
+${GREEN}Sajan${NC} is a lightweight tool to automize some web development tasks
 This tool provides you with some automation tasks for Laravel, Git, PhpStorm and Webpack
 "
 
