@@ -5,7 +5,7 @@ declare ERRORCOLOR='\033[1;101m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=0.1
+declare VERSION=0.2
 
 ################################################################################
 # VERSION                                                                      #
@@ -19,11 +19,13 @@ Version() {
 # Help                                                                         #
 ################################################################################
 
-
 Help() {
   # Display Help
   echo -e "${YELLOW}Usage:${NC}"
-  echo " sajan [program] [action] [--]";
+  echo " sajan [program] [action] [--]"
+  echo
+  echo -e "${YELLOW}Actions:"
+  echo -e "  ${GREEN}self-update         ${NC}Update sajan"
   echo
   echo -e "${YELLOW}Programs:"
   echo -e "  ${GREEN}laravel             ${NC}Execute Laravel actions"
@@ -67,4 +69,12 @@ ${GREEN}Sajan${NC} is a light tool to automize some web development tasks
 This tool provides you with some automation tasks for Laravel, Git, PhpStorm and Webpack
 "
 
+}
+
+sajan_self-update(){
+  curl -s https://raw.githubusercontent.com/dietercoopman/sajan/master/bin/sajan -o sajan
+  mv sajan /usr/local/bin
+  chmod +x /usr/local/bin/sajan
+  echo "Sajan has been updated to version $VERSION"
+  exit
 }

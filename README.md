@@ -10,7 +10,7 @@ Sajan is tested on MacOs
 ## Installation
 
 ````shell
-curl https://www.deltasolutions.be/sajan/ | bash
+curl -s https://www.deltasolutions.be/sajan/ | bash
 ````
 
 ## Available commands 
