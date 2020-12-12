@@ -25,8 +25,10 @@ sajan_phpstorm() {
 sajan_phpstorm_test(){
   if ! pstorm --help >/dev/null 2>&1; then
     echo -e "${RED}PhpStorm not installed"
+    return 0
   else
-    echo -e "${GREEN}PhpStorm installed"
+    echo -e "${INFOCOLOR}PhpStorm installed"
+    return 1
   fi
 }
 

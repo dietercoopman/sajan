@@ -1,4 +1,3 @@
-
 ################################################################################
 # Git                                                                          #
 ################################################################################
@@ -11,7 +10,7 @@ sajan_git() {
     sajan_git_clean $2 $3
     exit
     ;;
-   "-h"|*|"")
+  "-h" | * | "")
     sajan_git_help
     exit
     ;;
@@ -23,11 +22,13 @@ sajan_git() {
 # Test                                                                         #
 ################################################################################
 
-sajan_git_test(){
+sajan_git_test() {
   if ! git --version >/dev/null 2>&1; then
     echo -e "${RED}Git not installed"
+    return 0
   else
-    echo -e "${GREEN}Git installed"
+    echo -e "${INFOCOLOR}Git installed"
+    return 1
   fi
 }
 
@@ -48,7 +49,6 @@ sajan_git_help() {
   echo
   echo
 }
-
 
 ################################################################################
 # Clean                                                                        #

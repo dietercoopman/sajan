@@ -1,4 +1,3 @@
-
 ################################################################################
 # Git                                                                          #
 ################################################################################
@@ -15,7 +14,7 @@ sajan_webpack() {
     sajan_webpack_init
     exit
     ;;
-   "-h"|*|"")
+  "-h" | * | "")
     sajan_webpack_help
     exit
     ;;
@@ -27,19 +26,25 @@ sajan_webpack() {
 # Test                                                                         #
 ################################################################################
 
-sajan_webpack_test(){
+sajan_webpack_test() {
 
   if ! node -v >/dev/null 2>&1; then
     echo -e "${RED}Node not installed"
+    nodeok=0
   else
-    echo -e "${GREEN}Node installed"
+    echo -e "${INFOCOLOR}Node installed"
+    nodeok=1
   fi
 
   if ! npm -v >/dev/null 2>&1; then
     echo -e "${RED}Npm not installed"
+    npmok=0
   else
-    echo -e "${GREEN}Npm installed"
+    echo -e "${INFOCOLOR}Npm installed"
+    npmok=1
   fi
+
+  return ${npmok} && ${nodeok}
 }
 
 ################################################################################
@@ -61,7 +66,6 @@ sajan_webpack_help() {
   echo
 }
 
-
 ################################################################################
 # Init                                                                         #
 ################################################################################
@@ -74,6 +78,6 @@ sajan_webpack_init() {
 # Build                                                                         #
 ################################################################################
 
-sajan_webpack_build(){
+sajan_webpack_build() {
   echo "Build not implemented yet"
 }

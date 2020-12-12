@@ -5,7 +5,7 @@ declare ERRORCOLOR='\033[1;101m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=0.3
+declare VERSION=0.4-alfa
 
 ################################################################################
 # VERSION                                                                      #
@@ -82,7 +82,19 @@ sajan_self-update() {
 
 sajan_test() {
   sajan_git_test
+  GITOK=$?
   sajan_laravel_test
+  LARAVELOK=$?
   sajan_phpstorm_test
+  PHPSTORMOK=$?
   sajan_webpack_test
+  WEBPACKOK=$?
+
+  ALLOK=$(($GITOK + $LARAVELOK + $PHPSTORMOK + $WEBPACKOK))
+
+  if [[ $ALLOK == 4 ]]; then
+    echo -e "${GREEN}All tools are set , enjoy sajan !"
+  else
+    echo -e "${ERRORCOLOR}Not all tools are set , review the red lines "
+  fi
 }

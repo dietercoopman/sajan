@@ -29,8 +29,10 @@ sajan_laravel() {
 sajan_laravel_test(){
   if ! composer -V >/dev/null 2>&1; then
     echo -e "${RED}Composer not installed"
+    return 0
   else
-    echo -e "${GREEN}Composer installed"
+    echo -e "${INFOCOLOR}Composer installed"
+    return 1
   fi
 }
 
