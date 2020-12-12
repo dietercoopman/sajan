@@ -1,0 +1,1 @@
+jp2a sajjan.jpg --height=20 --invert --chars=" J@@"  > sajjan.txt
