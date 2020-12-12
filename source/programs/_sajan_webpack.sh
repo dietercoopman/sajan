@@ -89,7 +89,7 @@ sajan_webpack_init() {
   }
 }
 ' >package.json
-  mkdir sass
+  mkdir -p sass
   echo "h1 {
   font-size: 25px;
 }
