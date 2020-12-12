@@ -70,9 +70,9 @@ sajan_git_clean() {
 ################################################################################
 
 sajan_git_go() {
-  TIME=date +"%m-%d-%Y %H:%M"
+  SAJANTIME=date +"%m-%d-%Y %H:%M"
   git add .
-  git commit -m "sajan push at $TIME"
+  git commit -m "sajan push at ${SAJANTIME}"
   git push
 }
 
