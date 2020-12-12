@@ -7,7 +7,11 @@ sajan_git() {
 
   case $ACTION in
   clean)
-    sajan_git_clean $2 $3
+    sajan_git_clean
+    exit
+    ;;
+  go)
+    sajan_git_go
     exit
     ;;
   "-h" | * | "")
@@ -43,6 +47,7 @@ sajan_git_help() {
   echo
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}clean              ${NC}Reset and clean current git directory"
+  echo -e "  ${GREEN}go                 ${NC}Commit all files and push with a default message"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
@@ -59,3 +64,15 @@ sajan_git_clean() {
   git add .
   git pull
 }
+
+################################################################################
+# Clean                                                                        #
+################################################################################
+
+sajan_git_go() {
+  TIME=date +"%m-%d-%Y %H:%M"
+  git add .
+  git commit -m "sajan push at $TIME"
+  git push
+}
+
