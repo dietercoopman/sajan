@@ -5,4 +5,4 @@ cat programs/* >> deploy.sh
 shc -f deploy.sh
 mv deploy.sh.x ../bin/sajan
 rm deploy.sh.x.c
-rm deploy.sh
+#rm deploy.sh
