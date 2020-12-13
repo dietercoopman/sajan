@@ -5,7 +5,7 @@ declare ERRORCOLOR='\033[1;101m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=0.7-alfa
+declare VERSION=0.8-alfa
 
 ################################################################################
 # VERSION                                                                      #
