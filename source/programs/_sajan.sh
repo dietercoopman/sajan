@@ -1,11 +1,12 @@
 declare BRANDCOLOR='\033[0;33m'
 declare INFOCOLOR='\033[0;36m'
 declare ERRORCOLOR='\033[1;101m'
+declare LOVECOLOR='\033[31m'
 
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=0.11-alfa
+declare VERSION=0.12-alfa
 
 ################################################################################
 # VERSION                                                                      #
@@ -28,6 +29,7 @@ ${YELLOW}Usage:${NC}"
   echo
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
+  echo -e "  ${GREEN}bye                 ${NC}Deletes sajan"
   echo -e "  ${GREEN}tools-check         ${NC}Check if all tools needed for sajan are present"
   echo -e "  ${GREEN}tools-update        ${NC}Update tools used by sajan"
   echo -e "  ${GREEN}tools-install       ${NC}Install the tools used by sajan"
@@ -132,4 +134,35 @@ sajan_tools-install() {
   brew install git
   brew install composer
   echo -e "${GREEN}All tools are installed , enjoy using sajan !"
+}
+
+sajan_bye() {
+  # clear sessions
+  echo -e "
+  ${INFOCOLOR}I hope you mistyped ;-) ...
+  Are you sure you want to delete sajan (y/n)? ${NC}\c"
+  read sure
+  case "$sure" in
+  'y')
+
+    echo "
+  I'm sorry to see you leaving ... Bye Bye !! I am allready self-destroying ..."
+    rm /usr/local/bin/s
+    rm /usr/local/bin/sajan
+    echo "
+  And now I'm gone ... :( I'll prove with an error :(
+   "
+  sajan -v
+    ;;
+  *)
+    echo -e "${NC}
+  I love you tooooo ${LOVECOLOR}♥♥♥♥${NC} ... I'll do a self test ... Am i still here ???
+  "
+      sajan -v
+  echo "
+  Pfieeuw ... "
+
+    ;;
+  esac
+  echo -e ''
 }
