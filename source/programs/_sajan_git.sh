@@ -71,6 +71,14 @@ sajan_git_clean() {
 
 sajan_git_go() {
 
+  OPTION="${OPTIONS['h']}"
+  HELP="h"
+
+  if [ "$OPTION" = "$HELP" ]; then
+    exit
+  fi
+
+
   SAJANTIME=$(date +"%m-%d-%Y %H:%M")
   git add .
   git commit -m "sajan push at ${SAJANTIME}"
