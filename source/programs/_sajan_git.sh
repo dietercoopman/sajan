@@ -6,11 +6,11 @@ sajan_git() {
   ACTION=${ARGUMENTS[0]}
 
   case $ACTION in
-  clean)
+  clean|c)
     sajan_git_clean
     exit
     ;;
-  go)
+  go|g)
     sajan_git_go
     exit
     ;;
@@ -42,12 +42,14 @@ sajan_git_test() {
 
 sajan_git_help() {
   # Display Help
-  echo -e "${YELLOW}Usage:${NC}"
-  echo " sajan git [action]"
+  echo -e "
+${YELLOW}Usage:${NC}"
+  echo "  sajan git [action]"
+
   echo
   echo -e "${YELLOW}Actions:"
-  echo -e "  ${GREEN}clean              ${NC}Reset and clean current git directory"
-  echo -e "  ${GREEN}go                 ${NC}Commit all files and push with a default message"
+  echo -e "  ${GREEN}clean|c             ${NC}Reset and clean current git directory"
+  echo -e "  ${GREEN}g|g                 ${NC}Commit all files and push with a default message"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."

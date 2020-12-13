@@ -4,6 +4,7 @@
 
 sajan_git_clean() {
   OPTION="${OPTIONS['h']}"
+
   if [ "$OPTION" = "h" ]; then
     sajan_git_clean_help
   fi
@@ -22,7 +23,9 @@ sajan_git_clean() {
 ################################################################################
 
 sajan_git_clean_help() {
-  echo -e "  ${GREEN}clean              ${NC}Reset and clean current git directory"
+  echo -e "
+  ${GREEN}clean|c              ${NC}Reset and clean current git directory
+  "
   exit
 }
 
@@ -31,9 +34,9 @@ sajan_git_clean_help() {
 ################################################################################
 
 sajan_git_clean_explain() {
-  echo "teset"
   echo -e "
   ${GREEN}sajan git clean
+  ${GREEN}s git c
 
   This command will execute the following commands${NC}
 
@@ -45,7 +48,9 @@ sajan_git_clean_explain() {
   will stage all files (that are not listed in the .gitignore) in the entire repository.
   Remote changes are pulled into your branch.${NC}
 
-  "
+  Used tools for this action:
+  - git
 
+  "
   exit
 }

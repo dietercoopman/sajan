@@ -5,7 +5,7 @@ declare ERRORCOLOR='\033[1;101m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=0.9-alfa
+declare VERSION=0.10-alfa
 
 ################################################################################
 # VERSION                                                                      #
@@ -21,9 +21,10 @@ Version() {
 
 Help() {
   # Display Help
-  echo -e "${YELLOW}Usage:${NC}"
-  echo " sajan [program] [action] [--]"
-  echo " s [program] [action] [--]"
+  echo -e "
+${YELLOW}Usage:${NC}"
+  echo "  sajan [program] [action] [--]"
+  echo "  s     [program] [action] [--]"
   echo
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
