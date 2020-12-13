@@ -73,6 +73,11 @@ sajan_phpstorm_open() {
   pstorm .
 
   ${YELLOW}This will open PhpStorm with the current directory open.${NC}
+
+  Used tools for this action:
+  - PhpStorm
+
+
   "
     exit
   fi

@@ -92,8 +92,8 @@ sajan_webpack_init_explain() {
 
   package_config_string > package.json
   mkdir -p sass
-  echo 'h1 { font-size: 25px; }' >sass/style.scss
-  webpack_config_string >webpack.config.js
+  echo 'h1 { font-size: 25px; }' > sass/style.scss
+  webpack_config_string > webpack.config.js
   npm install
   npm run build
 
@@ -102,6 +102,11 @@ sajan_webpack_init_explain() {
   A webpack configuration file is created , this contains all webpack settings.
   Npm install will install all packages provided in package.json
   A build process is started to create the assets.${NC}
+
+  Used tools for this action:
+  - node
+  - npm
+
   "
   exit
 }

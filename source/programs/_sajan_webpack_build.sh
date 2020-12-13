@@ -44,6 +44,11 @@ sajan_webpack_build_explain() {
   npm run build
 
   ${YELLOW}Install npm packages.  Build all assets${NC}
+
+  Used tools for this action:
+  - node
+  - npm
+
   "
   exit
 }
