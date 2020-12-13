@@ -23,6 +23,7 @@ Help() {
   # Display Help
   echo -e "${YELLOW}Usage:${NC}"
   echo " sajan [program] [action] [--]"
+  echo " s [program] [action] [--]"
   echo
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
@@ -79,6 +80,7 @@ sajan_self-update() {
   curl -s https://raw.githubusercontent.com/dietercoopman/sajan/master/bin/sajan -o sajan
   mv sajan /usr/local/bin
   chmod +x /usr/local/bin/sajan
+  ln -s /usr/local/bin/sajan /usr/local/bin/s
   echo -e "${GREEN}Sajan${NC} has been updated to version ${YELLOW}$VERSION${NC}"
   exit
 }

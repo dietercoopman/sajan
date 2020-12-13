@@ -1,3 +1,5 @@
 curl -s https://raw.githubusercontent.com/dietercoopman/sajan/master/bin/sajan -o sajan
 mv sajan /usr/local/bin
+ln -s /usr/local/bin/sajan /usr/local/bin/s
 chmod +x /usr/local/bin/sajan
+sajan info
