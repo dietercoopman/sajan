@@ -4,8 +4,8 @@
 ################################################################################
 
 sajan_laravel_install() {
-  local VERSION="$1"
-  local FOLDER="$2"
+  local VERSION=${ARGUMENTS[1]}
+  local FOLDER=${ARGUMENTS[2]}
 
   OPTION="${OPTIONS['h']}"
 
