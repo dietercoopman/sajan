@@ -3,18 +3,18 @@
 ################################################################################
 
 sajan_webpack() {
-  ACTION="$1"
+  ACTION=${ARGUMENTS[0]}
 
   case $ACTION in
   build)
-    sajan_webpack_build $2
+    sajan_webpack_build
     exit
     ;;
   init)
     sajan_webpack_init
     exit
     ;;
-  "-h" | * | "")
+  *)
     sajan_webpack_help
     exit
     ;;

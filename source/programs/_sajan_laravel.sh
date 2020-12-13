@@ -1,21 +1,20 @@
-
 ################################################################################
 # Laravel                                                                      #
 ################################################################################
 
 sajan_laravel() {
-  ACTION="$1"
+  ACTION=${ARGUMENTS[0]}
 
   case $ACTION in
   install)
-    sajan_laravel_install $2 $3
+    sajan_laravel_install $3 $4
     exit
     ;;
- update)
+  update)
     sajan_laravel_update
     exit
     ;;
-  "-h"|*|"")
+  *)
     sajan_laravel_help
     exit
     ;;
@@ -26,7 +25,7 @@ sajan_laravel() {
 # Test                                                                         #
 ################################################################################
 
-sajan_laravel_test(){
+sajan_laravel_test() {
   if ! composer -V >/dev/null 2>&1; then
     echo -e "${RED}Composer is not installed on your computer"
     return 0
@@ -43,7 +42,7 @@ sajan_laravel_test(){
 sajan_laravel_help() {
   # Display Help
   echo -e "${YELLOW}Usage:${NC}"
-  echo " sajan laravel [action]";
+  echo " sajan laravel [action]"
   echo
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}install             ${NC}Install a specific laravel version in a given folder"

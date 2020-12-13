@@ -3,7 +3,7 @@
 ################################################################################
 
 sajan_git() {
-  ACTION="$1"
+  ACTION=${ARGUMENTS[0]}
 
   case $ACTION in
   clean)
@@ -14,7 +14,7 @@ sajan_git() {
     sajan_git_go
     exit
     ;;
-  "-h" | * | "")
+  *)
     sajan_git_help
     exit
     ;;
@@ -70,9 +70,9 @@ sajan_git_clean() {
 ################################################################################
 
 sajan_git_go() {
+
   SAJANTIME=$(date +"%m-%d-%Y %H:%M")
   git add .
   git commit -m "sajan push at ${SAJANTIME}"
   git push
 }
-

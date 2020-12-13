@@ -1,17 +1,16 @@
-
 ################################################################################
 # PhpStorm                                                                     #
 ################################################################################
 
 sajan_phpstorm() {
-  ACTION=$1
+  ACTION=${ARGUMENTS[0]}
 
   case $ACTION in
   open)
     sajan_phpstorm_open
     exit
     ;;
-  "-h" | * | "")
+  *)
     sajan_phpstorm_help
     exit
     ;;
@@ -22,7 +21,7 @@ sajan_phpstorm() {
 # Test                                                                         #
 ################################################################################
 
-sajan_phpstorm_test(){
+sajan_phpstorm_test() {
   if ! pstorm --help >/dev/null 2>&1; then
     echo -e "${RED}PhpStorm is not installed on your computer"
     return 0
