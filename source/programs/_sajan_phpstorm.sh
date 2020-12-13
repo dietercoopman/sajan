@@ -45,6 +45,7 @@ sajan_phpstorm_help() {
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
   echo
   echo
 }
@@ -54,5 +55,23 @@ sajan_phpstorm_help() {
 ################################################################################
 
 sajan_phpstorm_open() {
+  OPTION="${OPTIONS['h']}"
+  if [ "$OPTION" = "h" ]; then
+    echo -e "  ${GREEN}open              ${NC}Open PhpStorm with current directory"
+    exit
+  fi
+
+  if [ "$OPTION" = "e" ]; then
+    echo -e "
+  ${GREEN}This command will execute the following commands${NC}
+
+  pstorm .
+
+  ${YELLOW}This will open PhpStorm with the current directory open.${NC}
+
+  "
+
+    exit
+  fi
   pstorm .
 }
