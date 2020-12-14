@@ -18,7 +18,7 @@ curl -s https://www.deltasolutions.be/sajan/ | bash
 
 ## Available commands
 
-````shell
+````text
 Usage:
   sajan [program] [action] [--]
   s     [program] [action] [--]
@@ -31,6 +31,7 @@ Actions:
   tools-install       Install the tools used by sajan
 
 Programs:
+  tools               Execute Tools actions
   laravel             Execute Laravel actions
   git                 Execute Git actions
   phpstorm            Execute PhpStorm actions
@@ -44,15 +45,15 @@ Options:
 ````
 
 
-### Available programs 
+### Available command 
 
-[Git - actions](docs/git.md)
+[Git command](docs/git.md)
 
-[Laravel documentation](docs/laravel.md)
+[Laravel command](docs/laravel.md)
 
-[Webpack actions](docs/webpack.md)
+[Webpack command](docs/webpack.md)
 
-[PhpStorm actions](docs/phpstorm.md)
+[PhpStorm command](docs/phpstorm.md)
 
 ### Educational role
 
@@ -61,7 +62,7 @@ This will show you what the action really does under the hood.
 
 This is an example
 
-````shell
+````text
   sajan git clean
   s git c
 

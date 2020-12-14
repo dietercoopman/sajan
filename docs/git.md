@@ -1,30 +1,28 @@
-# GIT
+# Git
 
-```shell
+```text
 Usage:
-sajan git [action]
+  sajan webpack [action]
+  s webpack [action]
 
 Actions:
-clean|c              Reset and clean current git directory
-go|g                 Commit all files and push with a default message
-relink|rln           Change your remote
+  init|i              Init webpack for css and javascript in current directory
+  build|i             Build your assets
 
 Options:
--h     Print this Help.
--e     Explains the command via the dry-run output of the command.
+  -h     Print this Help.
+  -e     Explains the command via the dry-run output of the command.
 ```
 
-### clean 
+### init 
 
-The active branch is reset to the git index, so all changes are reset. Git add .
-will stage all files (that are not listed in the .gitignore) in the entire repository.
-Remote changes are pulled into your branch.
+A configuration json for npm is saved to package.json. This file contains all necessary packages to install.
+A sass directory is created with a style.scss file.
+A webpack configuration file is created , this contains all webpack settings.
+Npm install will install all packages provided in package.json
+A build process is started to create the assets.
 
-### go
 
-The git go command stages all changed files. These files are committed with a default sajan commit message via the '
-commit' command. After the commit there is a push to your default remote git server.
+### build
 
-### relink
-
-This command will show your current origin name and url and prompt for a new remote and url
+Install npm packages.  Build all assets
