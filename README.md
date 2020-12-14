@@ -1,16 +1,19 @@
 # sajan
 
-Sajan is a lightweight command line tool for webdevelopers.  The tools provides developers with shortcuts for multiline
-commands.  
+Sajan is a lightweight command line tool for webdevelopers.  The tools provides them with shortcuts for multiline
+commands or opens a world of hidden oneliners.
 
 ## Requirements
 
-Sajan is a shell tool tested on MacOs and Linux
+Sajan is a shell tool tested on MacOs desktop and Linux servers
 
-Sajan uses tools like git , npm , node , composer. 
-For us brew is the best tool to install these programs , so we depend on it. If you dont have it you can install it via sajan.
+Sajan uses tools like brew, git, npm, node and composer. 
+
+For us brew is the best tool to install these programs, so we depend on it. If you don't have it, you can install it easily via sajan.
 
 ## Installation
+
+The purpose of sajan is simplicity, and that starts with the installation ... 
 
 ````shell
 curl -s https://www.deltasolutions.be/sajan/ | bash
@@ -25,7 +28,7 @@ Usage:
 
 Actions:
   self-update         Update sajan
-  bye                 Deletes sajan
+  bye                 Delete sajan
 
 Programs:
   tools               Execute Tools actions
@@ -54,9 +57,9 @@ Options:
 
 [PhpStorm command](docs/phpstorm.md)
 
-### Educational role
+### Educational purpose
 
-Sajan provides an educational role , every action has an option to explain the command.
+One of my personal goals is to provide developers with Sajan provides an educational purpose. Every action has an option to explain the command ( -e ).
 This will show you what the action really does under the hood.
 
 This is an example
