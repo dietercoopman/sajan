@@ -62,6 +62,10 @@ This will show you what the action really does under the hood.
 
 This is an example
 
+````shell
+ $ sajan git clean -e
+````
+
 ````text
   sajan git clean
   s git c
