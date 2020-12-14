@@ -1,7 +1,8 @@
 # sajan
 
-Sajan is a lightweight command line tool for webdevelopers.  The tools provides them with shortcuts for multiline
-commands or opens a world of hidden oneliners.
+Sajan is a lightweight command line tool for webdevelopers.  
+
+The tool provides them with shortcuts for multiline commands or opens a world of hidden oneliners.
 
 ## Requirements
 
