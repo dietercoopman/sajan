@@ -7,7 +7,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=0.15-alfa
+declare VERSION=0.20-alfa
 
 ################################################################################
 # VERSION                                                                      #
