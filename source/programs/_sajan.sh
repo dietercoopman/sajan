@@ -29,7 +29,7 @@ ${YELLOW}Usage:${NC}"
   echo
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
-  echo -e "  ${GREEN}bye                 ${NC}Deletes sajan"
+  echo -e "  ${GREEN}bye                 ${NC}Delete sajan"
 
   echo
   echo -e "${YELLOW}Programs:"
