@@ -7,7 +7,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=0.20-alfa
+declare VERSION=0.1-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -775,8 +775,8 @@ sajan_tools_install_explain() {
     brew install composer
 
 
- ${YELLOW}This program first ask the user confirmation to install brew itself.  After this installation
- npm, node, git and composer are installed via brew.${NC}
+  ${YELLOW}This program first asks the user confirmation to install brew itself.  After this installation
+  npm, node, git and composer are installed via brew.${NC}
 
   Used tools for this action:
   - brew
@@ -818,14 +818,14 @@ echo
 
 sajan_tools_update_explain() {
   echo -e "
-  ${GREEN}sajan tools updte
+  ${GREEN}sajan tools update
   ${GREEN}s tools u
 
   This command will execute the following commands${NC}
 
      brew upgrade
 
- ${YELLOW}This program will upgrade all installed brew packages.${NC}
+  ${YELLOW}This program will upgrade all installed brew packages.${NC}
 
   Used tools for this action:
   - brew
