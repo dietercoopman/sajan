@@ -42,7 +42,7 @@ sajan_git_go_explain() {
   git commit -m "sajan push at ${SAJANTIME}"
   git push
 
-  ${YELLOW}The git add stages all changed files. These files are committed with a default sajan commit
+  ${YELLOW}The git go command stages all changed files. These files are committed with a default sajan commit
   message via the 'commit' command.  After the commit there is a push to your default remote git server.${NC}
 
   Used tools for this action:
