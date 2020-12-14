@@ -1,16 +1,12 @@
+
 ################################################################################
 # Init                                                                         #
 ################################################################################
 
 sajan_webpack_init() {
-  OPTION="${OPTIONS['h']}"
-  if [ "$OPTION" = "h" ]; then
-    sajan_webpack_init_help
-  fi
 
-  if [ "$OPTION" = "e" ]; then
-    sajan_webpack_init_explain
-  fi
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_webpack_init_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_webpack_init_explain
 
   echo '{
   "private": true,

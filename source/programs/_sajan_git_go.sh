@@ -5,15 +5,9 @@
 
 sajan_git_go() {
   SAJANTIME=$(date +"%m-%d-%Y %H:%M")
-  OPTION="${OPTIONS['h']}"
 
-  if [ "$OPTION" = "h" ]; then
-    sajan_git_go_help
-  fi
-
-  if [ "$OPTION" = "e" ]; then
-    sajan_git_go_explain
-  fi
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_git_go_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_git_go_explain
 
   SAJANTIME=$(date +"%m-%d-%Y %H:%M")
   git add .

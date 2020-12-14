@@ -6,7 +6,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=0.12-alfa
+declare VERSION=0.13-alfa
 
 ################################################################################
 # VERSION                                                                      #
@@ -152,14 +152,14 @@ sajan_bye() {
     echo "
   And now I'm gone ... :( I'll prove with an error :(
    "
-  sajan -v
+    sajan -v
     ;;
   *)
     echo -e "${NC}
   I love you tooooo ${LOVECOLOR}♥♥♥♥${NC} ... I'll do a self test ... Am i still here ???
   "
-      sajan -v
-  echo "
+    sajan -v
+    echo "
   Pfieeuw ... "
 
     ;;

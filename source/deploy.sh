@@ -7,7 +7,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=0.12-alfa
+declare VERSION=0.13-alfa
 
 ################################################################################
 # VERSION                                                                      #
@@ -153,14 +153,14 @@ sajan_bye() {
     echo "
   And now I'm gone ... :( I'll prove with an error :(
    "
-  sajan -v
+    sajan -v
     ;;
   *)
     echo -e "${NC}
   I love you tooooo ${LOVECOLOR}♥♥♥♥${NC} ... I'll do a self test ... Am i still here ???
   "
-      sajan -v
-  echo "
+    sajan -v
+    echo "
   Pfieeuw ... "
 
     ;;
@@ -176,11 +176,11 @@ sajan_git() {
   ACTION=${ARGUMENTS[0]}
 
   case $ACTION in
-  clean|c)
+  clean | c)
     sajan_git_clean
     exit
     ;;
-  go|g)
+  go | g)
     sajan_git_go
     exit
     ;;
@@ -233,19 +233,20 @@ ${YELLOW}Usage:${NC}"
 ################################################################################
 
 sajan_git_clean() {
-  OPTION="${OPTIONS['h']}"
 
-  if [ "$OPTION" = "h" ]; then
-    sajan_git_clean_help
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_git_clean_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_git_clean_explain
+
+  echo -e "Are your sure you want to clean up ? This will remove uncommitted changes (y/n)? ${NC}\c"
+  read sure
+  if [ "$sure" == "y" ]; then
+    echo "test"
+    exit
+    git reset --hard
+    git add .
+    git pull
   fi
 
-  if [ "$OPTION" = "e" ]; then
-    sajan_git_clean_explain
-  fi
-
-  git reset --hard
-  git add .
-  git pull
 }
 
 ################################################################################
@@ -291,15 +292,9 @@ sajan_git_clean_explain() {
 
 sajan_git_go() {
   SAJANTIME=$(date +"%m-%d-%Y %H:%M")
-  OPTION="${OPTIONS['h']}"
 
-  if [ "$OPTION" = "h" ]; then
-    sajan_git_go_help
-  fi
-
-  if [ "$OPTION" = "e" ]; then
-    sajan_git_go_explain
-  fi
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_git_go_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_git_go_explain
 
   SAJANTIME=$(date +"%m-%d-%Y %H:%M")
   git add .
@@ -393,6 +388,7 @@ ${YELLOW}Usage:${NC}"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
   echo
   echo
 }
@@ -405,15 +401,8 @@ sajan_laravel_install() {
   local VERSION=${ARGUMENTS[1]}
   local FOLDER=${ARGUMENTS[2]}
 
-  OPTION="${OPTIONS['h']}"
-
-  if [ "$OPTION" = "h" ]; then
-    sajan_laravel_install_help
-  fi
-
-  if [ "$OPTION" = "e" ]; then
-    sajan_laravel_install_explain
-  fi
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_laravel_install_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_laravel_install_explain
 
   if [[ $VERSION == "" ]]; then
     echo -e "${ERRORCOLOR}Please provide a version , choose one from ${NC}"
@@ -553,12 +542,12 @@ ${YELLOW}Usage:${NC}"
 
 sajan_phpstorm_open() {
   OPTION="${OPTIONS['h']}"
-  if [ "$OPTION" = "h" ]; then
+  if [ "$OPTION" == "h" ]; then
     echo -e "  ${GREEN}open|o              ${NC}Open PhpStorm with current directory"
     exit
   fi
 
-  if [ "$OPTION" = "e" ]; then
+  if [ "$OPTION" == "e" ]; then
     echo -e "
   ${GREEN}sajan phpstorm open
   ${GREEN}s phpstorm o
@@ -656,14 +645,8 @@ ${YELLOW}Usage:${NC}"
 
 sajan_webpack_build() {
 
-  OPTION="${OPTIONS['h']}"
-  if [ "$OPTION" = "h" ]; then
-    sajan_webpack_build_help
-  fi
-
-  if [ "$OPTION" = "e" ]; then
-    sajan_webpack_build_explain
-  fi
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_webpack_build_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_webpack_build_explain
 
   npm install
   npm run build
@@ -704,19 +687,15 @@ sajan_webpack_build_explain() {
   "
   exit
 }
+
 ################################################################################
 # Init                                                                         #
 ################################################################################
 
 sajan_webpack_init() {
-  OPTION="${OPTIONS['h']}"
-  if [ "$OPTION" = "h" ]; then
-    sajan_webpack_init_help
-  fi
 
-  if [ "$OPTION" = "e" ]; then
-    sajan_webpack_init_explain
-  fi
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_webpack_init_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_webpack_init_explain
 
   echo '{
   "private": true,
@@ -833,6 +812,18 @@ fn_invalid() {
   echo
   Help
   exit
+}
+
+fn_array_contains () {
+    local seeking=$1; shift
+    local in=1
+    for element; do
+        if [[ $element == "$seeking" ]]; then
+            in=0
+            break
+        fi
+    done
+    return $in
 }
 
 ################################################################################

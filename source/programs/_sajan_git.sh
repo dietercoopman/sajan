@@ -7,11 +7,11 @@ sajan_git() {
   ACTION=${ARGUMENTS[0]}
 
   case $ACTION in
-  clean|c)
+  clean | c)
     sajan_git_clean
     exit
     ;;
-  go|g)
+  go | g)
     sajan_git_go
     exit
     ;;

@@ -7,15 +7,8 @@ sajan_laravel_install() {
   local VERSION=${ARGUMENTS[1]}
   local FOLDER=${ARGUMENTS[2]}
 
-  OPTION="${OPTIONS['h']}"
-
-  if [ "$OPTION" = "h" ]; then
-    sajan_laravel_install_help
-  fi
-
-  if [ "$OPTION" = "e" ]; then
-    sajan_laravel_install_explain
-  fi
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_laravel_install_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_laravel_install_explain
 
   if [[ $VERSION == "" ]]; then
     echo -e "${ERRORCOLOR}Please provide a version , choose one from ${NC}"

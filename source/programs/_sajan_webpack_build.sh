@@ -5,14 +5,8 @@
 
 sajan_webpack_build() {
 
-  OPTION="${OPTIONS['h']}"
-  if [ "$OPTION" = "h" ]; then
-    sajan_webpack_build_help
-  fi
-
-  if [ "$OPTION" = "e" ]; then
-    sajan_webpack_build_explain
-  fi
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_webpack_build_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_webpack_build_explain
 
   npm install
   npm run build

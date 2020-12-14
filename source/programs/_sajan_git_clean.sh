@@ -4,19 +4,20 @@
 ################################################################################
 
 sajan_git_clean() {
-  OPTION="${OPTIONS['h']}"
 
-  if [ "$OPTION" = "h" ]; then
-    sajan_git_clean_help
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_git_clean_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_git_clean_explain
+
+  echo -e "Are your sure you want to clean up ? This will remove uncommitted changes (y/n)? ${NC}\c"
+  read sure
+  if [ "$sure" == "y" ]; then
+    echo "test"
+    exit
+    git reset --hard
+    git add .
+    git pull
   fi
 
-  if [ "$OPTION" = "e" ]; then
-    sajan_git_clean_explain
-  fi
-
-  git reset --hard
-  git add .
-  git pull
 }
 
 ################################################################################
