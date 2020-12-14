@@ -26,9 +26,6 @@ Usage:
 Actions:
   self-update         Update sajan
   bye                 Deletes sajan
-  tools-check         Check if all tools needed for sajan are present
-  tools-update        Update tools used by sajan
-  tools-install       Install the tools used by sajan
 
 Programs:
   tools               Execute Tools actions
@@ -46,6 +43,8 @@ Options:
 
 
 ### Available command 
+
+[Tools command](docs/tools.md)
 
 [Git command](docs/git.md)
 

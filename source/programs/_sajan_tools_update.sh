@@ -32,14 +32,14 @@ echo
 
 sajan_tools_update_explain() {
   echo -e "
-  ${GREEN}sajan tools updte
+  ${GREEN}sajan tools update
   ${GREEN}s tools u
 
   This command will execute the following commands${NC}
 
      brew upgrade
 
- ${YELLOW}This program will upgrade all installed brew packages.${NC}
+  ${YELLOW}This program will upgrade all installed brew packages.${NC}
 
   Used tools for this action:
   - brew

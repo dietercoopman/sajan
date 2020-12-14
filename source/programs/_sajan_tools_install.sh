@@ -49,8 +49,8 @@ sajan_tools_install_explain() {
     brew install composer
 
 
- ${YELLOW}This program first ask the user confirmation to install brew itself.  After this installation
- npm, node, git and composer are installed via brew.${NC}
+  ${YELLOW}This program first asks the user confirmation to install brew itself.  After this installation
+  npm, node, git and composer are installed via brew.${NC}
 
   Used tools for this action:
   - brew
