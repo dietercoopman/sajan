@@ -15,6 +15,10 @@ sajan_git() {
     sajan_git_go
     exit
     ;;
+  relink | rnk)
+    sajan_git_relink
+    exit
+    ;;
   *)
     sajan_git_help
     exit
@@ -50,7 +54,8 @@ ${YELLOW}Usage:${NC}"
   echo
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}clean|c             ${NC}Reset and clean current git directory"
-  echo -e "  ${GREEN}g|g                 ${NC}Commit all files and push with a default message"
+  echo -e "  ${GREEN}go|g                 ${NC}Commit all files and push with a default message"
+  echo -e "  ${GREEN}relink|rln          ${NC}Change your remote"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
