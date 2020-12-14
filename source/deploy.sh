@@ -31,12 +31,10 @@ ${YELLOW}Usage:${NC}"
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
   echo -e "  ${GREEN}bye                 ${NC}Deletes sajan"
-  echo -e "  ${GREEN}tools-check         ${NC}Check if all tools needed for sajan are present"
-  echo -e "  ${GREEN}tools-update        ${NC}Update tools used by sajan"
-  echo -e "  ${GREEN}tools-install       ${NC}Install the tools used by sajan"
 
   echo
   echo -e "${YELLOW}Programs:"
+  echo -e "  ${GREEN}tools               ${NC}Execute Tools actions"
   echo -e "  ${GREEN}laravel             ${NC}Execute Laravel actions"
   echo -e "  ${GREEN}git                 ${NC}Execute Git actions"
   echo -e "  ${GREEN}phpstorm            ${NC}Execute PhpStorm actions"
@@ -87,54 +85,6 @@ sajan_self-update() {
   ln -sfn /usr/local/bin/sajan /usr/local/bin/s
   echo -e "${GREEN}Sajan${NC} has been updated to version ${YELLOW}$VERSION${NC}"
   exit
-}
-
-sajan_brew_test() {
-  if ! brew --version >/dev/null 2>&1; then
-    echo -e "${RED}Brew is not installed on your computer"
-    return 0
-  else
-    echo -e "${INFOCOLOR}Brew is found on your computer"
-    return 1
-  fi
-}
-
-sajan_tools-check() {
-  sajan_brew_test
-  BREWOK=$?
-  sajan_git_test
-  GITOK=$?
-  sajan_laravel_test
-  LARAVELOK=$?
-  sajan_phpstorm_test
-  PHPSTORMOK=$?
-  sajan_webpack_test
-  WEBPACKOK=$?
-
-  ALLOK=$(($BREWOK + $GITOK + $LARAVELOK + $PHPSTORMOK + $WEBPACKOK))
-
-  if [[ $ALLOK == 5 ]]; then
-    echo -e "${GREEN}All tools are set , enjoy sajan !"
-  else
-    echo -e "${ERRORCOLOR}Not all tools are set , review the red lines "
-  fi
-}
-
-sajan_tools-update() {
-  echo -e "${INFOCOLOR}Start updating toolset , brew , npm , git , node "
-  brew upgrade
-  npm update -g
-  echo -e "${GREEN}All tools are updated , enjoy using sajan !"
-}
-
-sajan_tools-install() {
-  echo -e "${INFOCOLOR}Installing sayan toolset , brew , node , npm , git , composer "
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  brew install npm
-  brew install node
-  brew install git
-  brew install composer
-  echo -e "${GREEN}All tools are installed , enjoy using sajan !"
 }
 
 sajan_bye() {
@@ -260,8 +210,8 @@ sajan_git_clean() {
 
 sajan_git_clean_help() {
   echo -e "
-  ${GREEN}clean|c              ${NC}Reset and clean current git directory
-  "
+  ${GREEN}clean|c              ${NC}Reset and clean current git directory"
+  echo
   exit
 }
 
@@ -314,8 +264,8 @@ sajan_git_go() {
 sajan_git_go_help() {
   echo -e "
   ${GREEN}go|g                 ${NC}Commit all files and push with a default message"
-  echo -e "  ${INFOCOLOR}This action will stash all your files , commit them with a default message and push them to the default remote
-  "
+  echo -e "  ${INFOCOLOR}This action will stash all your files , commit them with a default message and push them to the default remote"
+  echo
   exit
 }
 
@@ -334,7 +284,7 @@ sajan_git_go_explain() {
   git commit -m "sajan push at ${SAJANTIME}"
   git push
 
-  ${YELLOW}The git add stages all changed files. These files are committed with a default sajan commit
+  ${YELLOW}The git go command stages all changed files. These files are committed with a default sajan commit
   message via the 'commit' command.  After the commit there is a push to your default remote git server.${NC}
 
   Used tools for this action:
@@ -385,8 +335,8 @@ sajan_git_relink() {
 sajan_git_relink_help() {
   echo -e "
   ${GREEN}relink|rln                 ${NC}Change your remote"
-  echo -e "  ${INFOCOLOR}Relink your current git to a new remote git url.
-  "
+  echo -e "  ${INFOCOLOR}Relink your current git to a new remote git url."
+  echo
   exit
 }
 
@@ -506,6 +456,7 @@ sajan_laravel_install_help() {
   echo -e "
   ${GREEN}install|i             ${NC}Install a specific laravel version in a given folder
   "
+  echo
   exit
 }
 
@@ -640,6 +591,248 @@ sajan_phpstorm_open() {
   fi
   pstorm .
 }
+################################################################################
+# Tools                                                                        #
+################################################################################
+
+sajan_tools() {
+  ACTION=${ARGUMENTS[0]}
+
+  case $ACTION in
+  check | c)
+    sajan_tools_check
+    ;;
+  update | u)
+    sajan_tools_update
+    exit
+    ;;
+  install | i)
+    sajan_tools_install
+    exit
+    ;;
+  *)
+    sajan_tools_help
+    exit
+    ;;
+  esac
+
+}
+
+################################################################################
+# Test                                                                         #
+################################################################################
+sajan_brew_test() {
+  if ! brew --version >/dev/null 2>&1; then
+    echo -e "${RED}Brew is not installed on your computer"
+    return 0
+  else
+    echo -e "${INFOCOLOR}Brew is found on your computer"
+    return 1
+  fi
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_tools_help() {
+  # Display Help
+  echo -e "
+${YELLOW}Usage:${NC}"
+  echo "  sajan tools [action]"
+
+  echo
+  echo -e "${YELLOW}Actions:"
+  echo -e "  ${GREEN}install       ${NC}Install the tools used by sajan"
+  echo -e "  ${GREEN}update        ${NC}Update tools used by sajan"
+  echo -e "  ${GREEN}check         ${NC}Check if all tools needed for sajan are present"
+  echo
+  echo -e "${YELLOW}Options:"
+  echo -e "  ${GREEN}-h     Print this Help."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo
+  echo
+}
+
+################################################################################
+# Check                                                                        #
+################################################################################
+
+sajan_tools_check() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_tools_check_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_tools_check_explain
+
+  sajan_brew_test
+  BREWOK=$?
+  sajan_git_test
+  GITOK=$?
+  sajan_laravel_test
+  LARAVELOK=$?
+  sajan_phpstorm_test
+  PHPSTORMOK=$?
+  sajan_webpack_test
+  WEBPACKOK=$?
+
+  ALLOK=$(($BREWOK + $GITOK + $LARAVELOK + $PHPSTORMOK + $WEBPACKOK))
+
+  if [[ $ALLOK == 5 ]]; then
+    echo -e "${GREEN}All tools are set , enjoy sajan !"
+  else
+    echo -e "${ERRORCOLOR}Not all tools are set , review the red lines "
+  fi
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_tools_check_help() {
+  echo -e "
+  ${GREEN}check         ${NC}Check if all tools needed for sajan are present"
+  echo -e "  ${INFOCOLOR}This action will test if brew, git, composer, phpstorm and webpack is installed."
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                      #
+################################################################################
+
+sajan_tools_check_explain() {
+  echo -e "
+  ${GREEN}sajan tools check
+  ${GREEN}s tools c
+
+  This command will execute the following commands${NC}
+
+  brew --version
+  git --version
+  comopser -V
+  node -v
+  npm -v
+
+ ${YELLOW}This command checks the version of all the uses programs to see if they are installed${NC}
+
+  Used tools for this action:
+  - brew
+  - git
+  - composer
+  - node
+  - npm
+
+  "
+  exit
+}
+################################################################################
+# Install                                                                      #
+################################################################################
+
+sajan_tools_install() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_tools_install_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_tools_install_explain
+
+  read -p "Are your sure you want to install brew (y/n) ? [y]: " sure
+  if [ "$sure" == "y" ]; then
+    echo -e "${INFOCOLOR}Installing sayan toolset , brew , node , npm , git , composer "
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew install npm
+    brew install node
+    brew install git
+    brew install composer
+    echo -e "${GREEN}All tools are installed , enjoy using sajan !"
+  fi
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_tools_install_help() {
+  echo -e "
+  ${GREEN}install       ${NC}Install the tools used by sajan"
+  echo -e "  ${INFOCOLOR}This actions will install brew first.  Then npm, node, git and composer via brew."
+echo
+  exit
+}
+
+################################################################################
+# Explain                                                                      #
+################################################################################
+
+sajan_tools_install_explain() {
+  echo -e "
+  ${GREEN}sajan tools install
+  ${GREEN}s tools i
+
+  This command will execute the following commands${NC}
+
+    /bin/bash -c '\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)'
+    brew install npm
+    brew install node
+    brew install git
+    brew install composer
+
+
+ ${YELLOW}This program first ask the user confirmation to install brew itself.  After this installation
+ npm, node, git and composer are installed via brew.${NC}
+
+  Used tools for this action:
+  - brew
+
+  "
+  exit
+}
+
+################################################################################
+# Update                                                                       #
+################################################################################
+
+sajan_tools_update() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_tools_update_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_tools_update_explain
+
+  echo -e "${INFOCOLOR}Start updating toolset , brew , npm , git , node "
+  brew upgrade
+  echo -e "${GREEN}All tools are updated , enjoy using sajan !"
+
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_tools_update_help() {
+  echo -e "
+  ${GREEN}update        ${NC}Update tools used by sajan"
+  echo -e "  ${INFOCOLOR}This actions will upgrade all installed brew formulae."
+echo
+  exit
+}
+
+################################################################################
+# Explain                                                                      #
+################################################################################
+
+sajan_tools_update_explain() {
+  echo -e "
+  ${GREEN}sajan tools updte
+  ${GREEN}s tools u
+
+  This command will execute the following commands${NC}
+
+     brew upgrade
+
+ ${YELLOW}This program will upgrade all installed brew packages.${NC}
+
+  Used tools for this action:
+  - brew
+
+  "
+  exit
+}
 
 ################################################################################
 # Webpack                                                                      #
@@ -732,8 +925,8 @@ sajan_webpack_build() {
 sajan_webpack_build_help() {
   echo -e "
   ${GREEN}build|b             ${NC}Build your assets"
-  echo -e "  ${INFOCOLOR}This action will install all npm dependencies and run a build.
-  "
+  echo -e "  ${INFOCOLOR}This action will install all npm dependencies and run a build."
+  echo
   exit
 }
 
@@ -831,8 +1024,8 @@ module.exports = {
 
 sajan_webpack_init_help() {
   echo -e "  ${GREEN}init|i              ${NC}Init webpack for css and javascript in current directory"
-  echo -e "  ${INFOCOLOR}This action will create all necessary files for javascript and css compilation with webpack
-  "
+  echo -e "  ${INFOCOLOR}This action will create all necessary files for javascript and css compilation with webpack"
+  echo
   exit
 }
 

@@ -26,8 +26,8 @@ sajan_git_clean() {
 
 sajan_git_clean_help() {
   echo -e "
-  ${GREEN}clean|c              ${NC}Reset and clean current git directory
-  "
+  ${GREEN}clean|c              ${NC}Reset and clean current git directory"
+  echo
   exit
 }
 

@@ -40,8 +40,8 @@ sajan_git_relink() {
 sajan_git_relink_help() {
   echo -e "
   ${GREEN}relink|rln                 ${NC}Change your remote"
-  echo -e "  ${INFOCOLOR}Relink your current git to a new remote git url.
-  "
+  echo -e "  ${INFOCOLOR}Relink your current git to a new remote git url."
+  echo
   exit
 }
 

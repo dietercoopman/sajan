@@ -30,12 +30,10 @@ ${YELLOW}Usage:${NC}"
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
   echo -e "  ${GREEN}bye                 ${NC}Deletes sajan"
-  echo -e "  ${GREEN}tools-check         ${NC}Check if all tools needed for sajan are present"
-  echo -e "  ${GREEN}tools-update        ${NC}Update tools used by sajan"
-  echo -e "  ${GREEN}tools-install       ${NC}Install the tools used by sajan"
 
   echo
   echo -e "${YELLOW}Programs:"
+  echo -e "  ${GREEN}tools               ${NC}Execute Tools actions"
   echo -e "  ${GREEN}laravel             ${NC}Execute Laravel actions"
   echo -e "  ${GREEN}git                 ${NC}Execute Git actions"
   echo -e "  ${GREEN}phpstorm            ${NC}Execute PhpStorm actions"
@@ -86,54 +84,6 @@ sajan_self-update() {
   ln -sfn /usr/local/bin/sajan /usr/local/bin/s
   echo -e "${GREEN}Sajan${NC} has been updated to version ${YELLOW}$VERSION${NC}"
   exit
-}
-
-sajan_brew_test() {
-  if ! brew --version >/dev/null 2>&1; then
-    echo -e "${RED}Brew is not installed on your computer"
-    return 0
-  else
-    echo -e "${INFOCOLOR}Brew is found on your computer"
-    return 1
-  fi
-}
-
-sajan_tools-check() {
-  sajan_brew_test
-  BREWOK=$?
-  sajan_git_test
-  GITOK=$?
-  sajan_laravel_test
-  LARAVELOK=$?
-  sajan_phpstorm_test
-  PHPSTORMOK=$?
-  sajan_webpack_test
-  WEBPACKOK=$?
-
-  ALLOK=$(($BREWOK + $GITOK + $LARAVELOK + $PHPSTORMOK + $WEBPACKOK))
-
-  if [[ $ALLOK == 5 ]]; then
-    echo -e "${GREEN}All tools are set , enjoy sajan !"
-  else
-    echo -e "${ERRORCOLOR}Not all tools are set , review the red lines "
-  fi
-}
-
-sajan_tools-update() {
-  echo -e "${INFOCOLOR}Start updating toolset , brew , npm , git , node "
-  brew upgrade
-  npm update -g
-  echo -e "${GREEN}All tools are updated , enjoy using sajan !"
-}
-
-sajan_tools-install() {
-  echo -e "${INFOCOLOR}Installing sayan toolset , brew , node , npm , git , composer "
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  brew install npm
-  brew install node
-  brew install git
-  brew install composer
-  echo -e "${GREEN}All tools are installed , enjoy using sajan !"
 }
 
 sajan_bye() {

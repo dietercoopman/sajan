@@ -1,26 +1,28 @@
 
 ################################################################################
-# Build                                                                         #
+# Update                                                                       #
 ################################################################################
 
-sajan_webpack_build() {
+sajan_tools_update() {
 
-  fn_array_contains "h" "${OPTIONS[@]}" && sajan_webpack_build_help
-  fn_array_contains "e" "${OPTIONS[@]}" && sajan_webpack_build_explain
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_tools_update_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_tools_update_explain
 
-  npm install
-  npm run build
+  echo -e "${INFOCOLOR}Start updating toolset , brew , npm , git , node "
+  brew upgrade
+  echo -e "${GREEN}All tools are updated , enjoy using sajan !"
+
 }
 
 ################################################################################
 # Help                                                                         #
 ################################################################################
 
-sajan_webpack_build_help() {
+sajan_tools_update_help() {
   echo -e "
-  ${GREEN}build|b             ${NC}Build your assets"
-  echo -e "  ${INFOCOLOR}This action will install all npm dependencies and run a build."
-  echo
+  ${GREEN}update        ${NC}Update tools used by sajan"
+  echo -e "  ${INFOCOLOR}This actions will upgrade all installed brew formulae."
+echo
   exit
 }
 
@@ -28,21 +30,19 @@ sajan_webpack_build_help() {
 # Explain                                                                      #
 ################################################################################
 
-sajan_webpack_build_explain() {
+sajan_tools_update_explain() {
   echo -e "
-  ${GREEN}sajan webpack build
-  ${GREEN}s webpack b
+  ${GREEN}sajan tools updte
+  ${GREEN}s tools u
 
   This command will execute the following commands${NC}
 
-  npm install
-  npm run build
+     brew upgrade
 
-  ${YELLOW}Install npm packages.  Build all assets${NC}
+ ${YELLOW}This program will upgrade all installed brew packages.${NC}
 
   Used tools for this action:
-  - node
-  - npm
+  - brew
 
   "
   exit

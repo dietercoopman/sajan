@@ -22,8 +22,8 @@ sajan_git_go() {
 sajan_git_go_help() {
   echo -e "
   ${GREEN}go|g                 ${NC}Commit all files and push with a default message"
-  echo -e "  ${INFOCOLOR}This action will stash all your files , commit them with a default message and push them to the default remote
-  "
+  echo -e "  ${INFOCOLOR}This action will stash all your files , commit them with a default message and push them to the default remote"
+  echo
   exit
 }
 

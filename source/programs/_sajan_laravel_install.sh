@@ -39,6 +39,7 @@ sajan_laravel_install_help() {
   echo -e "
   ${GREEN}install|i             ${NC}Install a specific laravel version in a given folder
   "
+  echo
   exit
 }
 

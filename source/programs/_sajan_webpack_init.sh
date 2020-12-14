@@ -69,8 +69,8 @@ module.exports = {
 
 sajan_webpack_init_help() {
   echo -e "  ${GREEN}init|i              ${NC}Init webpack for css and javascript in current directory"
-  echo -e "  ${INFOCOLOR}This action will create all necessary files for javascript and css compilation with webpack
-  "
+  echo -e "  ${INFOCOLOR}This action will create all necessary files for javascript and css compilation with webpack"
+  echo
   exit
 }
 
