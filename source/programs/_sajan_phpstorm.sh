@@ -59,12 +59,12 @@ ${YELLOW}Usage:${NC}"
 
 sajan_phpstorm_open() {
   OPTION="${OPTIONS['h']}"
-  if [ "$OPTION" = "h" ]; then
+  if [ "$OPTION" == "h" ]; then
     echo -e "  ${GREEN}open|o              ${NC}Open PhpStorm with current directory"
     exit
   fi
 
-  if [ "$OPTION" = "e" ]; then
+  if [ "$OPTION" == "e" ]; then
     echo -e "
   ${GREEN}sajan phpstorm open
   ${GREEN}s phpstorm o

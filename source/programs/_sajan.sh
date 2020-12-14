@@ -6,7 +6,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=0.13-alfa
+declare VERSION=0.14-alfa
 
 ################################################################################
 # VERSION                                                                      #
@@ -83,7 +83,7 @@ sajan_self-update() {
   curl -s https://raw.githubusercontent.com/dietercoopman/sajan/master/bin/sajan -o sajan
   mv sajan /usr/local/bin
   chmod +x /usr/local/bin/sajan
-  ln -s /usr/local/bin/sajan /usr/local/bin/s
+  ln -sfn /usr/local/bin/sajan /usr/local/bin/s
   echo -e "${GREEN}Sajan${NC} has been updated to version ${YELLOW}$VERSION${NC}"
   exit
 }
