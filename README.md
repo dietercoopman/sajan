@@ -60,7 +60,7 @@ Options:
 
 ### Educational purpose
 
-One of my personal goals is to provide developers with Sajan provides an educational purpose. Every action has an option to explain the command ( -e ).
+One of my personal goals is to provide developers with knowledge. Sajan provides an educational purpose. Every action has an option to explain the command ( -e ).
 This will show you what the action really does under the hood.
 
 This is an example
