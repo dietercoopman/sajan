@@ -1,3 +1,4 @@
+
 ################################################################################
 # Alias                                                                        #
 ################################################################################
@@ -6,7 +7,7 @@ sajan_aliasses() {
   fn_array_contains "h" "${OPTIONS[@]}" && sajan_aliasses_help
   fn_array_contains "e" "${OPTIONS[@]}" && sajan_aliasses_explain
 
-  aliasses
+  alias
 
 }
 

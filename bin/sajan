@@ -7,7 +7,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.26-beta
+declare VERSION=v0.27-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -184,6 +184,7 @@ sajan_alias_explain() {
   "
   exit
 }
+
 ################################################################################
 # Alias                                                                        #
 ################################################################################
@@ -192,7 +193,7 @@ sajan_aliasses() {
   fn_array_contains "h" "${OPTIONS[@]}" && sajan_aliasses_help
   fn_array_contains "e" "${OPTIONS[@]}" && sajan_aliasses_explain
 
-  aliasses
+  alias
 
 }
 
