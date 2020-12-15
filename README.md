@@ -30,6 +30,7 @@ Usage:
 Actions:
   self-update         Update sajan
   bye                 Delete sajan
+  alias               Create an alias for a program or command
 
 Programs:
   tools               Execute Tools actions
