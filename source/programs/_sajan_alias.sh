@@ -25,7 +25,7 @@ sajan_alias() {
     exec zsh -l
   else
     source ~/.bash_profile
-    echo $SHELL
+    exec bash -l
   fi
 
 }
