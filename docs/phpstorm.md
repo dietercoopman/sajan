@@ -15,5 +15,10 @@ Options:
 
 ### open 
 
+```Shell
+sajan phpstorm open
+s phpstorm o
+```
+
 This will open PhpStorm with the current directory open.
 
