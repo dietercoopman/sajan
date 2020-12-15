@@ -16,14 +16,29 @@ Options:
 
 ### install 
 
+```Shell
+sajan tools install
+s tools i
+```
+
 This program first asks the user confirmation to install brew itself.  After this installation
 npm, node, git and composer are installed via brew.
 
 ### update
 
+```Shell
+sajan tools update
+s tools u
+```
+
 This program will upgrade all installed brew packages.
 
 ### check
+
+```Shell
+sajan tools check
+s tools c
+```
 
 This command checks the version of all the uses programs to see if they are installed
 
