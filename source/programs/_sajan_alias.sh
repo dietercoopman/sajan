@@ -1,10 +1,8 @@
-
 ################################################################################
 # Alias                                                                        #
 ################################################################################
 
 sajan_alias() {
-
   fn_array_contains "h" "${OPTIONS[@]}" && sajan_alias_help
   fn_array_contains "e" "${OPTIONS[@]}" && sajan_alias_explain
 
@@ -16,10 +14,19 @@ sajan_alias() {
   read NAME
   echo
 
-  echo "alias $NAME=\"${PROGRAM}\"" >>  ~/.bash_profile
-  source ~/.bash_profile
-  echo -e "  If your alias does not work immediatly please run ${YELLOW}source ~/.bash_profile${NC}'"
+  echo "alias $NAME=\"${PROGRAM}\"" >>~/.bash_profile
+
+  echo -e "  Your alias ${YELLOW}$NAME${NC} is ready for use , did you know you can list all your aliasses by typing '${YELLOW}alias${NC}'"
   echo
+
+  if [ "$SHELL" == "/bin/zsh" ]; then
+    echo source ~/.bash_profile >~/.zshenv
+    source ~/.zshenv
+    exec zsh -l
+  else
+    source ~/.bash_profile
+    echo $SHELL
+  fi
 
 }
 

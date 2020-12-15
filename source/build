@@ -1,8 +1,4 @@
 #!/bin/bash
 echo "#!/bin/bash" > deploy.sh
 cat programs/* >> deploy.sh
-
-shc -f deploy.sh
-mv deploy.sh.x ../bin/sajan
-rm deploy.sh.x.c
-#rm deploy.sh
+cp deploy.sh ../bin/sajan
