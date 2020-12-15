@@ -31,6 +31,7 @@ Actions:
   self-update         Update sajan
   bye                 Delete sajan
   alias               Create an alias for a program or command
+  aliasses            Show all aliasses on your system
 
 Programs:
   tools               Execute Tools actions
