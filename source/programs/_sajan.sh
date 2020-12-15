@@ -73,7 +73,7 @@ Info() {
             JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
 ${NC}
 ${GREEN}Sajan${NC} is a lightweight tool to automize some web development tasks
-This tool provides you with some automation tasks for Laravel, Git, PhpStorm and Webpack
+This tool provides you with some automation tasks for Laravel, Git, PhpStorm and Webpack${NC}
 "
 
 }

@@ -1,4 +1,3 @@
 #!/bin/bash
 echo "#!/bin/bash" > deploy.sh
-cat programs/* >> deploy.sh
-cp deploy.sh ../bin/sajan
+cat programs/* >> ../bin/sajan
