@@ -6,7 +6,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.24-beta
+declare VERSION=v0.25-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -80,7 +80,7 @@ This tool provides you with some automation tasks for Laravel, Git, PhpStorm and
 
 sajan_self-update() {
   curl -s https://raw.githubusercontent.com/dietercoopman/sajan/master/bin/sajan -o sajan
-  mv sajan /usr/local/bin
+  mv -f sajan /usr/local/bin
   chmod +x /usr/local/bin/sajan
   ln -sfn /usr/local/bin/sajan /usr/local/bin/s
   echo -e "${GREEN}Sajan${NC} has been updated to version ${YELLOW}$VERSION${NC}"
