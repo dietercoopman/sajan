@@ -8,15 +8,18 @@ sajan_alias() {
   fn_array_contains "h" "${OPTIONS[@]}" && sajan_alias_help
   fn_array_contains "e" "${OPTIONS[@]}" && sajan_alias_explain
 
-  echo -e "Which program/command do you want to alias ? ${NC}\c"
+  echo
+  echo -e "  Which program/command do you want to alias ? ${NC}\c"
   read PROGRAM
 
-  echo -e "Which name do you choose for your alias ? ${NC}\c"
+  echo -e "  Which name do you choose for your alias ? ${NC}\c"
   read NAME
+  echo
 
   echo "alias $NAME=\"${PROGRAM}\"" >>  ~/.bash_profile
   source ~/.bash_profile
-  echo "If your alias does not work immediatly please run 'source ~/.bash_profile'"
+  echo -e "  If your alias does not work immediatly please run ${YELLOW}source ~/.bash_profile${NC}'"
+  echo
 
 }
 
