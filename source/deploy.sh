@@ -44,7 +44,7 @@ ${YELLOW}Usage:${NC}"
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
   echo -e "  ${GREEN}-v     Print software version and exit."
-  echo -e "  ${GREEN}-i     Print software information and exit."
+  echo -e "  ${GREEN}-i     Print software information and exit.${NC}"
   echo
   echo
 }
