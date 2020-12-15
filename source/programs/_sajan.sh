@@ -6,7 +6,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.25-beta
+declare VERSION=v0.26-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -31,6 +31,7 @@ ${YELLOW}Usage:${NC}"
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
   echo -e "  ${GREEN}bye                 ${NC}Delete sajan"
   echo -e "  ${GREEN}alias               ${NC}Create an alias for a program or command"
+  echo -e "  ${GREEN}aliasses            ${NC}Show all aliasses on your system"
 
   echo
   echo -e "${YELLOW}Programs:"
@@ -79,7 +80,7 @@ This tool provides you with some automation tasks for Laravel, Git, PhpStorm and
 }
 
 sajan_self-update() {
-  curl -s https://raw.githubusercontent.com/dietercoopman/sajan/master/bin/sajan -o sajan
+  curl -H 'Cache-Control: no-cache' -s https://raw.githubusercontent.com/dietercoopman/sajan/master/bin/sajan -o sajan
   mv -f sajan /usr/local/bin
   chmod +x /usr/local/bin/sajan
   ln -sfn /usr/local/bin/sajan /usr/local/bin/s
