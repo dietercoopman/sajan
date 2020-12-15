@@ -4859,3 +4859,1218 @@ if ! fn_exists $EXEC; then
 fi
 
 $EXEC
+declare BRANDCOLOR='\033[0;33m'
+declare INFOCOLOR='\033[0;36m'
+declare ERRORCOLOR='\033[1;101m'
+declare LOVECOLOR='\033[31m'
+
+declare GREEN='\033[0;32m'
+declare YELLOW='\033[0;33m'
+declare NC='\033[0m'
+declare VERSION=v0.24-beta
+
+################################################################################
+# VERSION                                                                      #
+################################################################################
+
+Version() {
+  echo -e "${GREEN}Sajan${NC} version ${YELLOW}$VERSION${NC} by Dieter Coopman"
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+Help() {
+  # Display Help
+  echo -e "
+${YELLOW}Usage:${NC}"
+  echo "  sajan [program] [action] [--]"
+  echo "  s     [program] [action] [--]"
+  echo
+  echo -e "${YELLOW}Actions:"
+  echo -e "  ${GREEN}self-update         ${NC}Update sajan"
+  echo -e "  ${GREEN}bye                 ${NC}Delete sajan"
+  echo -e "  ${GREEN}alias               ${NC}Create an alias for a program or command"
+
+  echo
+  echo -e "${YELLOW}Programs:"
+  echo -e "  ${GREEN}tools               ${NC}Execute Tools actions"
+  echo -e "  ${GREEN}laravel             ${NC}Execute Laravel actions"
+  echo -e "  ${GREEN}git                 ${NC}Execute Git actions"
+  echo -e "  ${GREEN}phpstorm            ${NC}Execute PhpStorm actions"
+  echo -e "  ${GREEN}webpack             ${NC}Execute Webpack actions"
+  echo
+  echo -e "${YELLOW}Options:"
+  echo -e "  ${GREEN}-h     Print this Help."
+  echo -e "  ${GREEN}-v     Print software version and exit."
+  echo -e "  ${GREEN}-i     Print software information and exit.${NC}"
+  echo
+  echo
+}
+
+################################################################################
+# Info                                                                         #
+################################################################################
+
+Info() {
+  echo -e "${BRANDCOLOR}
+                         JJJJJJJ JJJJJJJ
+                         JJJJJJJ JJJJJJJ
+                         JJJJJJJ JJJJJJJ
+                         JJJJJJJ JJJJJJJ
+                         JJJJJJJ JJJJJJJ
+                         JJJJJJJ JJJJJJJ
+                         JJJJJJJ JJJJJJJ
+                         JJJJJJJ JJJJJJJ
+           JJJJJJJ       JJJJJJJ JJJJJJJ       JJJJJJJ
+           JJJJJJJ       JJJJJJJ JJJJJJJ       JJJJJJJ
+           JJJJJJJ       JJJJJJJ JJJJJJJ       JJJJJJJ
+            JJJJJJJ      JJJJJJJ JJJJJJJJ     JJJJJJJJ
+            JJJJJJJJJJJJJJJJJJJ   JJJJJJJJJJJJJJJJJJJ
+              JJJJJJJJJJJJJJJ       JJJJJJJJJJJJJJJ
+            JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+            JJJJJJJJJJASPERJJJJJJJJJJJJANAJJJJJJJJJJJ
+            JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+${NC}
+${GREEN}Sajan${NC} is a lightweight tool to automize some web development tasks
+This tool provides you with some automation tasks for Laravel, Git, PhpStorm and Webpack${NC}
+"
+
+}
+
+sajan_self-update() {
+  curl -s https://raw.githubusercontent.com/dietercoopman/sajan/master/bin/sajan -o sajan
+  mv sajan /usr/local/bin
+  chmod +x /usr/local/bin/sajan
+  ln -sfn /usr/local/bin/sajan /usr/local/bin/s
+  echo -e "${GREEN}Sajan${NC} has been updated to version ${YELLOW}$VERSION${NC}"
+  exit
+}
+
+sajan_bye() {
+  # clear sessions
+  echo -e "
+  ${INFOCOLOR}I hope you mistyped ;-) ...
+  Are you sure you want to delete sajan (y/n)? ${NC}\c"
+  read sure
+  case "$sure" in
+  'y')
+
+    echo "
+  I'm sorry to see you leaving ... Bye Bye !! I am allready self-destroying ..."
+    rm /usr/local/bin/s
+    rm /usr/local/bin/sajan
+    echo "
+  And now I'm gone ... :( I'll prove with an error :(
+   "
+    sajan -v
+    ;;
+  *)
+    echo -e "${NC}
+  I love you tooooo ${LOVECOLOR}♥♥♥♥${NC} ... I'll do a self test ... Am i still here ???
+  "
+    sajan -v
+    echo "
+  Pfieeuw ... "
+
+    ;;
+  esac
+  echo -e ''
+}
+################################################################################
+# Alias                                                                        #
+################################################################################
+
+sajan_alias() {
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_alias_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_alias_explain
+
+  echo
+  echo -e "  Which program/command do you want to alias ? ${NC}\c"
+  read PROGRAM
+
+  echo -e "  Which name do you choose for your alias ? ${NC}\c"
+  read NAME
+  echo
+
+  echo "alias $NAME=\"${PROGRAM}\"" >>~/.bash_profile
+
+  echo -e "  Your alias ${YELLOW}$NAME${NC} is ready for use , did you know you can list all your aliasses by typing '${YELLOW}alias${NC}'"
+  echo
+
+  if [ "$SHELL" == "/bin/zsh" ]; then
+    echo source ~/.bash_profile >~/.zshenv
+    source ~/.zshenv
+    exec zsh -l
+  else
+    source ~/.bash_profile
+    exec bash -l
+  fi
+
+}
+
+################################################################################
+# Help                                                                        #
+################################################################################
+
+sajan_alias_help() {
+  echo -e "
+  ${GREEN}alias              ${NC}Create an alias for a program or command"
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                        #
+################################################################################
+
+sajan_alias_explain() {
+  echo -e "
+  ${GREEN}sajan alias
+
+  This command will execute the following commands${NC}
+
+  echo alias name=\"program\" >>  ~/.bash_profile
+  source ~/.bash_profile"
+
+  echo -e "
+  ${YELLOW}This command will create a provided alias for a given program ${NC}
+
+  Used tools for this action:
+  - bash
+
+  "
+  exit
+}
+
+################################################################################
+# Git                                                                          #
+################################################################################
+
+sajan_git() {
+  ACTION=${ARGUMENTS[0]}
+
+  case $ACTION in
+  clean | c)
+    sajan_git_clean
+    exit
+    ;;
+  go | g)
+    sajan_git_go
+    exit
+    ;;
+  relink | rnk)
+    sajan_git_relink
+    exit
+    ;;
+  *)
+    sajan_git_help
+    exit
+    ;;
+  esac
+
+}
+
+################################################################################
+# Test                                                                         #
+################################################################################
+
+sajan_git_test() {
+  if ! git --version >/dev/null 2>&1; then
+    echo -e "${RED}Git is not installed on your computer"
+    return 0
+  else
+    echo -e "${INFOCOLOR}Git is found on your computer"
+    return 1
+  fi
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_git_help() {
+  # Display Help
+  echo -e "
+${YELLOW}Usage:${NC}"
+  echo "  sajan git [action]"
+
+  echo
+  echo -e "${YELLOW}Actions:"
+  echo -e "  ${GREEN}clean|c             ${NC}Reset and clean current git directory"
+  echo -e "  ${GREEN}go|g                 ${NC}Commit all files and push with a default message"
+  echo -e "  ${GREEN}relink|rln          ${NC}Change your remote"
+  echo
+  echo -e "${YELLOW}Options:"
+  echo -e "  ${GREEN}-h     Print this Help."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo
+  echo
+}
+
+################################################################################
+# Clean                                                                        #
+################################################################################
+
+sajan_git_clean() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_git_clean_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_git_clean_explain
+
+  echo -e "Are your sure you want to clean up ? This will remove uncommitted changes (y/n)? ${NC}\c"
+  read sure
+  if [ "$sure" == "y" ]; then
+    echo "test"
+    exit
+    git reset --hard
+    git add .
+    git pull
+  fi
+
+}
+
+################################################################################
+# Help                                                                        #
+################################################################################
+
+sajan_git_clean_help() {
+  echo -e "
+  ${GREEN}clean|c              ${NC}Reset and clean current git directory"
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                        #
+################################################################################
+
+sajan_git_clean_explain() {
+  echo -e "
+  ${GREEN}sajan git clean
+  ${GREEN}s git c
+
+  This command will execute the following commands${NC}
+
+  git reset --hard
+  git add .
+  git pull"
+  echo -e "
+  ${YELLOW}The active branch is reset to the git index, so all changes are reset. Git add .
+  will stage all files (that are not listed in the .gitignore) in the entire repository.
+  Remote changes are pulled into your branch.${NC}
+
+  Used tools for this action:
+  - git
+
+  "
+  exit
+}
+
+################################################################################
+# GO                                                                        #
+################################################################################
+
+sajan_git_go() {
+  SAJANTIME=$(date +"%m-%d-%Y %H:%M")
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_git_go_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_git_go_explain
+
+  SAJANTIME=$(date +"%m-%d-%Y %H:%M")
+  git add .
+  git commit -m "sajan push at ${SAJANTIME}"
+  git push
+}
+
+################################################################################
+# Help                                                                        #
+################################################################################
+
+sajan_git_go_help() {
+  echo -e "
+  ${GREEN}go|g                 ${NC}Commit all files and push with a default message"
+  echo -e "  ${INFOCOLOR}This action will stash all your files , commit them with a default message and push them to the default remote"
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                      #
+################################################################################
+
+sajan_git_go_explain() {
+  echo -e "
+  ${GREEN}sajan git go
+  ${GREEN}s git g
+
+  This command will execute the following commands${NC}
+
+  git add .
+  git commit -m "sajan push at ${SAJANTIME}"
+  git push
+
+  ${YELLOW}The git go command stages all changed files. These files are committed with a default sajan commit
+  message via the 'commit' command.  After the commit there is a push to your default remote git server.${NC}
+
+  Used tools for this action:
+  - git
+
+  "
+  exit
+}
+
+################################################################################
+# RELINK                                                                       #
+################################################################################
+
+sajan_git_relink() {
+  SAJANTIME=$(date +"%m-%d-%Y %H:%M")
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_git_relink_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_git_relink_explain
+
+  echo
+  CURRENTREMOTE=$(git remote)
+  CURRENTREMOTEURL=$(git config --get remote.origin.url)
+  echo -e "This is your current remote name :     ${YELLOW}$CURRENTREMOTE${NC}"
+  echo -e "This is your remote url :              ${YELLOW}$CURRENTREMOTEURL${NC}"
+  echo
+  read -p "What is the name of your new remote ? [$CURRENTREMOTE]: " NEWREMOTE
+  NEWREMOTE=${NEWREMOTE:-$CURRENTREMOTE}
+  read -p "What is your new remote url ? [$CURRENTREMOTEURL]: " NEWURL
+  NEWURL=${NEWURL:-$CURRENTREMOTEURL}
+
+  git remote set-url $NEWREMOTE $NEWURL
+
+  echo
+  CURRENTREMOTE=$(git remote)
+  CURRENTREMOTEURL=$(git config --get remote.origin.url)
+  echo -e "This is your new remote name :        ${YELLOW}$CURRENTREMOTE${NC}"
+  echo -e "This is new remote url :              ${YELLOW}$CURRENTREMOTEURL${NC}"
+  echo
+  echo "Happy git-ing !! "
+  echo
+
+}
+
+################################################################################
+# Help                                                                        #
+################################################################################
+
+sajan_git_relink_help() {
+  echo -e "
+  ${GREEN}relink|rln                 ${NC}Change your remote"
+  echo -e "  ${INFOCOLOR}Relink your current git to a new remote git url."
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                      #
+################################################################################
+
+sajan_git_relink_explain() {
+  echo -e "
+  ${GREEN}sajan git relink
+  ${GREEN}s git rln
+
+  This command will execute the following commands${NC}
+
+  git remote set-url newremote newurl
+
+  ${YELLOW}This command will show your current origin name and url and prompt for a new remote and url${NC}
+
+  Used tools for this action:
+  - git
+
+  "
+  exit
+}
+
+################################################################################
+# Laravel                                                                      #
+################################################################################
+
+sajan_laravel() {
+  ACTION=${ARGUMENTS[0]}
+
+  case $ACTION in
+  install|i)
+    sajan_laravel_install $3 $4
+    exit
+    ;;
+  *)
+    sajan_laravel_help
+    exit
+    ;;
+  esac
+}
+
+################################################################################
+# Test                                                                         #
+################################################################################
+
+sajan_laravel_test() {
+  if ! composer -V >/dev/null 2>&1; then
+    echo -e "${RED}Composer is not installed on your computer"
+    return 0
+  else
+    echo -e "${INFOCOLOR}Composer is found on your computer"
+    return 1
+  fi
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_laravel_help() {
+  # Display Help
+  echo -e "
+${YELLOW}Usage:${NC}"
+  echo "  sajan laravel [action]"
+  echo "  s laravel [action]"
+  echo
+  echo -e "${YELLOW}Actions:"
+  echo -e "  ${GREEN}install|i             ${NC}Install a specific laravel version in a given folder"
+  echo
+  echo -e "${YELLOW}Options:"
+  echo -e "  ${GREEN}-h     Print this Help."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo
+  echo
+}
+
+################################################################################
+# Install                                                                      #
+################################################################################
+
+sajan_laravel_install() {
+  local VERSION=${ARGUMENTS[1]}
+  local FOLDER=${ARGUMENTS[2]}
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_laravel_install_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_laravel_install_explain
+
+  if [[ $VERSION == "" ]]; then
+    echo -e "${ERRORCOLOR}Please provide a version , choose one from ${NC}"
+    git ls-remote --heads https://github.com/laravel/laravel.git | cut -f 2 | cut -b 12-20
+    exit
+  fi
+
+  if [[ -d "$FOLDER" ]]; then
+    echo -e "${ERRORCOLLOR}Folder {$FOLDER} allready exits ... Please remove it first ${NC}"
+    exit
+  fi
+
+  echo -e "${INFOCOLOR}Start installation of laravel ${VERSION} into folder ${FOLDER} ${NC}"
+  git clone --branch ${VERSION} https://github.com/laravel/laravel.git ${FOLDER}
+  cd $FOLDER
+  composer install
+
+  VERSION="$(php artisan -V)"
+  PERSON="$(whoami)"
+  echo -e "${INFOCOLOR}Congratulations ${PERSON} you sucessfully installed ${VERSION} into folder ${FOLDER} ${NC}"
+
+}
+################################################################################
+# Help                                                                        #
+################################################################################
+
+sajan_laravel_install_help() {
+  echo -e "
+  ${GREEN}install|i             ${NC}Install a specific laravel version in a given folder
+  "
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                      #
+################################################################################
+
+sajan_laravel_install_explain() {
+  echo -e "
+  ${GREEN}sajan laravel install
+  ${GREEN}s laravel i
+
+  This command will execute the following commands${NC}
+
+  if [[ \$VERSION == '' ]]; then
+    echo -e '\${ERRORCOLOR}Please provide a version , choose one from \${NC}'
+    git ls-remote --heads https://github.com/laravel/laravel.git | cut -f 2 | cut -b 12-20
+    exit
+  fi
+
+  if [[ -d '\$FOLDER' ]]; then
+    echo -e '\${ERRORCOLLOR}Folder {\$FOLDER} allready exits ... Please remove it first \${NC}'
+    exit
+  fi
+
+  echo -e '\${INFOCOLOR}Start installation of laravel \${VERSION} into folder \${FOLDER} \${NC}'
+  git clone --branch \${VERSION} https://github.com/laravel/laravel.git \${FOLDER}
+  cd \$FOLDER
+  composer install
+
+  VERSION='\$(php artisan -V)'
+  PERSON='\$(whoami)'
+  echo -e '\${INFOCOLOR}Congratulations \${PERSON} you sucessfully installed \${VERSION} into folder \${FOLDER} \${NC}'
+
+  ${YELLOW}This command first checks if a version is given , if not a list of all available version is fetched from the internet.
+  If a version is provided and the given folder exists then the scripts prompts for deletion of the folder by the user.
+  If all parameters are set the specified Laravel version is pulled from the internet.
+  The scripts cd's into th folder and installs laravel, fetches the laravel version via artisan and returns a success
+  message${NC}
+
+  Used tools for this action:
+  - git
+  - php
+  - composer
+
+  "
+  exit
+}
+
+################################################################################
+# PhpStorm                                                                     #
+################################################################################
+
+sajan_phpstorm() {
+  ACTION=${ARGUMENTS[0]}
+
+  case $ACTION in
+  open|o)
+    sajan_phpstorm_open
+    exit
+    ;;
+  *)
+    sajan_phpstorm_help
+    exit
+    ;;
+  esac
+}
+
+################################################################################
+# Test                                                                         #
+################################################################################
+
+sajan_phpstorm_test() {
+  if ! pstorm --help >/dev/null 2>&1; then
+    echo -e "${RED}PhpStorm is not installed on your computer"
+    return 0
+  else
+    echo -e "${INFOCOLOR}PhpStorm is found on your computer"
+    return 1
+  fi
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_phpstorm_help() {
+  # Display Help
+  echo -e "
+${YELLOW}Usage:${NC}"
+  echo "  sajan phpstorm [action]"
+  echo "  s phpstorm [action]"
+  echo
+  echo -e "${YELLOW}Actions:"
+  echo -e "  ${GREEN}open|o             ${NC}Open PhpStorm with current directory"
+  echo
+  echo -e "${YELLOW}Options:"
+  echo -e "  ${GREEN}-h     Print this Help."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo
+  echo
+}
+
+################################################################################
+# Open                                                                         #
+################################################################################
+
+sajan_phpstorm_open() {
+  OPTION="${OPTIONS['h']}"
+  if [ "$OPTION" == "h" ]; then
+    echo -e "  ${GREEN}open|o              ${NC}Open PhpStorm with current directory"
+    exit
+  fi
+
+  if [ "$OPTION" == "e" ]; then
+    echo -e "
+  ${GREEN}sajan phpstorm open
+  ${GREEN}s phpstorm o
+
+  ${GREEN}This command will execute the following commands${NC}
+
+  pstorm .
+
+  ${YELLOW}This will open PhpStorm with the current directory open.${NC}
+
+  Used tools for this action:
+  - PhpStorm
+
+
+  "
+    exit
+  fi
+  pstorm .
+}
+################################################################################
+# Tools                                                                        #
+################################################################################
+
+sajan_tools() {
+  ACTION=${ARGUMENTS[0]}
+
+  case $ACTION in
+  check | c)
+    sajan_tools_check
+    ;;
+  update | u)
+    sajan_tools_update
+    exit
+    ;;
+  install | i)
+    sajan_tools_install
+    exit
+    ;;
+  *)
+    sajan_tools_help
+    exit
+    ;;
+  esac
+
+}
+
+################################################################################
+# Test                                                                         #
+################################################################################
+sajan_brew_test() {
+  if ! brew --version >/dev/null 2>&1; then
+    echo -e "${RED}Brew is not installed on your computer"
+    return 0
+  else
+    echo -e "${INFOCOLOR}Brew is found on your computer"
+    return 1
+  fi
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_tools_help() {
+  # Display Help
+  echo -e "
+${YELLOW}Usage:${NC}"
+  echo "  sajan tools [action]"
+
+  echo
+  echo -e "${YELLOW}Actions:"
+  echo -e "  ${GREEN}install       ${NC}Install the tools used by sajan"
+  echo -e "  ${GREEN}update        ${NC}Update tools used by sajan"
+  echo -e "  ${GREEN}check         ${NC}Check if all tools needed for sajan are present"
+  echo
+  echo -e "${YELLOW}Options:"
+  echo -e "  ${GREEN}-h     Print this Help."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo
+  echo
+}
+
+################################################################################
+# Check                                                                        #
+################################################################################
+
+sajan_tools_check() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_tools_check_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_tools_check_explain
+
+  sajan_brew_test
+  BREWOK=$?
+  sajan_git_test
+  GITOK=$?
+  sajan_laravel_test
+  LARAVELOK=$?
+  sajan_phpstorm_test
+  PHPSTORMOK=$?
+  sajan_webpack_test
+  WEBPACKOK=$?
+
+  ALLOK=$(($BREWOK + $GITOK + $LARAVELOK + $PHPSTORMOK + $WEBPACKOK))
+
+  if [[ $ALLOK == 5 ]]; then
+    echo -e "${GREEN}All tools are set , enjoy sajan !"
+  else
+    echo -e "${ERRORCOLOR}Not all tools are set , review the red lines "
+  fi
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_tools_check_help() {
+  echo -e "
+  ${GREEN}check         ${NC}Check if all tools needed for sajan are present"
+  echo -e "  ${INFOCOLOR}This action will test if brew, git, composer, phpstorm and webpack is installed."
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                      #
+################################################################################
+
+sajan_tools_check_explain() {
+  echo -e "
+  ${GREEN}sajan tools check
+  ${GREEN}s tools c
+
+  This command will execute the following commands${NC}
+
+  brew --version
+  git --version
+  comopser -V
+  node -v
+  npm -v
+
+ ${YELLOW}This command checks the version of all the uses programs to see if they are installed${NC}
+
+  Used tools for this action:
+  - brew
+  - git
+  - composer
+  - node
+  - npm
+
+  "
+  exit
+}
+################################################################################
+# Install                                                                      #
+################################################################################
+
+sajan_tools_install() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_tools_install_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_tools_install_explain
+
+  read -p "Are your sure you want to install brew (y/n) ? [y]: " sure
+  if [ "$sure" == "y" ]; then
+    echo -e "${INFOCOLOR}Installing sayan toolset , brew , node , npm , git , composer "
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew install npm
+    brew install node
+    brew install git
+    brew install composer
+    echo -e "${GREEN}All tools are installed , enjoy using sajan !"
+  fi
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_tools_install_help() {
+  echo -e "
+  ${GREEN}install       ${NC}Install the tools used by sajan"
+  echo -e "  ${INFOCOLOR}This actions will install brew first.  Then npm, node, git and composer via brew."
+echo
+  exit
+}
+
+################################################################################
+# Explain                                                                      #
+################################################################################
+
+sajan_tools_install_explain() {
+  echo -e "
+  ${GREEN}sajan tools install
+  ${GREEN}s tools i
+
+  This command will execute the following commands${NC}
+
+    /bin/bash -c '\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)'
+    brew install npm
+    brew install node
+    brew install git
+    brew install composer
+
+
+  ${YELLOW}This program first asks the user confirmation to install brew itself.  After this installation
+  npm, node, git and composer are installed via brew.${NC}
+
+  Used tools for this action:
+  - brew
+
+  "
+  exit
+}
+
+################################################################################
+# Update                                                                       #
+################################################################################
+
+sajan_tools_update() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_tools_update_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_tools_update_explain
+
+  echo -e "${INFOCOLOR}Start updating toolset , brew , npm , git , node "
+  brew upgrade
+  echo -e "${GREEN}All tools are updated , enjoy using sajan !"
+
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_tools_update_help() {
+  echo -e "
+  ${GREEN}update        ${NC}Update tools used by sajan"
+  echo -e "  ${INFOCOLOR}This actions will upgrade all installed brew formulae."
+echo
+  exit
+}
+
+################################################################################
+# Explain                                                                      #
+################################################################################
+
+sajan_tools_update_explain() {
+  echo -e "
+  ${GREEN}sajan tools update
+  ${GREEN}s tools u
+
+  This command will execute the following commands${NC}
+
+     brew upgrade
+
+  ${YELLOW}This program will upgrade all installed brew packages.${NC}
+
+  Used tools for this action:
+  - brew
+
+  "
+  exit
+}
+
+################################################################################
+# Webpack                                                                      #
+################################################################################
+
+sajan_webpack() {
+  ACTION=${ARGUMENTS[0]}
+
+  case $ACTION in
+  build|b)
+    sajan_webpack_build
+    exit
+    ;;
+  init|i)
+    sajan_webpack_init
+    exit
+    ;;
+  *)
+    sajan_webpack_help
+    exit
+    ;;
+  esac
+
+}
+
+################################################################################
+# Test                                                                         #
+################################################################################
+
+sajan_webpack_test() {
+
+  if ! node -v >/dev/null 2>&1; then
+    echo -e "${RED}Node is not installed on your computer"
+    nodeok=0
+  else
+    echo -e "${INFOCOLOR}Node is found on your computer"
+    nodeok=1
+  fi
+
+  if ! npm -v >/dev/null 2>&1; then
+    echo -e "${RED}Npm is not installed on your computer"
+    npmok=0
+  else
+    echo -e "${INFOCOLOR}Npm is found on your computer"
+    npmok=1
+  fi
+
+  return ${npmok} && ${nodeok}
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_webpack_help() {
+  # Display Help
+  echo -e "
+${YELLOW}Usage:${NC}"
+  echo "  sajan webpack [action]"
+  echo "  s webpack [action]"
+  echo
+  echo -e "${YELLOW}Actions:"
+  echo -e "  ${GREEN}init|i              ${NC}Init webpack for css and javascript in current directory"
+  echo -e "  ${GREEN}build|i             ${NC}Build your assets"
+  echo
+  echo -e "${YELLOW}Options:"
+  echo -e "  ${GREEN}-h     Print this Help."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo
+  echo
+}
+
+################################################################################
+# Build                                                                         #
+################################################################################
+
+sajan_webpack_build() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_webpack_build_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_webpack_build_explain
+
+  npm install
+  npm run build
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_webpack_build_help() {
+  echo -e "
+  ${GREEN}build|b             ${NC}Build your assets"
+  echo -e "  ${INFOCOLOR}This action will install all npm dependencies and run a build."
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                      #
+################################################################################
+
+sajan_webpack_build_explain() {
+  echo -e "
+  ${GREEN}sajan webpack build
+  ${GREEN}s webpack b
+
+  This command will execute the following commands${NC}
+
+  npm install
+  npm run build
+
+  ${YELLOW}Install npm packages.  Build all assets${NC}
+
+  Used tools for this action:
+  - node
+  - npm
+
+  "
+  exit
+}
+
+################################################################################
+# Init                                                                         #
+################################################################################
+
+sajan_webpack_init() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_webpack_init_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_webpack_init_explain
+
+  echo '{
+  "private": true,
+  "scripts": {
+    "build": "webpack --mode development",
+    "dist": "webpack --mode production",
+    "watch": "webpack --watch --mode development"
+  },
+  "devDependencies": {
+    "compass": "^0.1.1",
+    "css-loader": "^5.0.1",
+    "mini-css-extract-plugin": "^1.3.1",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.1.0",
+    "webpack": "^5.9.0",
+    "webpack-cli": "^4.2.0"
+  }
+}
+' >package.json
+  mkdir -p sass
+  echo "h1 {
+  font-size: 25px;
+}
+" >sass/style.scss
+  echo 'const path = require("path");
+
+// include the css extraction and minification plugins
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+module.exports = {
+    devtool: false,
+    entry: ["./sass/style.scss"],
+    output: {
+        path: path.resolve(__dirname)
+    },
+    module: {
+        rules: [
+            // compile all .scss files to plain old css
+            {
+                test: /\.(sass|scss)$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+            }
+        ]
+    },
+
+    plugins: [
+        // extract css into dedicated file
+        new MiniCssExtractPlugin({
+            filename: "style.css"
+        })
+    ]
+};' >webpack.config.js
+  npm install
+  npm run build
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_webpack_init_help() {
+  echo -e "  ${GREEN}init|i              ${NC}Init webpack for css and javascript in current directory"
+  echo -e "  ${INFOCOLOR}This action will create all necessary files for javascript and css compilation with webpack"
+  echo
+  exit
+}
+
+
+################################################################################
+# Explain                                                                      #
+################################################################################
+
+sajan_webpack_init_explain() {
+
+  echo -e "
+  ${GREEN}sajan webpack init
+  ${GREEN}s webpack i
+
+  This command will execute the following commands${NC}
+
+  package_config_string > package.json
+  mkdir -p sass
+  echo 'h1 { font-size: 25px; }' > sass/style.scss
+  webpack_config_string > webpack.config.js
+  npm install
+  npm run build
+
+  ${YELLOW}A configuration json for npm is saved to package.json. This file contains all necessary packages to install.
+  A sass directory is created with a style.scss file.
+  A webpack configuration file is created , this contains all webpack settings.
+  Npm install will install all packages provided in package.json
+  A build process is started to create the assets.${NC}
+
+  Used tools for this action:
+  - node
+  - npm
+
+  "
+  exit
+}
+################################################################################
+################################################################################
+# Main program                                                                 #
+################################################################################
+
+fn_exists() {
+  # appended double quote is an ugly trick to make sure we do get a string -- if $1 is not a known command, type does not output anything
+  [ $(type -t $1)"" == 'function' ]
+}
+
+fn_invalid() {
+  Info
+  Version
+  echo
+  Help
+  exit
+}
+
+fn_array_contains () {
+    local seeking=$1; shift
+    local in=1
+    for element; do
+        if [[ $element == "$seeking" ]]; then
+            in=0
+            break
+        fi
+    done
+    return $in
+}
+
+################################################################################
+# Process the input options. Add options as needed.                            #
+################################################################################
+# Get the options
+declare -a ARGUMENTS=()
+declare -a OPTIONS=()
+
+for var in "$@"; do
+  if [[ ${var:0:1} == "-" ]]; then
+    OPTIONS=("${OPTIONS[@]}" ${var:1})
+  else
+    ARGUMENTS=("${ARGUMENTS[@]}" $var)
+  fi
+done
+
+# If no arguments passed then check the base options
+if [ "${#ARGUMENTS[@]}" -eq "0" ]; then
+
+  for option in ${OPTIONS[@]}; do
+
+    case $option in
+    h) # display Help
+      Help
+      exit
+      ;;
+    v) #display version
+      Version
+      exit
+      ;;
+    i) #display info
+      Info
+      exit
+      ;;
+    \?) # incorrect option
+      Help
+      exit
+      ;;
+    esac
+  done
+fi
+
+# Get the program
+PROGRAM=${ARGUMENTS[0]}
+# remove program from arguments array
+ARGUMENTS=("${ARGUMENTS[@]:1}")
+
+EXEC="sajan_$PROGRAM"
+if [[ $PROGRAM == "" ]]; then
+  fn_invalid
+fi
+
+if ! fn_exists $EXEC; then
+  fn_invalid
+fi
+
+$EXEC
