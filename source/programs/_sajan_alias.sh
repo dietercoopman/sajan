@@ -55,7 +55,8 @@ sajan_alias_explain() {
   source ~/.bash_profile"
 
   echo -e "
-  ${YELLOW}This command will create a provided alias for a given program ${NC}
+  ${YELLOW}This command will create a provided alias for a given program.
+  If you want to delete an alias, remove it from you ~/.bash_profile file.  A sajan command will be provided soon.${NC}
 
   Used tools for this action:
   - bash

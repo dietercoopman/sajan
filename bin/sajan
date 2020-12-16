@@ -7,7 +7,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.27-beta
+declare VERSION=v0.28-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -32,7 +32,7 @@ ${YELLOW}Usage:${NC}"
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
   echo -e "  ${GREEN}bye                 ${NC}Delete sajan"
   echo -e "  ${GREEN}alias               ${NC}Create an alias for a program or command"
-  echo -e "  ${GREEN}aliasses            ${NC}Show all aliasses on your system"
+  echo -e "  ${GREEN}aliasses            ${NC}Show all user defined aliasses on your system"
 
   echo
   echo -e "${YELLOW}Programs:"
@@ -176,7 +176,8 @@ sajan_alias_explain() {
   source ~/.bash_profile"
 
   echo -e "
-  ${YELLOW}This command will create a provided alias for a given program ${NC}
+  ${YELLOW}This command will create a provided alias for a given program.
+  If you want to delete an alias, remove it from you ~/.bash_profile file.  A sajan command will be provided soon.${NC}
 
   Used tools for this action:
   - bash
@@ -190,11 +191,18 @@ sajan_alias_explain() {
 ################################################################################
 
 sajan_aliasses() {
+  echo "list aliasses"
   fn_array_contains "h" "${OPTIONS[@]}" && sajan_aliasses_help
   fn_array_contains "e" "${OPTIONS[@]}" && sajan_aliasses_explain
 
-  alias
-
+  INPUT="$(cat  ~/.bash_profile | grep alias)"
+  INPUT=${INPUT//alias /----}
+  INPUT=${INPUT//=/}
+  INPUT=${INPUT//\"/\\t\\t\\t\\t\\t}
+  INPUT=${INPUT//----/\\n}
+  echo -e ${YELLOW}Alias\\t\\t\\t\\t\\tProgram${NC} $INPUT > /tmp/sajan_aliasses.txt
+  column -t -s $'\n' /tmp/sajan_aliasses.txt
+  rm /tmp/sajan_aliasses.txt
 }
 
 ################################################################################
@@ -216,9 +224,10 @@ sajan_aliasses_explain() {
   echo -e "
   ${GREEN}sajan aliasses
 
-  This command will execute the following commands${NC}
+  This command will execute the following actions${NC}
 
-  alias
+  It will read the ~/.bash_profile, parse the input and write the parsed content to a tmp file.
+  Column command will read the file and show all alias variables in a table
 
   Used tools for this action:
   - bash
