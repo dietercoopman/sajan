@@ -65,7 +65,7 @@ ${YELLOW}Usage:${NC}"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
-  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command.${NC}"
   echo
   echo
 }

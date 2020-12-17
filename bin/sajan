@@ -7,7 +7,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.28-beta
+declare VERSION=v0.29-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -237,6 +237,128 @@ sajan_aliasses_explain() {
 }
 
 ################################################################################
+# Apache                                                                       #
+################################################################################
+
+sajan_apache() {
+  ACTION=${ARGUMENTS[0]}
+
+  case $ACTION in
+  list | l)
+    sajan_apache_list
+    exit
+    ;;
+  *)
+    sajan_apache_help
+    exit
+    ;;
+  esac
+
+}
+
+################################################################################
+# Test                                                                         #
+################################################################################
+
+sajan_apache_test() {
+  if ! apachectl -v >/dev/null 2>&1; then
+    echo -e "${RED}Apache is not installed on your system"
+    return 0
+  else
+    echo -e "${INFOCOLOR}Apache is found on your system"
+    return 1
+  fi
+}
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_apache_help() {
+  # Display Help
+  echo -e "
+${YELLOW}Usage:${NC}"
+  echo "  sajan apache [action]"
+
+  echo
+  echo -e "${YELLOW}Actions:"
+  echo -e "  ${GREEN}list|             ${NC}List all active sites on your system"
+  echo
+  echo -e "${YELLOW}Options:"
+  echo -e "  ${GREEN}-h     Print this Help."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command.${NC}"
+  echo
+  echo
+}
+################################################################################
+# List                                                                        #
+################################################################################
+
+sajan_apache_list() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_apache_list_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_apache_list_explain
+
+  INPUT="$(apache2ctl -S | grep namevhost)"
+  INPUT=${INPUT//namevhost /}
+
+  INPUT=${INPUT//         port /}
+  echo "$INPUT" |
+    while IFS= read -r line; do
+      line=${line//443 /https://}
+      line=${line//80 /https://}
+
+      URL="$(echo "$line" | cut -d' ' -f 1)"
+
+      CONFIG="$(echo "$line" | cut -d' ' -f 2)"
+      CONFIG=${CONFIG//(/}
+      CONFIG=${CONFIG//)/}
+      CONFIGFILE="$(echo "$CONFIG" | cut -d':' -f 1)"
+
+      LINENUMBER="$(echo "$CONFIG" | cut -d':' -f 2)"
+      LINENUMBER=$((LINENUMBER+1))
+
+      echo "$URL"
+      #$CONFIGFILE $LINENUMBER
+      #sed "$LINENUMBER!d" "$CONFIGFILE"
+
+    done
+
+}
+
+################################################################################
+# Help                                                                        #
+################################################################################
+
+sajan_apache_list_help() {
+  echo -e "
+  ${GREEN}list|             ${NC}List all active sites on your system${NC}"
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                        #
+################################################################################
+
+sajan_apache_list_explain() {
+  echo -e "
+  ${GREEN}sajan apache list
+  ${GREEN}s apache l
+
+  This command will execute the following commands${NC}
+
+
+  ${YELLOW}...${NC}
+
+  Used tools for this action:
+  - apachectl
+
+  "
+  exit
+}
+
+################################################################################
 # Git                                                                          #
 ################################################################################
 
@@ -296,7 +418,7 @@ ${YELLOW}Usage:${NC}"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
-  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command.${NC}"
   echo
   echo
 }
@@ -529,7 +651,7 @@ ${YELLOW}Usage:${NC}"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
-  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command.${NC}"
   echo
   echo
 }
@@ -673,7 +795,7 @@ ${YELLOW}Usage:${NC}"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
-  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command.${NC}"
   echo
   echo
 }
@@ -767,7 +889,7 @@ ${YELLOW}Usage:${NC}"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
-  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command.${NC}"
   echo
   echo
 }
@@ -1018,7 +1140,7 @@ ${YELLOW}Usage:${NC}"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
-  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command.${NC}"
   echo
   echo
 }
