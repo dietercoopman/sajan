@@ -7,7 +7,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.30-beta
+declare VERSION=v0.31-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -204,7 +204,7 @@ sajan_aliases() {
 
   echo -e Alias\|\\t\\t\\tProgram$INPUT > /tmp/sajan_aliases.txt
   column -t -s '|' /tmp/sajan_aliases.txt
-  #rm /tmp/sajan_aliases.txt
+  rm /tmp/sajan_aliases.txt
 }
 
 ################################################################################
@@ -247,7 +247,7 @@ sajan_apache() {
 
   case $ACTION in
   list | l)
-    sajan_apache_list
+    sajan_apache_list $3
     exit
     ;;
   *)
@@ -284,7 +284,7 @@ ${YELLOW}Usage:${NC}"
 
   echo
   echo -e "${YELLOW}Actions:"
-  echo -e "  ${GREEN}list|             ${NC}List all active sites on your system"
+  echo -e "  ${GREEN}list|l [site]            ${NC}List all active sites on your system, you can optionaly pass a site to search for"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
@@ -297,12 +297,21 @@ ${YELLOW}Usage:${NC}"
 ################################################################################
 
 sajan_apache_list() {
+  local SEARCH=${ARGUMENTS[1]}
 
   fn_array_contains "h" "${OPTIONS[@]}" && sajan_apache_list_help
   fn_array_contains "e" "${OPTIONS[@]}" && sajan_apache_list_explain
 
-  INPUT="$(apache2ctl -S | grep namevhost)"
+    if [ "$SEARCH" != "" ]; then
+      INPUT="$(apache2ctl -S | grep namevhost | grep ${SEARCH})"
+    else
+      INPUT="$(apache2ctl -S | grep namevhost)"
+    fi
+
+
   INPUT=${INPUT//namevhost /}
+
+  echo -e "Hostname|Configuration file|Unique id" > /tmp/sajan_apache_list.txt
 
   INPUT=${INPUT//         port /}
   echo "$INPUT" |
@@ -320,11 +329,16 @@ sajan_apache_list() {
       LINENUMBER="$(echo "$CONFIG" | cut -d':' -f 2)"
       LINENUMBER=$((LINENUMBER+1))
 
-      echo -e "$URL in ${GREEN}$CONFIGFILE:$LINENUMBER ${NC}"
-      #$CONFIGFILE $LINENUMBER
-      #sed "$LINENUMBER!d" "$CONFIGFILE"
+      UNIQUEID="$(echo "$URL" | md5sum)"
+      UNIQUEID=${UNIQUEID//-/}
+
+      echo -e "$URL|$CONFIGFILE:$LINENUMBER|$UNIQUEID" >> /tmp/sajan_apache_list.txt
 
     done
+      sort  /tmp/sajan_apache_list.txt > /tmp/sajan_apache_list_sorted.txt
+      column -t -s '|' /tmp/sajan_apache_list_sorted.txt
+      rm /tmp/sajan_apache_list.txt
+      rm /tmp/sajan_apache_list_sorted.txt
 
 }
 
@@ -334,7 +348,7 @@ sajan_apache_list() {
 
 sajan_apache_list_help() {
   echo -e "
-  ${GREEN}list|             ${NC}List all active sites on your system${NC}"
+  ${GREEN}list|l [site]            ${NC}List all active sites on your system, and optional search for a site${NC}"
   echo
   exit
 }
@@ -345,11 +359,12 @@ sajan_apache_list_help() {
 
 sajan_apache_list_explain() {
   echo -e "
-  ${GREEN}sajan apache list
+  ${GREEN}sajan apache list [site]
   ${GREEN}s apache l
 
-  This command will execute the following commands${NC}
+  This command will execute the following commands and format its output in a table${NC}
 
+  apache2ctl -S | grep namevhost
 
   ${YELLOW}...${NC}
 
@@ -649,7 +664,7 @@ ${YELLOW}Usage:${NC}"
   echo "  s laravel [action]"
   echo
   echo -e "${YELLOW}Actions:"
-  echo -e "  ${GREEN}install|i             ${NC}Install a specific laravel version in a given folder"
+  echo -e "  ${GREEN}install|i [version] [folder]          ${NC}Install a specific laravel version in a given folder"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
@@ -696,7 +711,7 @@ sajan_laravel_install() {
 
 sajan_laravel_install_help() {
   echo -e "
-  ${GREEN}install|i             ${NC}Install a specific laravel version in a given folder
+  ${GREEN}install|i  [version] [folder]     ${NC}Install a specific laravel version in a given folder
   "
   echo
   exit
@@ -708,8 +723,8 @@ sajan_laravel_install_help() {
 
 sajan_laravel_install_explain() {
   echo -e "
-  ${GREEN}sajan laravel install
-  ${GREEN}s laravel i
+  ${GREEN}sajan laravel install [version] [folder]
+  ${GREEN}s laravel i [version] [folder]
 
   This command will execute the following commands${NC}
 

@@ -6,7 +6,7 @@ Usage:
   s laravel [action]
 
 Actions:
-  install|i             Install a specific laravel version in a given folder
+  install|i [version] [folder]            Install a specific laravel version in a given folder
 
 Options:
   -h     Print this Help.

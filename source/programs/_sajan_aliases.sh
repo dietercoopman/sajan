@@ -16,7 +16,7 @@ sajan_aliases() {
 
   echo -e Alias\|\\t\\t\\tProgram$INPUT > /tmp/sajan_aliases.txt
   column -t -s '|' /tmp/sajan_aliases.txt
-  #rm /tmp/sajan_aliases.txt
+  rm /tmp/sajan_aliases.txt
 }
 
 ################################################################################

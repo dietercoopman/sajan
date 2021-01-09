@@ -8,7 +8,7 @@ sajan_apache() {
 
   case $ACTION in
   list | l)
-    sajan_apache_list
+    sajan_apache_list $3
     exit
     ;;
   *)
@@ -45,7 +45,7 @@ ${YELLOW}Usage:${NC}"
 
   echo
   echo -e "${YELLOW}Actions:"
-  echo -e "  ${GREEN}list|             ${NC}List all active sites on your system"
+  echo -e "  ${GREEN}list|l [site]            ${NC}List all active sites on your system, you can optionaly pass a site to search for"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."

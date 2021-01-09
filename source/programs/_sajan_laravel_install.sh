@@ -37,7 +37,7 @@ sajan_laravel_install() {
 
 sajan_laravel_install_help() {
   echo -e "
-  ${GREEN}install|i             ${NC}Install a specific laravel version in a given folder
+  ${GREEN}install|i  [version] [folder]     ${NC}Install a specific laravel version in a given folder
   "
   echo
   exit
@@ -49,8 +49,8 @@ sajan_laravel_install_help() {
 
 sajan_laravel_install_explain() {
   echo -e "
-  ${GREEN}sajan laravel install
-  ${GREEN}s laravel i
+  ${GREEN}sajan laravel install [version] [folder]
+  ${GREEN}s laravel i [version] [folder]
 
   This command will execute the following commands${NC}
 

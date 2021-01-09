@@ -3,18 +3,27 @@
 ################################################################################
 
 sajan_apache_list() {
+  local SEARCH=${ARGUMENTS[1]}
 
   fn_array_contains "h" "${OPTIONS[@]}" && sajan_apache_list_help
   fn_array_contains "e" "${OPTIONS[@]}" && sajan_apache_list_explain
 
-  INPUT="$(apache2ctl -S | grep namevhost)"
+    if [ "$SEARCH" != "" ]; then
+      INPUT="$(apache2ctl -S | grep namevhost | grep ${SEARCH})"
+    else
+      INPUT="$(apache2ctl -S | grep namevhost)"
+    fi
+
+
   INPUT=${INPUT//namevhost /}
+
+  echo -e "Hostname|Configuration file|Unique id" > /tmp/sajan_apache_list.txt
 
   INPUT=${INPUT//         port /}
   echo "$INPUT" |
     while IFS= read -r line; do
       line=${line//443 /https://}
-      line=${line//80 /https://}
+      line=${line//80 /http://}
 
       URL="$(echo "$line" | cut -d' ' -f 1)"
 
@@ -26,11 +35,16 @@ sajan_apache_list() {
       LINENUMBER="$(echo "$CONFIG" | cut -d':' -f 2)"
       LINENUMBER=$((LINENUMBER+1))
 
-      echo "$URL"
-      #$CONFIGFILE $LINENUMBER
-      #sed "$LINENUMBER!d" "$CONFIGFILE"
+      UNIQUEID="$(echo "$URL" | md5sum)"
+      UNIQUEID=${UNIQUEID//-/}
+
+      echo -e "$URL|$CONFIGFILE:$LINENUMBER|$UNIQUEID" >> /tmp/sajan_apache_list.txt
 
     done
+      sort  /tmp/sajan_apache_list.txt > /tmp/sajan_apache_list_sorted.txt
+      column -t -s '|' /tmp/sajan_apache_list_sorted.txt
+      rm /tmp/sajan_apache_list.txt
+      rm /tmp/sajan_apache_list_sorted.txt
 
 }
 
@@ -40,7 +54,7 @@ sajan_apache_list() {
 
 sajan_apache_list_help() {
   echo -e "
-  ${GREEN}list|             ${NC}List all active sites on your system${NC}"
+  ${GREEN}list|l [site]            ${NC}List all active sites on your system, and optional search for a site${NC}"
   echo
   exit
 }
@@ -51,11 +65,12 @@ sajan_apache_list_help() {
 
 sajan_apache_list_explain() {
   echo -e "
-  ${GREEN}sajan apache list
+  ${GREEN}sajan apache list [site]
   ${GREEN}s apache l
 
-  This command will execute the following commands${NC}
+  This command will execute the following commands and format its output in a table${NC}
 
+  apache2ctl -S | grep namevhost
 
   ${YELLOW}...${NC}
 

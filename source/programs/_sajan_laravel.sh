@@ -44,7 +44,7 @@ ${YELLOW}Usage:${NC}"
   echo "  s laravel [action]"
   echo
   echo -e "${YELLOW}Actions:"
-  echo -e "  ${GREEN}install|i             ${NC}Install a specific laravel version in a given folder"
+  echo -e "  ${GREEN}install|i [version] [folder]          ${NC}Install a specific laravel version in a given folder"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."

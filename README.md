@@ -31,10 +31,11 @@ Actions:
   self-update         Update sajan
   bye                 Delete sajan
   alias               Create an alias for a program or command
-  aliases            Show all aliases on your system
+  aliases             Show all aliases on your system
 
 Programs:
   tools               Execute Tools actions
+  apache              Execute Apache actions
   laravel             Execute Laravel actions
   git                 Execute Git actions
   phpstorm            Execute PhpStorm actions
@@ -53,6 +54,8 @@ Options:
 [Tools command](docs/tools.md)
 
 [Git command](docs/git.md)
+
+[Apache command](docs/apache.md)
 
 [Laravel command](docs/laravel.md)
 
