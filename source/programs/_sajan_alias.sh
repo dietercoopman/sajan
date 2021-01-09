@@ -16,7 +16,7 @@ sajan_alias() {
 
   echo "alias $NAME=\"${PROGRAM}\"" >>~/.bash_profile
 
-  echo -e "  Your alias ${YELLOW}$NAME${NC} is ready for use , did you know you can list all your aliasses by typing '${YELLOW}alias${NC}'"
+  echo -e "  Your alias ${YELLOW}$NAME${NC} is ready for use , did you know you can list all your aliases by typing '${YELLOW}alias${NC}'"
   echo
 
   if [ "$SHELL" == "/bin/zsh" ]; then

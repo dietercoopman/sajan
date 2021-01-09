@@ -6,7 +6,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.29-beta
+declare VERSION=v0.30-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -31,11 +31,12 @@ ${YELLOW}Usage:${NC}"
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
   echo -e "  ${GREEN}bye                 ${NC}Delete sajan"
   echo -e "  ${GREEN}alias               ${NC}Create an alias for a program or command"
-  echo -e "  ${GREEN}aliasses            ${NC}Show all user defined aliasses on your system"
+  echo -e "  ${GREEN}aliases             ${NC}Show all user defined aliases on your system"
 
   echo
   echo -e "${YELLOW}Programs:"
   echo -e "  ${GREEN}tools               ${NC}Execute Tools actions"
+  echo -e "  ${GREEN}apache              ${NC}Execute Apache actions"
   echo -e "  ${GREEN}laravel             ${NC}Execute Laravel actions"
   echo -e "  ${GREEN}git                 ${NC}Execute Git actions"
   echo -e "  ${GREEN}phpstorm            ${NC}Execute PhpStorm actions"

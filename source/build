@@ -2,3 +2,4 @@
 echo "#!/bin/bash" > deploy.sh
 cat programs/* >> deploy.sh
 mv deploy.sh ../bin/sajan
+echo "build done"

@@ -3,28 +3,29 @@
 # Alias                                                                        #
 ################################################################################
 
-sajan_aliasses() {
-  echo "list aliasses"
-  fn_array_contains "h" "${OPTIONS[@]}" && sajan_aliasses_help
-  fn_array_contains "e" "${OPTIONS[@]}" && sajan_aliasses_explain
+sajan_aliases() {
+  echo "list aliases"
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_aliases_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_aliases_explain
 
   INPUT="$(cat  ~/.bash_profile | grep alias)"
   INPUT=${INPUT//alias /----}
-  INPUT=${INPUT//=/}
-  INPUT=${INPUT//\"/\\t\\t\\t\\t\\t}
+  INPUT=${INPUT//\=\"/|\\t\\t\\t}
+  INPUT=${INPUT//\"/}
   INPUT=${INPUT//----/\\n}
-  echo -e ${YELLOW}Alias\\t\\t\\t\\t\\tProgram${NC} $INPUT > /tmp/sajan_aliasses.txt
-  column -t -s $'\n' /tmp/sajan_aliasses.txt
-  rm /tmp/sajan_aliasses.txt
+
+  echo -e Alias\|\\t\\t\\tProgram$INPUT > /tmp/sajan_aliases.txt
+  column -t -s '|' /tmp/sajan_aliases.txt
+  #rm /tmp/sajan_aliases.txt
 }
 
 ################################################################################
 # Help                                                                        #
 ################################################################################
 
-sajan_aliasses_help() {
+sajan_aliases_help() {
   echo -e "
-  ${GREEN}aliasses             ${NC}Show all aliasses on your system"
+  ${GREEN}aliases             ${NC}Show all aliases on your system"
   echo
   exit
 }
@@ -33,9 +34,9 @@ sajan_aliasses_help() {
 # Explain                                                                        #
 ################################################################################
 
-sajan_aliasses_explain() {
+sajan_aliases_explain() {
   echo -e "
-  ${GREEN}sajan aliasses
+  ${GREEN}sajan aliases
 
   This command will execute the following actions${NC}
 
