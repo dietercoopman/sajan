@@ -7,6 +7,8 @@ Usage:
 
 Actions:
   list|l [site]            ${NC}List all active sites on your system, you can optionaly pass a site to search for
+  inspect|i [uniqueid]     ${NC}Get more details for a given site , like vhost , source path, application type, database${NC}"
+
 
 Options
 -h     Print this Help.
