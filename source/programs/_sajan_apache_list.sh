@@ -3,16 +3,24 @@
 ################################################################################
 
 sajan_apache_list() {
+
+
   local SEARCH=${ARGUMENTS[1]}
 
   fn_array_contains "h" "${OPTIONS[@]}" && sajan_apache_list_help
   fn_array_contains "e" "${OPTIONS[@]}" && sajan_apache_list_explain
 
-    if [ "$SEARCH" != "" ]; then
-      INPUT="$(apache2ctl -S | grep namevhost | grep ${SEARCH})"
-    else
-      INPUT="$(apache2ctl -S | grep namevhost)"
-    fi
+
+  if ! apachectl -v >/dev/null 2>&1; then
+    echo -e "${RED}Apache is not installed on your system"
+    return 0
+  fi
+
+  if [ "$SEARCH" != "" ]; then
+    INPUT="$(apache2ctl -S | grep namevhost | grep ${SEARCH})"
+  else
+    INPUT="$(apache2ctl -S | grep namevhost)"
+  fi
 
 
   INPUT=${INPUT//namevhost /}

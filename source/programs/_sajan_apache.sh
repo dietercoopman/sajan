@@ -11,6 +11,10 @@ sajan_apache() {
     sajan_apache_list $3
     exit
     ;;
+  inspect | i)
+    sajan_apache_inspect $3
+    exit
+    ;;
   *)
     sajan_apache_help
     exit
@@ -46,6 +50,7 @@ ${YELLOW}Usage:${NC}"
   echo
   echo -e "${YELLOW}Actions:"
   echo -e "  ${GREEN}list|l [site]            ${NC}List all active sites on your system, you can optionaly pass a site to search for"
+  echo -e "  ${GREEN}inspect|i [uniqueid]     ${NC}Get more details for a given site , like vhost , source path, application type, database"
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
