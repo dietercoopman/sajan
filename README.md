@@ -1,6 +1,6 @@
 # sajan
 
-![Sajan](brand/sajjan.jpg?raw=true "Sajan")
+![Sajan](brand/sajjan.png?raw=true "Sajan")
 
 Sajan is a lightweight command line tool for webdevelopers.  
 
