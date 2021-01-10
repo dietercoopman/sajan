@@ -5,8 +5,8 @@ declare LOVECOLOR='\033[31m'
 
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
-declare NC='\033[0m'
-declare VERSION=v0.32-beta
+declare NC='\034[0m'
+declare VERSION=v0.33-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -56,23 +56,17 @@ ${YELLOW}Usage:${NC}"
 
 Info() {
   echo -e "${BRANDCOLOR}
-                         JJJJJJJ JJJJJJJ
-                         JJJJJJJ JJJJJJJ
-                         JJJJJJJ JJJJJJJ
-                         JJJJJJJ JJJJJJJ
-                         JJJJJJJ JJJJJJJ
-                         JJJJJJJ JJJJJJJ
-                         JJJJJJJ JJJJJJJ
-                         JJJJJJJ JJJJJJJ
-           JJJJJJJ       JJJJJJJ JJJJJJJ       JJJJJJJ
-           JJJJJJJ       JJJJJJJ JJJJJJJ       JJJJJJJ
-           JJJJJJJ       JJJJJJJ JJJJJJJ       JJJJJJJ
-            JJJJJJJ      JJJJJJJ JJJJJJJJ     JJJJJJJJ
-            JJJJJJJJJJJJJJJJJJJ   JJJJJJJJJJJJJJJJJJJ
-              JJJJJJJJJJJJJJJ       JJJJJJJJJJJJJJJ
-            JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
-            JJJJJJJJJJASPERJJJJJJJJJJJJANAJJJJJJJJJJJ
-            JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+          ****     **********           *****             ***          *****          ****         ***
+         ****    **************        *******            ****         ******         *****        ****
+        ****     ****                 ********            ****        ********        *******      ****
+       ****     ****                  **** ****           ****       **** ****        ********     ****
+       ****      ****                ****  ****           ****      ****   ****       **** ****    ****
+      ****       *************      ****    ****          ****      ****    ****      ****  ****   ****
+     ****                 *****     ****    *****         ****     *****    ****      ****   **********
+     ****                  ****    ***************        ****    ***************     ****    *********
+    ****                   ****   ****        ****       *****    ****       *****    ****      *******
+   ****          **************   ****         ****  ********    ****         ****    ****       ******
+   ****            *********     ****           ***    ****      ***           ***    ***          ****
 ${NC}
 ${GREEN}Sajan${NC} is a lightweight tool to automize some web development tasks
 This tool provides you with some automation tasks for Laravel, Git, PhpStorm and Webpack${NC}

@@ -1,5 +1,7 @@
 # sajan
 
+![Sajan](brand/sajjan.jpg?raw=true "Sajan")
+
 Sajan is a lightweight command line tool for webdevelopers.  
 
 The tool provides them with shortcuts for multiline commands or opens a world of hidden oneliners.

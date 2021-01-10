@@ -1,20 +1,11 @@
-                                              
-                                              
-               JJJJJJJ JJJJJJJ                
-               JJJJJJJ JJJJJJJ                
-               JJJJJJJ JJJJJJJ                
-               JJJJJJJ JJJJJJJ                
-               JJJJJJJ JJJJJJJ                
-               JJJJJJJ JJJJJJJ                
-               JJJJJJJ JJJJJJJ                
-               JJJJJJJ JJJJJJJ                
- JJJJJJJ       JJJJJJJ JJJJJJJ       JJJJJJJ  
- JJJJJJJ       JJJJJJJ JJJJJJJ       JJJJJJJ  
- JJJJJJJ       JJJJJJJ JJJJJJJ       JJJJJJJ  
-  JJJJJJJ      JJJJJJJ JJJJJJJJ     JJJJJJJJ  
-  JJJJJJJJJJJJJJJJJJJ   JJJJJJJJJJJJJJJJJJJ   
-    JJJJJJJJJJJJJJJ       JJJJJJJJJJJJJJJ     
-  JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ   
-  JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ  
-  JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ   
-                                              
+          ****     **********           *****             ***          *****          ****         ***
+         ****    **************        *******            ****         ******         *****        ****            
+        ****     ****                 ********            ****        ********        *******      ****            
+       ****     ****                  **** ****           ****       **** ****        ********     ****            
+       ****      ****                ****  ****           ****      ****   ****       **** ****    ****            
+      ****       *************      ****    ****          ****      ****    ****      ****  ****   ****            
+     ****                 *****     ****    *****         ****     *****    ****      ****   **********
+     ****                  ****    ***************        ****    ***************     ****    *********
+    ****                   ****   ****        ****       *****    ****       *****    ****      *******            
+   ****          **************   ****         ****  ********    ****         ****    ****       ******            
+   ****            *********     ****           ***    ****      ***           ***    ***          ****

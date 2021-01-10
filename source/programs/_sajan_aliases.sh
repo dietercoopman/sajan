@@ -4,7 +4,6 @@
 ################################################################################
 
 sajan_aliases() {
-  echo "list aliases"
   fn_array_contains "h" "${OPTIONS[@]}" && sajan_aliases_help
   fn_array_contains "e" "${OPTIONS[@]}" && sajan_aliases_explain
 
