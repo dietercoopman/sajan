@@ -22,6 +22,14 @@ The purpose of sajan is simplicity, and that starts with the installation ...
 curl -s https://www.deltasolutions.be/sajan/ | bash
 ````
 
+## Welcome
+
+One sajan is installed you can get an overview of all the commands by running the `sajan` command.  You will see this 
+welcome screen.
+
+![Sajan home screen](brand/overview.png?raw=true "Sajan home screen")
+
+
 ## Available commands
 
 ````text
