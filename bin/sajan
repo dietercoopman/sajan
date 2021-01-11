@@ -543,8 +543,6 @@ sajan_git_clean() {
   echo -e "Are your sure you want to clean up ? This will remove uncommitted changes (y/n)? ${NC}\c"
   read sure
   if [ "$sure" == "y" ]; then
-    echo "test"
-    exit
     git reset --hard
     git add .
     git pull
