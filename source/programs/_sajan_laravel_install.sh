@@ -12,7 +12,7 @@ sajan_laravel_install() {
 
   if [[ $VERSION == "" ]]; then
     echo -e "${ERRORCOLOR}Please provide a version , choose one from ${NC}"
-    git ls-remote --heads https://github.com/laravel/laravel.git | cut -f 2 | cut -b 12-20
+    git ls-remote --heads https://github.com/laravel/framework.git | cut -f 2 | cut -b 12-20
     exit
   fi
 
@@ -22,7 +22,7 @@ sajan_laravel_install() {
   fi
 
   echo -e "${INFOCOLOR}Start installation of laravel ${VERSION} into folder ${FOLDER} ${NC}"
-  git clone --branch ${VERSION} https://github.com/laravel/laravel.git ${FOLDER}
+  git clone --branch ${VERSION} https://github.com/laravel/framework.git ${FOLDER}
   cd $FOLDER
   composer install
 

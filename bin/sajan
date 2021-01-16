@@ -7,7 +7,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.34-beta
+declare VERSION=v0.35-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -775,7 +775,7 @@ sajan_laravel_install() {
 
   if [[ $VERSION == "" ]]; then
     echo -e "${ERRORCOLOR}Please provide a version , choose one from ${NC}"
-    git ls-remote --heads https://github.com/laravel/laravel.git | cut -f 2 | cut -b 12-20
+    git ls-remote --heads https://github.com/laravel/framework.git | cut -f 2 | cut -b 12-20
     exit
   fi
 
@@ -785,7 +785,7 @@ sajan_laravel_install() {
   fi
 
   echo -e "${INFOCOLOR}Start installation of laravel ${VERSION} into folder ${FOLDER} ${NC}"
-  git clone --branch ${VERSION} https://github.com/laravel/laravel.git ${FOLDER}
+  git clone --branch ${VERSION} https://github.com/laravel/framework.git ${FOLDER}
   cd $FOLDER
   composer install
 
