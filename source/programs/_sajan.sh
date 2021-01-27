@@ -6,7 +6,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.37-beta
+declare VERSION=v0.38-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -28,10 +28,10 @@ ${YELLOW}Usage:${NC}"
   echo "  s     [program] [action] [--]"
   echo
   echo -e "${YELLOW}Actions:"
-  echo -e "  ${GREEN}self-update         ${NC}Update sajan"
-  echo -e "  ${GREEN}bye                 ${NC}Delete sajan"
   echo -e "  ${GREEN}alias               ${NC}Create an alias for a program or command"
   echo -e "  ${GREEN}aliases             ${NC}Show all user defined aliases on your system"
+  echo -e "  ${GREEN}bye                 ${NC}Delete sajan"
+  echo -e "  ${GREEN}self-update         ${NC}Update sajan"
 
   echo
   echo -e "${YELLOW}Programs:"

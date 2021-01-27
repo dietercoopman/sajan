@@ -44,11 +44,13 @@ Actions:
   aliases             Show all aliases on your system
 
 Programs:
-  tools               Execute Tools actions
+ 
   apache              Execute Apache actions
-  laravel             Execute Laravel actions
   git                 Execute Git actions
+  laravel             Execute Laravel actions
   phpstorm            Execute PhpStorm actions
+  ssh                 Execute Ssh actions
+  tools               Execute Tools actions
   webpack             Execute Webpack actions
 
 Options:
@@ -61,17 +63,19 @@ Options:
 
 ### Available command 
 
-[Tools command](docs/tools.md)
+[Apache command](docs/apache.md)
 
 [Git command](docs/git.md)
 
-[Apache command](docs/apache.md)
-
 [Laravel command](docs/laravel.md)
 
-[Webpack command](docs/webpack.md)
-
 [PhpStorm command](docs/phpstorm.md)
+
+[Ssh command](docs/ssh.md)
+
+[Tools command](docs/tools.md)
+
+[Webpack command](docs/webpack.md)
 
 ### Educational purpose
 
