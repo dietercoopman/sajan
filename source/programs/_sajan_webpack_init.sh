@@ -27,11 +27,9 @@ sajan_webpack_init() {
   }
 }
 ' >package.json
-  mkdir -p sass
-  echo "h1 {
-  font-size: 25px;
-}
-" >sass/style.scss
+
+  touch sass/style.scss
+
   echo 'const path = require("path");
 
 // include the css extraction and minification plugins
