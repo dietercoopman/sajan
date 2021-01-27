@@ -14,6 +14,7 @@ sajan_webpack_init() {
     "build": "webpack --mode development",
     "dist": "webpack --mode production",
     "watch": "webpack --watch --mode development"
+    "wp": "webpack --watch --mode production"
   },
   "devDependencies": {
     "compass": "^0.1.1",
