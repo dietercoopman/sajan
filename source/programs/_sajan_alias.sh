@@ -14,6 +14,13 @@ sajan_alias() {
   read NAME
   echo
 
+  HASBASHRC="$(cat ~/.bash_profile | grep ' ~/.bashrc')"
+  if [[ $HASBASHRC == *".bashrc"* ]]; then
+    echo
+  else
+    echo -e "if [ -f ~/.bashrc ]; then \n\t. ~/.bashrc\nfi\n\n$(cat ~/.bash_profile)" > ~/.bash_profile
+  fi
+
   echo "alias $NAME=\"${PROGRAM}\"" >>~/.bash_profile
 
   echo -e "  Your alias ${YELLOW}$NAME${NC} is ready for use , did you know you can list all your aliases by typing '${YELLOW}alias${NC}'"
