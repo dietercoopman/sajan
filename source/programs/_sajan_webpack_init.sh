@@ -13,7 +13,7 @@ sajan_webpack_init() {
   "scripts": {
     "build": "webpack --mode development",
     "dist": "webpack --mode production",
-    "watch": "webpack --watch --mode development"
+    "watch": "webpack --watch --mode development",
     "wp": "webpack --watch --mode production"
   },
   "devDependencies": {
@@ -28,6 +28,7 @@ sajan_webpack_init() {
 }
 ' >package.json
 
+  mkdir -p sass
   touch sass/style.scss
 
   echo 'const path = require("path");

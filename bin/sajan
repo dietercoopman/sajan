@@ -7,7 +7,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.38-beta
+declare VERSION=v0.39-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -1539,7 +1539,7 @@ sajan_webpack_init() {
   "scripts": {
     "build": "webpack --mode development",
     "dist": "webpack --mode production",
-    "watch": "webpack --watch --mode development"
+    "watch": "webpack --watch --mode development",
     "wp": "webpack --watch --mode production"
   },
   "devDependencies": {
@@ -1554,6 +1554,7 @@ sajan_webpack_init() {
 }
 ' >package.json
 
+  mkdir -p sass
   touch sass/style.scss
 
   echo 'const path = require("path");
