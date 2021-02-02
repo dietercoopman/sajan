@@ -7,7 +7,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.39-beta
+declare VERSION=v0.40-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -40,7 +40,7 @@ ${YELLOW}Usage:${NC}"
   echo -e "  ${GREEN}git                 ${NC}Execute Git actions"
   echo -e "  ${GREEN}laravel             ${NC}Execute Laravel actions"
   echo -e "  ${GREEN}phpstorm            ${NC}Execute PhpStorm actions"
-  echo -e "  ${GREEN}ssh                 ${NC}Execute Ssh actions"
+  echo -e "  ${GREEN}key                 ${NC}Execute Ssh key actions"
   echo -e "  ${GREEN}tools               ${NC}Execute Tools actions"
   echo -e "  ${GREEN}webpack             ${NC}Execute Webpack actions"
   echo
@@ -715,6 +715,292 @@ sajan_git_relink_explain() {
   "
   exit
 }
+################################################################################
+# Ssh                                                                          #
+################################################################################
+
+sajan_key() {
+  ACTION=${ARGUMENTS[0]}
+
+  case $ACTION in
+  copy | c)
+    sajan_key_copy
+    exit
+    ;;
+  dir | d)
+    sajan_key_dir
+    exit
+    ;;
+  make | m)
+    sajan_key_make
+    exit
+    ;;
+  push | p)
+  sajan_key_push
+  exit
+  ;;
+
+  *)
+    sajan_key_help
+    exit
+    ;;
+  esac
+
+}
+
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+sajan_key_help() {
+  # Display Help
+  echo -e "
+${YELLOW}Usage:${NC}"
+  echo "  sajan key [action]"
+  echo "  s key [action]"
+
+  echo
+  echo -e "${YELLOW}Actions:"
+  echo -e "  ${GREEN}copy|c             ${NC}Read the public key of a key pair"
+  echo -e "  ${GREEN}dir|d              ${NC}Cd into your ssh keys folder"
+  echo -e "  ${GREEN}make|m             ${NC}Create an ssh key"
+  echo -e "  ${GREEN}push|p             ${NC}Push a provided ssh key to an ssh server"  
+  echo
+  echo -e "${YELLOW}Options:"
+  echo -e "  ${GREEN}-h     Print this Help."
+  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command.${NC}"
+  echo
+  echo
+}
+################################################################################
+# Make key                                                                        #
+################################################################################
+
+sajan_key_copy() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_key_copy_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_key_copy_explain
+
+  cd ~/.ssh
+
+  ARRAY=($(ls | grep pub))
+  COUNT="0"
+  DUMMYPUBKEY=1
+
+  for i in ${ARRAY[*]}; do
+    echo "[$(($COUNT + 1))]  $i"
+    let COUNT++
+  done
+
+  read -p "Which key do you want to copy ? [$DUMMYPUBKEY]: " PUBKEY
+  PUBKEY=${PUBKEY:-$DUMMYPUBKEY}
+  FILE=${ARRAY[$PUBKEY - 1]}
+
+  pbcopy <~/.ssh/$FILE
+
+  echo -e "${GREEN}the key $FILE has been copied to your clipboard${NC}"
+
+}
+
+################################################################################
+# Help                                                                        #
+################################################################################
+
+sajan_key_copy_help() {
+  echo -e "
+  ${GREEN}copy|c              ${NC}Read the public key of a key pair"
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                        #
+################################################################################
+
+sajan_key_copy_explain() {
+  echo -e "
+  ${GREEN}sajan key copy
+  ${GREEN}s key c
+
+  This command will execute the following commands${NC}
+
+  ARRAY=\$(ls | grep pub))
+  COUNT="0"
+  DUMMYPUBKEY=1
+
+  for i in \${ARRAY[*]}; do
+    echo "[\$\(\(\$COUNT + 1\)\)] \$i"
+    let COUNT++
+  done
+
+  read -p "Which key do you want to copy ? [\$DUMMYPUBKEY]: " PUBKEY
+  PUBKEY=\${PUBKEY:-\$DUMMYPUBKEY}
+  FILE=\${ARRAY[\$PUBKEY - 1]}
+
+  pbcopy <  ~/.ssh/\$FILE
+
+  ${YELLOW}This command will ask you which public key to copy and then copy it to clipboard${NC}
+
+  Used tools for this action:
+  - pbcopy
+
+  "
+  exit
+}
+################################################################################
+# Make key                                                                        #
+################################################################################
+
+sajan_key_dir() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_key_dir_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_key_dir_explain
+
+  cd ~/.ssh
+  $SHELL
+
+}
+
+################################################################################
+# Help                                                                        #
+################################################################################
+
+sajan_key_dir_help() {
+  echo -e "
+  ${GREEN}dir|d             ${NC}Cd into your ssh folder"
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                        #
+################################################################################
+
+sajan_key_dir_explain() {
+  echo -e "
+  ${GREEN}sajan key dir
+  ${GREEN}s key d
+
+  This command will execute the following commands${NC}
+
+  cd ~/.ssh
+  \$SHELL
+
+  ${YELLOW}This command will cd into your ssh folder${NC}
+
+  "
+  exit
+}
+################################################################################
+# Make key                                                                        #
+################################################################################
+
+sajan_key_make() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_key_make_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_key_make_explain
+
+  ssh-keygen -t rsa
+
+}
+
+################################################################################
+# Help                                                                        #
+################################################################################
+
+sajan_key_make_help() {
+  echo -e "
+  ${GREEN}make|m              ${NC}Create an ssh key on your computer"
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                        #
+################################################################################
+
+sajan_key_make_explain() {
+  echo -e "
+  ${GREEN}sajan key make
+  ${GREEN}s key m
+
+  This command will execute the following commands${NC}
+
+  ssh-keygen -t rsa
+
+  ${YELLOW}This command will generate an ssh key pair on your computer${NC}
+
+  Used tools for this action:
+  - ssh-keygen
+
+  "
+  exit
+}
+################################################################################
+# Make key                                                                        #
+################################################################################
+
+sajan_key_push() {
+
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_key_push_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_key_push_explain
+
+  cd ~/.ssh
+
+  ARRAY=($(ls | grep pub))
+  COUNT="0"
+  DUMMYPUBKEY=1
+
+  for i in ${ARRAY[*]}; do
+    echo "[$(($COUNT + 1))]  $i"
+    let COUNT++
+  done
+
+  read -p "Which key do you want to copy ? [$DUMMYPUBKEY]: " PUBKEY
+  PUBKEY=${PUBKEY:-$DUMMYPUBKEY}
+  FILE=${ARRAY[$PUBKEY - 1]}
+
+  read -p "Provide the username and hostname of the server you want to push the key to ( ex.  user@hostname ) ?: " SERVER
+ 
+  ssh-copy-id -i ~/.ssh/$FILE $SERVER
+
+  echo -e "${GREEN}the key $FILE has been pushed to the server $SERVER${NC}"
+
+}
+
+################################################################################
+# Help                                                                        #
+################################################################################
+
+sajan_key_push_help() {
+  echo -e "
+  ${GREEN}push|p              ${NC}Push a provided ssh key to an ssh server"
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                        #
+################################################################################
+
+sajan_key_push_explain() {
+  echo -e "
+  ${GREEN}sajan key push
+  ${GREEN}s key p
+
+  This command will execute the following commands${NC}
+
+  ssh-copy-id -i ~/.ssh/$FILE $SERVER
+
+  ${YELLOW}This command will push a provided ssh key to a given server${NC}
+
+  Used tools for this action:
+  - ssh-copy-id
+
+  "
+  exit
+}
 
 ################################################################################
 # Laravel                                                                      #
@@ -944,223 +1230,6 @@ sajan_phpstorm_open() {
     exit
   fi
   pstorm .
-}
-################################################################################
-# Ssh                                                                          #
-################################################################################
-
-sajan_ssh() {
-  ACTION=${ARGUMENTS[0]}
-
-  case $ACTION in
-  copykey | c)
-    sajan_ssh_copykey
-    exit
-    ;;
-  dir | d)
-    sajan_ssh_dir
-    exit
-    ;;
-  makekey | m)
-    sajan_ssh_makekey
-    exit
-    ;;
-
-  *)
-    sajan_ssh_help
-    exit
-    ;;
-  esac
-
-}
-
-
-################################################################################
-# Help                                                                         #
-################################################################################
-
-sajan_ssh_help() {
-  # Display Help
-  echo -e "
-${YELLOW}Usage:${NC}"
-  echo "  sajan ssh [action]"
-  echo "  s ssh [action]"
-
-  echo
-  echo -e "${YELLOW}Actions:"
-  echo -e "  ${GREEN}copykey|c             ${NC}Read the public key of a key pair"
-  echo -e "  ${GREEN}dir|d                 ${NC}Cd into your ssh folder"
-  echo -e "  ${GREEN}makekey|m             ${NC}Create an ssh key"
-  echo
-  echo -e "${YELLOW}Options:"
-  echo -e "  ${GREEN}-h     Print this Help."
-  echo -e "  ${GREEN}-e     Explains the command via the dry-run output of the command.${NC}"
-  echo
-  echo
-}
-################################################################################
-# Make key                                                                        #
-################################################################################
-
-sajan_ssh_copykey() {
-
-  fn_array_contains "h" "${OPTIONS[@]}" && sajan_ssh_copykey_help
-  fn_array_contains "e" "${OPTIONS[@]}" && sajan_ssh_copykey_explain
-
-  cd ~/.ssh
-
-  ARRAY=($(ls | grep pub))
-  COUNT="0"
-  DUMMYPUBKEY=1
-
-  for i in ${ARRAY[*]}; do
-    echo "[$(($COUNT + 1))]  $i"
-    let COUNT++
-  done
-
-  read -p "Which key do you want to copy ? [$DUMMYPUBKEY]: " PUBKEY
-  PUBKEY=${PUBKEY:-$DUMMYPUBKEY}
-  FILE=${ARRAY[$PUBKEY - 1]}
-
-  pbcopy <~/.ssh/$FILE
-
-  echo -e "${GREEN}the key $FILE has been copied to your clipboard${NC}"
-
-}
-
-################################################################################
-# Help                                                                        #
-################################################################################
-
-sajan_ssh_copykey_help() {
-  echo -e "
-  ${GREEN}copykey|c              ${NC}Read the public key of a key pair"
-  echo
-  exit
-}
-
-################################################################################
-# Explain                                                                        #
-################################################################################
-
-sajan_ssh_copykey_explain() {
-  echo -e "
-  ${GREEN}sajan ssh copykey
-  ${GREEN}s ssh c
-
-  This command will execute the following commands${NC}
-
-  ARRAY=\$(ls | grep pub))
-  COUNT="0"
-  DUMMYPUBKEY=1
-
-  for i in \${ARRAY[*]}; do
-    echo "[\$\(\(\$COUNT + 1\)\)] \$i"
-    let COUNT++
-  done
-
-  read -p "Which key do you want to copy ? [\$DUMMYPUBKEY]: " PUBKEY
-  PUBKEY=\${PUBKEY:-\$DUMMYPUBKEY}
-  FILE=\${ARRAY[\$PUBKEY - 1]}
-
-  pbcopy <  ~/.ssh/\$FILE
-
-  ${YELLOW}This command will ask you which public key to copy and then copy it to clipboard${NC}
-
-  Used tools for this action:
-  - pbcopy
-
-  "
-  exit
-}
-################################################################################
-# Make key                                                                        #
-################################################################################
-
-sajan_ssh_dir() {
-
-  fn_array_contains "h" "${OPTIONS[@]}" && sajan_ssh_dir_help
-  fn_array_contains "e" "${OPTIONS[@]}" && sajan_ssh_dir_explain
-
-  cd ~/.ssh
-  $SHELL
-
-}
-
-################################################################################
-# Help                                                                        #
-################################################################################
-
-sajan_ssh_dir_help() {
-  echo -e "
-  ${GREEN}dir|d             ${NC}Cd into your ssh folder"
-  echo
-  exit
-}
-
-################################################################################
-# Explain                                                                        #
-################################################################################
-
-sajan_ssh_dir_explain() {
-  echo -e "
-  ${GREEN}sajan ssh dir
-  ${GREEN}s ssh d
-
-  This command will execute the following commands${NC}
-
-  cd ~/.ssh
-  \$SHELL
-
-  ${YELLOW}This command will cd into your ssh folder${NC}
-
-  "
-  exit
-}
-################################################################################
-# Make key                                                                        #
-################################################################################
-
-sajan_ssh_makekey() {
-
-  fn_array_contains "h" "${OPTIONS[@]}" && sajan_ssh_makekey_help
-  fn_array_contains "e" "${OPTIONS[@]}" && sajan_ssh_makekey_explain
-
-  ssh-keygen -t rsa
-
-}
-
-################################################################################
-# Help                                                                        #
-################################################################################
-
-sajan_ssh_makekey_help() {
-  echo -e "
-  ${GREEN}makekey|m              ${NC}Create an ssh key on your computer"
-  echo
-  exit
-}
-
-################################################################################
-# Explain                                                                        #
-################################################################################
-
-sajan_ssh_makekey_explain() {
-  echo -e "
-  ${GREEN}sajan ssh makekey
-  ${GREEN}s ssh m
-
-  This command will execute the following commands${NC}
-
-  ssh-keygen -t rsa
-
-  ${YELLOW}This command will generate an ssh key pair on your computer${NC}
-
-  Used tools for this action:
-  - ssh-keygen
-
-  "
-  exit
 }
 ################################################################################
 # Tools                                                                        #

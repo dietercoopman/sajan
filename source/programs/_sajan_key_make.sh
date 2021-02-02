@@ -2,10 +2,10 @@
 # Make key                                                                        #
 ################################################################################
 
-sajan_ssh_makekey() {
+sajan_key_make() {
 
-  fn_array_contains "h" "${OPTIONS[@]}" && sajan_ssh_makekey_help
-  fn_array_contains "e" "${OPTIONS[@]}" && sajan_ssh_makekey_explain
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_key_make_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_key_make_explain
 
   ssh-keygen -t rsa
 
@@ -15,9 +15,9 @@ sajan_ssh_makekey() {
 # Help                                                                        #
 ################################################################################
 
-sajan_ssh_makekey_help() {
+sajan_key_make_help() {
   echo -e "
-  ${GREEN}makekey|m              ${NC}Create an ssh key on your computer"
+  ${GREEN}make|m              ${NC}Create an ssh key on your computer"
   echo
   exit
 }
@@ -26,10 +26,10 @@ sajan_ssh_makekey_help() {
 # Explain                                                                        #
 ################################################################################
 
-sajan_ssh_makekey_explain() {
+sajan_key_make_explain() {
   echo -e "
-  ${GREEN}sajan ssh makekey
-  ${GREEN}s ssh m
+  ${GREEN}sajan key make
+  ${GREEN}s key m
 
   This command will execute the following commands${NC}
 

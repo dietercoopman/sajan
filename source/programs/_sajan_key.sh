@@ -2,25 +2,29 @@
 # Ssh                                                                          #
 ################################################################################
 
-sajan_ssh() {
+sajan_key() {
   ACTION=${ARGUMENTS[0]}
 
   case $ACTION in
-  copykey | c)
-    sajan_ssh_copykey
+  copy | c)
+    sajan_key_copy
     exit
     ;;
   dir | d)
-    sajan_ssh_dir
+    sajan_key_dir
     exit
     ;;
-  makekey | m)
-    sajan_ssh_makekey
+  make | m)
+    sajan_key_make
     exit
     ;;
+  push | p)
+  sajan_key_push
+  exit
+  ;;
 
   *)
-    sajan_ssh_help
+    sajan_key_help
     exit
     ;;
   esac
@@ -32,18 +36,19 @@ sajan_ssh() {
 # Help                                                                         #
 ################################################################################
 
-sajan_ssh_help() {
+sajan_key_help() {
   # Display Help
   echo -e "
 ${YELLOW}Usage:${NC}"
-  echo "  sajan ssh [action]"
-  echo "  s ssh [action]"
+  echo "  sajan key [action]"
+  echo "  s key [action]"
 
   echo
   echo -e "${YELLOW}Actions:"
-  echo -e "  ${GREEN}copykey|c             ${NC}Read the public key of a key pair"
-  echo -e "  ${GREEN}dir|d                 ${NC}Cd into your ssh folder"
-  echo -e "  ${GREEN}makekey|m             ${NC}Create an ssh key"
+  echo -e "  ${GREEN}copy|c             ${NC}Read the public key of a key pair"
+  echo -e "  ${GREEN}dir|d              ${NC}Cd into your ssh keys folder"
+  echo -e "  ${GREEN}make|m             ${NC}Create an ssh key"
+  echo -e "  ${GREEN}push|p             ${NC}Push a provided ssh key to an ssh server"  
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."

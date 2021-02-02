@@ -2,10 +2,10 @@
 # Make key                                                                        #
 ################################################################################
 
-sajan_ssh_dir() {
+sajan_key_dir() {
 
-  fn_array_contains "h" "${OPTIONS[@]}" && sajan_ssh_dir_help
-  fn_array_contains "e" "${OPTIONS[@]}" && sajan_ssh_dir_explain
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_key_dir_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_key_dir_explain
 
   cd ~/.ssh
   $SHELL
@@ -16,7 +16,7 @@ sajan_ssh_dir() {
 # Help                                                                        #
 ################################################################################
 
-sajan_ssh_dir_help() {
+sajan_key_dir_help() {
   echo -e "
   ${GREEN}dir|d             ${NC}Cd into your ssh folder"
   echo
@@ -27,10 +27,10 @@ sajan_ssh_dir_help() {
 # Explain                                                                        #
 ################################################################################
 
-sajan_ssh_dir_explain() {
+sajan_key_dir_explain() {
   echo -e "
-  ${GREEN}sajan ssh dir
-  ${GREEN}s ssh d
+  ${GREEN}sajan key dir
+  ${GREEN}s key d
 
   This command will execute the following commands${NC}
 

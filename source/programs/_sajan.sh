@@ -6,7 +6,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.39-beta
+declare VERSION=v0.40-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -39,7 +39,7 @@ ${YELLOW}Usage:${NC}"
   echo -e "  ${GREEN}git                 ${NC}Execute Git actions"
   echo -e "  ${GREEN}laravel             ${NC}Execute Laravel actions"
   echo -e "  ${GREEN}phpstorm            ${NC}Execute PhpStorm actions"
-  echo -e "  ${GREEN}ssh                 ${NC}Execute Ssh actions"
+  echo -e "  ${GREEN}key                 ${NC}Execute Ssh key actions"
   echo -e "  ${GREEN}tools               ${NC}Execute Tools actions"
   echo -e "  ${GREEN}webpack             ${NC}Execute Webpack actions"
   echo

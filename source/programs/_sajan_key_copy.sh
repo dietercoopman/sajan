@@ -2,10 +2,10 @@
 # Make key                                                                        #
 ################################################################################
 
-sajan_ssh_copykey() {
+sajan_key_copy() {
 
-  fn_array_contains "h" "${OPTIONS[@]}" && sajan_ssh_copykey_help
-  fn_array_contains "e" "${OPTIONS[@]}" && sajan_ssh_copykey_explain
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_key_copy_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_key_copy_explain
 
   cd ~/.ssh
 
@@ -32,9 +32,9 @@ sajan_ssh_copykey() {
 # Help                                                                        #
 ################################################################################
 
-sajan_ssh_copykey_help() {
+sajan_key_copy_help() {
   echo -e "
-  ${GREEN}copykey|c              ${NC}Read the public key of a key pair"
+  ${GREEN}copy|c              ${NC}Read the public key of a key pair"
   echo
   exit
 }
@@ -43,10 +43,10 @@ sajan_ssh_copykey_help() {
 # Explain                                                                        #
 ################################################################################
 
-sajan_ssh_copykey_explain() {
+sajan_key_copy_explain() {
   echo -e "
-  ${GREEN}sajan ssh copykey
-  ${GREEN}s ssh c
+  ${GREEN}sajan key copy
+  ${GREEN}s key c
 
   This command will execute the following commands${NC}
 
