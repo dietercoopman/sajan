@@ -47,9 +47,9 @@ Programs:
  
   apache              Execute Apache actions
   git                 Execute Git actions
+  key                 Execute Ssh key actions
   laravel             Execute Laravel actions
   phpstorm            Execute PhpStorm actions
-  ssh                 Execute Ssh actions
   tools               Execute Tools actions
   webpack             Execute Webpack actions
 
