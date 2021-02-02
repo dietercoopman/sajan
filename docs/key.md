@@ -9,7 +9,7 @@ Usage:
 
   
   Actions:
-    copy|c             ${NC}Read the public key of a key pair"
+    copy|c             ${NC}Copy the public key of a key pair to your clipboard"
     dir|d              ${NC}Cd into your ssh key folder"
     make|m             ${NC}Create a ssh key"
     push|p             ${NC}Push a provided ssh key to a given ssh server"

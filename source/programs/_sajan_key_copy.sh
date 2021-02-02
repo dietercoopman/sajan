@@ -34,7 +34,7 @@ sajan_key_copy() {
 
 sajan_key_copy_help() {
   echo -e "
-  ${GREEN}copy|c              ${NC}Read the public key of a key pair"
+  ${GREEN}copy|c              ${NC}Copy the public key of a key pair to your clipboard"
   echo
   exit
 }

@@ -45,10 +45,10 @@ ${YELLOW}Usage:${NC}"
 
   echo
   echo -e "${YELLOW}Actions:"
-  echo -e "  ${GREEN}copy|c             ${NC}Read the public key of a key pair"
+  echo -e "  ${GREEN}copy|c             ${NC}Copy the public key of a key pair to your clipboard"
   echo -e "  ${GREEN}dir|d              ${NC}Cd into your ssh keys folder"
   echo -e "  ${GREEN}make|m             ${NC}Create an ssh key"
-  echo -e "  ${GREEN}push|p             ${NC}Push a provided ssh key to an ssh server"  
+  echo -e "  ${GREEN}push|p             ${NC}Push a provided ssh key to a ssh server"  
   echo
   echo -e "${YELLOW}Options:"
   echo -e "  ${GREEN}-h     Print this Help."
