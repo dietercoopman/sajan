@@ -71,7 +71,7 @@ Options:
 
 [PhpStorm command](docs/phpstorm.md)
 
-[Ssh command](docs/ssh.md)
+[Key command](docs/key.md)
 
 [Tools command](docs/tools.md)
 
