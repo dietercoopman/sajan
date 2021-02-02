@@ -77,6 +77,10 @@ Options:
 
 [Webpack command](docs/webpack.md)
 
+### Cheatsheet
+
+[I've build a cheatsheet , it can be found here](docs/cheatsheet.md)
+
 ### Educational purpose
 
 One of my personal goals is to provide developers with knowledge. Sajan provides an educational purpose. Every action has an option to explain the command ( -e ).
