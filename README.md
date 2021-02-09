@@ -42,6 +42,8 @@ Actions:
   bye                 Delete sajan
   alias               Create an alias for a program or command
   aliases             Show all aliases on your system
+  dnsflush            Clear the dns cache of your computer
+  secret              Let sajan create you a secure password
 
 Programs:
  

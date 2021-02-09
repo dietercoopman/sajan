@@ -6,7 +6,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.43-beta
+declare VERSION=v0.44-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -32,6 +32,7 @@ ${YELLOW}Usage:${NC}"
   echo -e "  ${GREEN}aliases             ${NC}Show all user defined aliases on your system"
   echo -e "  ${GREEN}bye                 ${NC}Delete sajan"
   echo -e "  ${GREEN}dnsflush            ${NC}Clear the dns cache of your computer"
+  echo -e "  ${GREEN}secret              ${NC}Let sajan create you a secure password"
 
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
 
