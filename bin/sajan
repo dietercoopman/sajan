@@ -7,7 +7,7 @@ declare LOVECOLOR='\033[31m'
 declare GREEN='\033[0;32m'
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
-declare VERSION=v0.42-beta
+declare VERSION=v0.43-beta
 
 ################################################################################
 # VERSION                                                                      #
@@ -32,6 +32,8 @@ ${YELLOW}Usage:${NC}"
   echo -e "  ${GREEN}alias               ${NC}Create an alias for a program or command"
   echo -e "  ${GREEN}aliases             ${NC}Show all user defined aliases on your system"
   echo -e "  ${GREEN}bye                 ${NC}Delete sajan"
+  echo -e "  ${GREEN}dnsflush           ${NC}Clear the dns cache of your computer"
+
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
 
   echo
@@ -471,6 +473,45 @@ sajan_apache_list_explain() {
   - apachectl
 
   "
+  exit
+}
+################################################################################
+# dnsflush                                                                        #
+################################################################################
+
+sajan_dnsflush() {
+  fn_array_contains "h" "${OPTIONS[@]}" && sajan_dnsflush_help
+  fn_array_contains "e" "${OPTIONS[@]}" && sajan_dnsflush_explain
+
+  sudo killall -HUP mDNSResponder
+
+}
+
+
+################################################################################
+# Help                                                                        #
+################################################################################
+
+sajan_dnsflush_help() {
+  echo -e "
+  ${GREEN}dnsflush              ${NC}Clear the dns cache of your computer"
+  echo
+  exit
+}
+
+################################################################################
+# Explain                                                                        #
+################################################################################
+
+sajan_dnsflush_explain() {
+  echo -e "
+  ${GREEN}sajan dnsflush
+
+  This command will execute the following commands${NC}
+
+  sudo killall -HUP mDNSResponder
+
+"
   exit
 }
 

@@ -3,6 +3,7 @@
     sajan alias               Create an alias for a program or command
     sajan aliases             Show all user defined aliases on your system
     sajan bye                 Delete sajan
+    sajan dnsflush            Clear the dns cache of you computer
     sajan self-update         Update sajan
     
 ## Apache
