@@ -31,7 +31,7 @@ ${YELLOW}Usage:${NC}"
   echo -e "  ${GREEN}alias               ${NC}Create an alias for a program or command"
   echo -e "  ${GREEN}aliases             ${NC}Show all user defined aliases on your system"
   echo -e "  ${GREEN}bye                 ${NC}Delete sajan"
-  echo -e "  ${GREEN}dnsflush           ${NC}Clear the dns cache of your computer"
+  echo -e "  ${GREEN}dnsflush            ${NC}Clear the dns cache of your computer"
 
   echo -e "  ${GREEN}self-update         ${NC}Update sajan"
 
