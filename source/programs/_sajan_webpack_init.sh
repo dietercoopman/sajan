@@ -21,6 +21,7 @@ sajan_webpack_init() {
     "css-loader": "^5.0.1",
     "mini-css-extract-plugin": "^1.3.1",
     "node-sass": "^5.0.0",
+    "sass": "^1.38.1",
     "sass-loader": "^10.1.0",
     "webpack": "^5.9.0",
     "webpack-cli": "^4.2.0"
