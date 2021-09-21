@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+<?php
+
+use Dietercoopman\SajanPhp\AliasCreateCommand;
+use Dietercoopman\SajanPhp\AliasListCommand;
+use Dietercoopman\SajanPhp\FlushDnsCommand;
+use Dietercoopman\SajanPhp\OpenCommand;
+use Dietercoopman\SajanPhp\SajanApplication;
+use Dietercoopman\SajanPhp\SecretCommand;
+use Dietercoopman\SajanPhp\ToolsCheck;
+use Dietercoopman\SajanPhp\ToolsInstall;
+use Dietercoopman\SajanPhp\ToolsUpdate;
+
+if (file_exists(__DIR__ . '/../../autoload.php')) {
+    require __DIR__ . '/../../autoload.php';
+} else {
+    require __DIR__ . '/vendor/autoload.php';
+}
+
+/**
+ * Start the console application.
+ */
+$app = new SajanApplication('<fg=green>Sajan</> version', 'beta');
+$app->add(new SecretCommand());
+$app->add(new AliasListCommand());
+$app->add(new AliasCreateCommand());
+$app->add(new FlushDnsCommand());
+$app->add(new OpenCommand());
+$app->add(new ToolsInstall());
+$app->add(new ToolsCheck());
+$app->add(new ToolsUpdate());
+$app->run();

@@ -1,0 +1,27 @@
+{
+  "name": "dietercoopman/sajan-php",
+  "description": "Sajan Sajan is a lightweight command line tool for webdevelopers.",
+  "type": "library",
+  "require": {
+    "illuminate/filesystem": "^8.61",
+    "illuminate/support": "^8.61",
+    "symfony/console": "^5.3",
+    "symfony/process": "^5.3",
+    "symfony/finder": "^5.3"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.1",
+    "symfony/var-dumper": "^5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dietercoopman\\SajanPhp\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Dieter Coopman",
+      "email": "dieter@deltasolutions.be"
+    }
+  ]
+}
