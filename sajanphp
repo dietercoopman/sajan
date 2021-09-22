@@ -39,6 +39,4 @@ $app->add(new WeatherCommand());
 $app->add(new MyIpCommand());
 $app->add(new WebpackInitCommand());
 $app->add(new WebpackBuildCommand());
-$app->add(new SshKeyDirCommand());
-$app->add(new SshKeyMakeCommand());
 $app->run();
