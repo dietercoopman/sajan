@@ -15,6 +15,6 @@ class SajanApplication extends \Symfony\Component\Console\Application
     private function brand()
     {
         $output = new ConsoleOutput();
-        $output->writeln(file_get_contents('src/brand.txt'));
+        $output->writeln(file_get_contents('brand.txt'));
     }
 }
