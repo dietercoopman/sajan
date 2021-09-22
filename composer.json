@@ -2,6 +2,9 @@
   "name": "dietercoopman/sajan-php",
   "description": "Sajan Sajan is a lightweight command line tool for webdevelopers.",
   "type": "library",
+  "bin": [
+    "sajan"
+  ],
   "require": {
     "illuminate/filesystem": "^8.61",
     "illuminate/support": "^8.61",
