@@ -1,10 +1,11 @@
-<?php namespace Dietercoopman\SajanPhp;
+<?php
+
+namespace Dietercoopman\SajanPhp;
 
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 class SajanApplication extends \Symfony\Component\Console\Application
 {
-
     public function __construct(string $name = 'UNKNOWN', string $version = 'UNKNOWN')
     {
         $this->brand();

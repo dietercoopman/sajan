@@ -1,15 +1,14 @@
-<?php namespace Dietercoopman\SajanPhp;
+<?php
+
+namespace Dietercoopman\SajanPhp;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-
 class WebpackInitCommand extends Command
 {
-
-
     /**
      * Configure the command.
      *
@@ -39,11 +38,12 @@ class WebpackInitCommand extends Command
         $process = Process::fromShellCommandline('npm install && npm run build');
         $process->run(function ($type, $buffer) {
             if (Process::ERR === $type) {
-                echo 'ERR > ' . $buffer;
+                echo 'ERR > '.$buffer;
             } else {
-                echo 'OUT > ' . $buffer;
+                echo 'OUT > '.$buffer;
             }
         });
+
         return 0;
     }
 
@@ -103,5 +103,4 @@ module.exports = {
 };';
         file_put_contents('webpack.config.js', $output);
     }
-
 }

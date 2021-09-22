@@ -1,4 +1,6 @@
-<?php namespace Dietercoopman\SajanPhp;
+<?php
+
+namespace Dietercoopman\SajanPhp;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -6,11 +8,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Process\Process;
 
-
 class WeatherCommand extends Command
 {
-
-
     /**
      * Configure the command.
      *
@@ -34,12 +33,11 @@ class WeatherCommand extends Command
     {
         $question = new Question('<fg=green>You want the weather in  ?</> ', '');
         $location = $this->getHelper('question')->ask($input, $output, $question);
-        $location = str_replace(" ", "+", $location);
+        $location = str_replace(' ', '+', $location);
 
-        $output = Process::fromShellCommandline('curl wttr.in/' . $location)->mustRun()->getOutput();
+        $output = Process::fromShellCommandline('curl wttr.in/'.$location)->mustRun()->getOutput();
         echo $output;
+
         return 0;
     }
-
-
 }
