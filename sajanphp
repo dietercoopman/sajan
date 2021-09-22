@@ -8,10 +8,14 @@ use Dietercoopman\SajanPhp\MyIpCommand;
 use Dietercoopman\SajanPhp\OpenCommand;
 use Dietercoopman\SajanPhp\SajanApplication;
 use Dietercoopman\SajanPhp\SecretCommand;
+use Dietercoopman\SajanPhp\SshKeyDirCommand;
+use Dietercoopman\SajanPhp\SshKeyMakeCommand;
 use Dietercoopman\SajanPhp\ToolsCheck;
 use Dietercoopman\SajanPhp\ToolsInstall;
 use Dietercoopman\SajanPhp\ToolsUpdate;
 use Dietercoopman\SajanPhp\WeatherCommand;
+use Dietercoopman\SajanPhp\WebpackBuildCommand;
+use Dietercoopman\SajanPhp\WebpackInitCommand;
 
 if (file_exists(__DIR__ . '/../../autoload.php')) {
     require __DIR__ . '/../../autoload.php';
@@ -33,5 +37,8 @@ $app->add(new ToolsCheck());
 $app->add(new ToolsUpdate());
 $app->add(new WeatherCommand());
 $app->add(new MyIpCommand());
-
+$app->add(new WebpackInitCommand());
+$app->add(new WebpackBuildCommand());
+$app->add(new SshKeyDirCommand());
+$app->add(new SshKeyMakeCommand());
 $app->run();
