@@ -1,5 +1,5 @@
 {
-  "name": "dietercoopman/sajan-php",
+  "name": "dietercoopman/sajan",
   "description": "Sajan Sajan is a lightweight command line tool for webdevelopers.",
   "type": "library",
   "bin": [
