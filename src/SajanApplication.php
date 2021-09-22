@@ -7,7 +7,7 @@ class SajanApplication extends \Symfony\Component\Console\Application
 
     public function __construct(string $name = 'UNKNOWN', string $version = 'UNKNOWN')
     {
-//        $this->brand();
+        $this->brand();
         parent::__construct($name, $version);
     }
 

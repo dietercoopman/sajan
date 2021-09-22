@@ -4,12 +4,14 @@
 use Dietercoopman\SajanPhp\AliasCreateCommand;
 use Dietercoopman\SajanPhp\AliasListCommand;
 use Dietercoopman\SajanPhp\FlushDnsCommand;
+use Dietercoopman\SajanPhp\MyIpCommand;
 use Dietercoopman\SajanPhp\OpenCommand;
 use Dietercoopman\SajanPhp\SajanApplication;
 use Dietercoopman\SajanPhp\SecretCommand;
 use Dietercoopman\SajanPhp\ToolsCheck;
 use Dietercoopman\SajanPhp\ToolsInstall;
 use Dietercoopman\SajanPhp\ToolsUpdate;
+use Dietercoopman\SajanPhp\WeatherCommand;
 
 if (file_exists(__DIR__ . '/../../autoload.php')) {
     require __DIR__ . '/../../autoload.php';
@@ -29,4 +31,7 @@ $app->add(new OpenCommand());
 $app->add(new ToolsInstall());
 $app->add(new ToolsCheck());
 $app->add(new ToolsUpdate());
+$app->add(new WeatherCommand());
+$app->add(new MyIpCommand());
+
 $app->run();
