@@ -19,11 +19,7 @@ For us brew is the best tool to install these programs, so we depend on it. If y
 
 ## Installation
 
-If you are using the 1.0 version of sajan in bash you can remove it with the following command
-
-```bash
-sajan bye
-```
+If you are using the 1.0 version of sajan in bash you can remove it with the following command with the bye command.
 
 The purpose of sajan is simplicity, and that starts with the installation ...  Sajan is installable via a global composer requirement
 
