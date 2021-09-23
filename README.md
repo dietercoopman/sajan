@@ -30,4 +30,7 @@ composer require dietercoopman/sajan
 One sajan is installed you can get an overview of all the commands by running the `sajan` command.  You will see this
 welcome screen.
 
+![Sajan home screen](brand/welcome.png?raw=true "Sajan home screen")
+
+
 
