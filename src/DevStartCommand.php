@@ -18,8 +18,9 @@ class DevStartCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('dev:open')
-            ->setDescription('Open phpstorm, finder and gittower for this folder');
+            ->setName('dev:start')
+            ->setDescription('Open phpstorm, finder and gittower for this folder')
+            ->setAliases(['ds']);
     }
 
     /**
