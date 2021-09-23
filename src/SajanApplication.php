@@ -52,7 +52,7 @@ This tool provides you with some automation tasks for Laravel, Git, PhpStorm and
     private function checkOutdated()
     {
         try {
-            $version = strstr(Process::fromShellCommandline('composer global outdated| grep sajan')->mustRun()->getOutput(), 'sajan');
+            $version = strstr(Process::fromShellCommandline('composer global outdated --direct | grep sajan')->mustRun()->getOutput(), 'sajan');
             return explode(' ', explode(' ! ', $version)[1])[0];
         } catch (\Exception $e) {
             return false;
