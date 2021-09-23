@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Process\Process;
 
-class WeatherCommand extends BaseCommand
+class MiscWeatherCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -18,7 +18,7 @@ class WeatherCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('weather')
+            ->setName('misc:weather')
             ->setDescription('Get the weather in your city');
     }
 

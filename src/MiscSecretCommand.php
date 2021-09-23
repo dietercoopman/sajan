@@ -6,7 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SecretCommand extends BaseCommand
+class MiscSecretCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -16,7 +16,7 @@ class SecretCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('secret')
+            ->setName('misc:secret')
             ->setDescription('Create a secure password');
     }
 
