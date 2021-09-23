@@ -16,7 +16,8 @@ class WebpackBuildCommand extends BaseCommand
     {
         $this
             ->setName('webpack:build')
-            ->setDescription('Install node modules and run build');
+            ->setDescription('Install node modules and run build')
+            ->setAliases(['wb']);
     }
 
     /**

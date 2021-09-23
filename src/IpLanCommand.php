@@ -19,7 +19,8 @@ class IpLanCommand extends BaseCommand
     {
         $this
             ->setName('ip:lan')
-            ->setDescription('Get your lan ip address');
+            ->setDescription('Get your lan ip address')
+            ->setAliases(['il']);
     }
 
     /**

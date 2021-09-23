@@ -19,7 +19,8 @@ class ToolsInstall extends BaseCommand
     {
         $this
             ->setName('tools:install')
-            ->setDescription('Install the tools used by sajan');
+            ->setDescription('Install the tools used by sajan')
+            ->setAliases(['ti']);
     }
 
     /**

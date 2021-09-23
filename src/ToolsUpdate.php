@@ -19,7 +19,8 @@ class ToolsUpdate extends BaseCommand
     {
         $this
             ->setName('tools:update')
-            ->setDescription('Update tools used by sajan');
+            ->setDescription('Update tools used by sajan')
+            ->setAliases(['tu']);
     }
 
     /**

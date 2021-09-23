@@ -22,7 +22,8 @@ class UpdateCommand extends BaseCommand
     {
         $this
             ->setName('self-update')
-            ->setDescription('Update sajan itself');
+            ->setDescription('Update sajan itself')
+            ->setAliases(['su']);
     }
 
     /**

@@ -18,7 +18,8 @@ class ToolsCheck extends BaseCommand
     {
         $this
             ->setName('tools:check')
-            ->setDescription('Check if all tools needed for sajan are present');
+            ->setDescription('Check if all tools needed for sajan are present')
+            ->setAliases(['tc']);
     }
 
     /**

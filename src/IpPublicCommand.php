@@ -19,7 +19,8 @@ class IpPublicCommand extends BaseCommand
     {
         $this
             ->setName('ip:public')
-            ->setDescription('Get your public ip address');
+            ->setDescription('Get your public ip address')
+            ->setAliases(['ip']);
     }
 
     /**

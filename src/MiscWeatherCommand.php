@@ -19,7 +19,8 @@ class MiscWeatherCommand extends BaseCommand
     {
         $this
             ->setName('misc:weather')
-            ->setDescription('Get the weather in your city');
+            ->setDescription('Get the weather in your city')
+            ->setAliases(['mw']);
     }
 
     /**

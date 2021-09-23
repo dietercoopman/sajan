@@ -23,7 +23,8 @@ class WebpackInitCommand extends BaseCommand
     {
         $this
             ->setName('webpack:init')
-            ->setDescription('Init webpack for css and javascript in current directory');
+            ->setDescription('Init webpack for css and javascript in current directory')
+            ->setAliases(['wi']);
     }
 
     /**

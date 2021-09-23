@@ -2,7 +2,6 @@
 
 namespace Dietercoopman\SajanPhp;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -19,7 +18,8 @@ class DnsFlushCommand extends BaseCommand
     {
         $this
             ->setName('dns:flush')
-            ->setDescription('Clear the dns cache of your computer');
+            ->setDescription('Clear the dns cache of your computer')
+            ->setAliases(['df']);
     }
 
     /**
@@ -34,7 +34,7 @@ class DnsFlushCommand extends BaseCommand
         $process = new Process(['sudo', 'killall', 'HUP', 'mDNSResponder']);
         $process->run();
 
-        if (! $process->isSuccessful()) {
+        if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
         $output->writeln('<fg=green>Dns successfully flushed</>');

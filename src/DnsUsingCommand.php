@@ -16,7 +16,8 @@ class DnsUsingCommand extends BaseCommand
     {
         $this
             ->setName('dns:using')
-            ->setDescription('Show the dns server your computer is using');
+            ->setDescription('Show the dns server your computer is using')
+            ->setAliases(['du']);
     }
 
     /**
