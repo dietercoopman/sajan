@@ -45,16 +45,5 @@ class AliasCreateCommand extends BaseCommand
         return 0;
     }
 
-    private function source()
-    {
-        $srccommand = 'if [ "$SHELL" == "/bin/zsh" ]; then
-    echo source ~/.bash_profile >~/.zshenv
-    source ~/.zshenv
-    exec zsh -l
-  else
-    source ~/.bash_profile
-    exec bash -l
-  fi';
-        Process::fromShellCommandline($srccommand)->mustRun();
-    }
+
 }

@@ -19,7 +19,7 @@ class BaseCommand extends Command
         $process = Process::fromShellCommandline($command);
         $process->setTimeout(3600);
         $process->mustRun(function ($type, $buffer) use ($output) {
-            $output->write('<fg=green>'.$buffer.'</>');
+            $output->write('<fg=green>' . $buffer . '</>');
         });
 
         if ($progressBar) {
@@ -27,5 +27,18 @@ class BaseCommand extends Command
         }
 
         return $process;
+    }
+
+    protected function source()
+    {
+        $srccommand = 'if [ "$SHELL" == "/bin/zsh" ]; then
+echo source ~/.bash_profile >~/.zshenv
+source ~/.zshenv
+exec zsh -l
+else
+source ~/.bash_profile
+exec bash -l
+fi';
+        Process::fromShellCommandline($srccommand)->mustRun();
     }
 }

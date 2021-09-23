@@ -6,9 +6,11 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class SajanApplication extends \Symfony\Component\Console\Application
 {
-    public function __construct(string $name = 'UNKNOWN', string $version = 'UNKNOWN')
+    public function __construct(string $name = 'UNKNOWN', string $version = 'UNKNOWN', $args)
     {
-        $this->brand();
+        if (count($args) == 1) {
+            $this->brand();
+        }
         parent::__construct($name, $version);
     }
 

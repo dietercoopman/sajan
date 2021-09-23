@@ -3,13 +3,14 @@
 
 use Dietercoopman\SajanPhp\AliasCreateCommand;
 use Dietercoopman\SajanPhp\AliasListCommand;
+use Dietercoopman\SajanPhp\DevPhpCommand;
+use Dietercoopman\SajanPhp\DevStartCommand;
 use Dietercoopman\SajanPhp\DnsFlushCommand;
 use Dietercoopman\SajanPhp\DnsUsingCommand;
 use Dietercoopman\SajanPhp\IpLanCommand;
 use Dietercoopman\SajanPhp\IpPublicCommand;
 use Dietercoopman\SajanPhp\MiscSecretCommand;
 use Dietercoopman\SajanPhp\MiscWeatherCommand;
-use Dietercoopman\SajanPhp\DevStartCommand;
 use Dietercoopman\SajanPhp\SajanApplication;
 use Dietercoopman\SajanPhp\SshKeyDirCommand;
 use Dietercoopman\SajanPhp\SshKeyMakeCommand;
@@ -19,25 +20,26 @@ use Dietercoopman\SajanPhp\ToolsUpdate;
 use Dietercoopman\SajanPhp\UpdateCommand;
 use Dietercoopman\SajanPhp\WebpackBuildCommand;
 use Dietercoopman\SajanPhp\WebpackInitCommand;
+use Symfony\Component\Process\Process;
 
-if (file_exists(__DIR__ . '/../../autoload.php')) {
-    require __DIR__ . '/../../autoload.php';
+if (file_exists(__DIR__.'/../../autoload.php')) {
+    require __DIR__.'/../../autoload.php';
 } else {
-    require __DIR__ . '/vendor/autoload.php';
+    require __DIR__.'/vendor/autoload.php';
 }
 
 /**
  * Start the console application.
  */
-$version = trim(array_values(array_filter(explode('   ', exec('composer global info | grep sajan'))))[1]);
-
-$app = new SajanApplication('<fg=green>Sajan</> version', $version);
+$version = trim(array_values(array_filter(explode('   ', Process::fromShellCommandline('composer global info | grep sajan')->mustRun()->getOutput())))[1]);
+$app = new SajanApplication('<fg=green>Sajan</> version', $version, get_defined_vars()['argv']);
 $app->add(new MiscSecretCommand());
 $app->add(new AliasListCommand());
 $app->add(new AliasCreateCommand());
 $app->add(new DnsFlushCommand());
 $app->add(new DnsUsingCommand());
 $app->add(new DevStartCommand());
+$app->add(new DevPhpCommand());
 $app->add(new ToolsInstall());
 $app->add(new ToolsCheck());
 $app->add(new ToolsUpdate());
