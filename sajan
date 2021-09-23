@@ -27,7 +27,7 @@ if (file_exists(__DIR__ . '/../../autoload.php')) {
 /**
  * Start the console application.
  */
-$app = new SajanApplication('<fg=green>Sajan</> version', '2.0.7');
+$app = new SajanApplication('<fg=green>Sajan</> version', '2.0.9');
 $app->add(new SecretCommand());
 $app->add(new AliasListCommand());
 $app->add(new AliasCreateCommand());
