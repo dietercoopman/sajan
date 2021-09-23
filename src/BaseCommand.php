@@ -14,12 +14,14 @@ class BaseCommand extends Command
      * @param ProgressBar $progressBar
      * @return Process
      */
-    public function runProcess($command, OutputInterface $output, $progressBar = null, $progressvalue = null): Process
+    public function runProcess($command, OutputInterface $output, $progressBar = null, $progressvalue = null, $withoutput = true): Process
     {
         $process = Process::fromShellCommandline($command);
         $process->setTimeout(3600);
-        $process->mustRun(function ($type, $buffer) use ($output) {
-            $output->write('<fg=green>' . $buffer . '</>');
+        $process->mustRun(function ($type, $buffer) use ($output, $withoutput) {
+            if ($withoutput) {
+                $output->write($buffer);
+            }
         });
 
         if ($progressBar) {
