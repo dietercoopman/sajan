@@ -9,7 +9,7 @@ use Dietercoopman\SajanPhp\IpLanCommand;
 use Dietercoopman\SajanPhp\IpPublicCommand;
 use Dietercoopman\SajanPhp\MiscSecretCommand;
 use Dietercoopman\SajanPhp\MiscWeatherCommand;
-use Dietercoopman\SajanPhp\OpenCommand;
+use Dietercoopman\SajanPhp\DevOpenCommand;
 use Dietercoopman\SajanPhp\SajanApplication;
 use Dietercoopman\SajanPhp\SshKeyDirCommand;
 use Dietercoopman\SajanPhp\SshKeyMakeCommand;
@@ -20,10 +20,10 @@ use Dietercoopman\SajanPhp\UpdateCommand;
 use Dietercoopman\SajanPhp\WebpackBuildCommand;
 use Dietercoopman\SajanPhp\WebpackInitCommand;
 
-if (file_exists(__DIR__.'/../../autoload.php')) {
-    require __DIR__.'/../../autoload.php';
+if (file_exists(__DIR__ . '/../../autoload.php')) {
+    require __DIR__ . '/../../autoload.php';
 } else {
-    require __DIR__.'/vendor/autoload.php';
+    require __DIR__ . '/vendor/autoload.php';
 }
 
 /**
@@ -37,7 +37,7 @@ $app->add(new AliasListCommand());
 $app->add(new AliasCreateCommand());
 $app->add(new DnsFlushCommand());
 $app->add(new DnsUsingCommand());
-$app->add(new OpenCommand());
+$app->add(new DevOpenCommand());
 $app->add(new ToolsInstall());
 $app->add(new ToolsCheck());
 $app->add(new ToolsUpdate());

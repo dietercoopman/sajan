@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-class OpenCommand extends BaseCommand
+class DevOpenCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -18,7 +18,7 @@ class OpenCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('open')
+            ->setName('dev:open')
             ->setDescription('Open phpstorm, finder and gittower for this folder');
     }
 
