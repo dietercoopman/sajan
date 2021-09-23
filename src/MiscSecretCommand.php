@@ -17,7 +17,8 @@ class MiscSecretCommand extends BaseCommand
     {
         $this
             ->setName('misc:secret')
-            ->setDescription('Create a secure password');
+            ->setDescription('Create a secure password')
+            ->setAliases(['ms']);
     }
 
     /**

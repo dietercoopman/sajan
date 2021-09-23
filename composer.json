@@ -4,7 +4,7 @@
   "type": "library",
   "license": "MIT",
   "bin": [
-    "sajan"
+    "sajan","s"
   ],
   "require": {
     "illuminate/filesystem": "^8.61",

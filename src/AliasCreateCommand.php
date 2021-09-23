@@ -18,7 +18,8 @@ class AliasCreateCommand extends BaseCommand
     {
         $this
             ->setName('alias:create')
-            ->setDescription('Create an alias for a program or command');
+            ->setDescription('Create an alias for a program or command')
+            ->setAliases(['ac']);
     }
 
     /**

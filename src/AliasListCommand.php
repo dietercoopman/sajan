@@ -19,7 +19,8 @@ class AliasListCommand extends BaseCommand
     {
         $this
             ->setName('alias:list')
-            ->setDescription('Get a table overview of all registered aliases on your computer');
+            ->setDescription('Get a table overview of all registered aliases on your computer')
+            ->setAliases(['al']);
     }
 
     /**
