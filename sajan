@@ -22,16 +22,17 @@ use Dietercoopman\SajanPhp\WebpackBuildCommand;
 use Dietercoopman\SajanPhp\WebpackInitCommand;
 use Symfony\Component\Process\Process;
 
-if (file_exists(__DIR__.'/../../autoload.php')) {
-    require __DIR__.'/../../autoload.php';
+if (file_exists(__DIR__ . '/../../autoload.php')) {
+    require __DIR__ . '/../../autoload.php';
 } else {
-    require __DIR__.'/vendor/autoload.php';
+    require __DIR__ . '/vendor/autoload.php';
 }
 
 /**
  * Start the console application.
  */
-$version = trim(array_values(array_filter(explode('   ', Process::fromShellCommandline('composer global info | grep sajan')->mustRun()->getOutput())))[1]);
+$version  = trim(array_values(array_filter(explode('   ', Process::fromShellCommandline('composer global info | grep sajan')->mustRun()->getOutput())))[1]);
+
 $app = new SajanApplication('<fg=green>Sajan</> version', $version, get_defined_vars()['argv']);
 $app->add(new MiscSecretCommand());
 $app->add(new AliasListCommand());
