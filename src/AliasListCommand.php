@@ -50,8 +50,12 @@ class AliasListCommand extends Command
     {
         $possibleAliasses = collect(explode("\n", $possibleAliasses));
         $aliases = $possibleAliasses
-            ->filter(fn ($line) => $this->isAnAlias($line))
-            ->transform(fn ($alias) => $this->destructAlias($alias));
+            ->filter(function ($line) {
+                $this->isAnAlias($line);
+            })
+            ->transform(function ($alias) {
+                $this->destructAlias($alias);
+            });
 
         return $aliases->toArray();
     }
