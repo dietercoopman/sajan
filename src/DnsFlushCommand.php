@@ -31,6 +31,7 @@ class DnsFlushCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $output->writeln('<fg=yellow>Flushing dns needs root privileges , please provide your password ... </>');
         $process = new Process(['sudo', 'killall', 'HUP', 'mDNSResponder']);
         $process->run();
 
