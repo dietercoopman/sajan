@@ -1,2 +1,2 @@
 #!/bin/bash
-sajan $1
+sajan $1 $2
