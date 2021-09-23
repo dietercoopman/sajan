@@ -3,8 +3,10 @@
 
 use Dietercoopman\SajanPhp\AliasCreateCommand;
 use Dietercoopman\SajanPhp\AliasListCommand;
-use Dietercoopman\SajanPhp\FlushDnsCommand;
-use Dietercoopman\SajanPhp\MyIpCommand;
+use Dietercoopman\SajanPhp\DnsFlushCommand;
+use Dietercoopman\SajanPhp\DnsUsingCommand;
+use Dietercoopman\SajanPhp\IpLanCommand;
+use Dietercoopman\SajanPhp\IpPublicCommand;
 use Dietercoopman\SajanPhp\OpenCommand;
 use Dietercoopman\SajanPhp\SajanApplication;
 use Dietercoopman\SajanPhp\SecretCommand;
@@ -27,17 +29,19 @@ if (file_exists(__DIR__ . '/../../autoload.php')) {
 /**
  * Start the console application.
  */
-$app = new SajanApplication('<fg=green>Sajan</> version', '2.0.9');
+$app = new SajanApplication('<fg=green>Sajan</> version', '2.0.10');
 $app->add(new SecretCommand());
 $app->add(new AliasListCommand());
 $app->add(new AliasCreateCommand());
-$app->add(new FlushDnsCommand());
+$app->add(new DnsFlushCommand());
+$app->add(new DnsUsingCommand());
 $app->add(new OpenCommand());
 $app->add(new ToolsInstall());
 $app->add(new ToolsCheck());
 $app->add(new ToolsUpdate());
 $app->add(new WeatherCommand());
-$app->add(new MyIpCommand());
+$app->add(new IpPublicCommand());
+$app->add(new IpLanCommand());
 $app->add(new WebpackInitCommand());
 $app->add(new WebpackBuildCommand());
 $app->add(new UpdateCommand());

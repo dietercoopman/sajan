@@ -2,16 +2,10 @@
 
 namespace Dietercoopman\SajanPhp;
 
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 
-class UpdateCommand extends BaseCommand
+class DnsUsingCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -21,8 +15,8 @@ class UpdateCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('self-update')
-            ->setDescription('Update sajan itself');
+            ->setName('dns:using')
+            ->setDescription('Show the dns server your computer is using');
     }
 
     /**
@@ -34,8 +28,8 @@ class UpdateCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->runProcess('composer global update dietercoopman/sajan', $output);
-
+        $output->write('<fg=yellow>You are using dns with ip : </>');
+        $this->runProcess("cat /etc/resolv.conf |grep -i '^nameserver'|head -n1|cut -d ' ' -f2", $output);
         return 0;
     }
 }

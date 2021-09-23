@@ -5,10 +5,10 @@ namespace Dietercoopman\SajanPhp;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Process\Process;
 
-class FlushDnsCommand extends BaseCommand
+class IpPublicCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -18,8 +18,8 @@ class FlushDnsCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('dnsflush')
-            ->setDescription('Clear the dns cache of your computer');
+            ->setName('ip:public')
+            ->setDescription('Get your public ip address');
     }
 
     /**
@@ -31,13 +31,8 @@ class FlushDnsCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $process = new Process(['sudo', 'killall', 'HUP', 'mDNSResponder']);
-        $process->run();
-
-        if (! $process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-        $output->writeln('<fg=green>Dns successfully flushed</>');
+        $ip = Process::fromShellCommandline('curl https://ifconfig.me/')->mustRun()->getOutput();
+        $output->writeln('<fg=yellow>Your public ip address is : </><bg=red> '.$ip.' </>');
 
         return 0;
     }

@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Process\Process;
 
-class MyIpCommand extends BaseCommand
+class IpLanCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -18,8 +18,8 @@ class MyIpCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('myip')
-            ->setDescription('Get your public ip address');
+            ->setName('ip:lan')
+            ->setDescription('Get your lan ip address');
     }
 
     /**
@@ -31,8 +31,8 @@ class MyIpCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $ip = Process::fromShellCommandline('curl https://ifconfig.me/')->mustRun()->getOutput();
-        $output->writeln('<fg=yellow>Your public ip address is : </><bg=red> '.$ip.' </>');
+        $ip = Process::fromShellCommandline("ifconfig | grep \"inet \" | grep -Fv 127.0.0.1 | awk '{print $2}'")->mustRun()->getOutput();
+        $output->writeln('<fg=yellow>Your lan ip address is : </><bg=red> '.trim($ip).' </>');
 
         return 0;
     }

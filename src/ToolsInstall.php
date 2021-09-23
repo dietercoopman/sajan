@@ -46,6 +46,7 @@ class ToolsInstall extends BaseCommand
 
     private function installHomeBrew()
     {
+
         $process = Process::fromShellCommandline('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"');
         $process->run(function ($type, $buffer) {
             if (Process::ERR === $type) {
