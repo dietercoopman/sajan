@@ -19,10 +19,10 @@ For us brew is the best tool to install these programs, so we depend on it. If y
 
 ## Installation
 
-The purpose of sajan is simplicity, and that starts with the installation ...
+The purpose of sajan is simplicity, and that starts with the installation ...  Sajan is installable via a global composer requirement
 
 ````shell
-composer require dietercoopman/sajan
+composer global require dietercoopman/sajan
 ````
 
 ## Welcome
