@@ -2,8 +2,8 @@
 
 ![Downloads](https://img.shields.io/packagist/dt/dietercoopman/sajan.svg?style=flat-square)
 
+![Sajan overview](https://banners.beyondco.de/sajan.png?theme=light&packageManager=&packageName=composer+global+require+dietercoopman%2Fsajan&pattern=morphingDiamonds&style=style_1&description=Sajan+is+a+lightweight+command+line+tool+for+webdevelopers&md=0&showWatermark=1&fontSize=150px&images=chip)
 
-**🚧 THIS TOOL IS STILL UNDER CONSTRUCTION 🚧** 
 
 Sajan is a lightweight command line tool written in php for webdevelopers.
 
