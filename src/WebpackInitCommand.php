@@ -2,13 +2,18 @@
 
 namespace Dietercoopman\SajanPhp;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
-class WebpackInitCommand extends Command
+class WebpackInitCommand extends BaseCommand
 {
+
+    public function __construct(string $name = null)
+    {
+        parent::__construct($name);
+    }
+
     /**
      * Configure the command.
      *
@@ -30,19 +35,23 @@ class WebpackInitCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $progressBar = new ProgressBar($output, 100);
+        $progressBar->start();
+        $output->writeln('');
+
         $this->createPackageJson();
-        Process::fromShellCommandline('mkdir -p sass &&  touch sass/style.scss')->mustRun()->getOutput();
+        $progressBar->advance(10);
+
+        $this->runProcess('mkdir -p sass', $output, $progressBar, 10);
+        $this->runProcess('touch sass/style.scss', $output, $progressBar, 10);
 
         $this->createWebpackConfig();
+        $progressBar->advance(10);
 
-        $process = Process::fromShellCommandline('npm install && npm run build');
-        $process->run(function ($type, $buffer) {
-            if (Process::ERR === $type) {
-                echo 'ERR > '.$buffer;
-            } else {
-                echo 'OUT > '.$buffer;
-            }
-        });
+        $this->runProcess('npm install', $output, $progressBar, 25);
+        $this->runProcess('npm run build', $output, $progressBar, 35);
+
+        $progressBar->finish();
 
         return 0;
     }
@@ -59,12 +68,11 @@ class WebpackInitCommand extends Command
         "wp": "webpack --watch --mode production"
   },
   "devDependencies": {
-        "compass": "^0.1.1",
-        "css-loader": "^5.0.1",
-        "mini-css-extract-plugin": "^1.3.1",
-        "node-sass": "^5.0.0",
+        "css-loader": "^6.2.1",
+        "mini-css-extract-plugin": "^2.3.0",
+        "node-sass": "^6.0.0",
         "sass": "^1.38.1",
-        "sass-loader": "^10.1.0",
+        "sass-loader": "^12.0.0",
         "webpack": "^5.9.0",
         "webpack-cli": "^4.2.0"
   }
@@ -103,4 +111,6 @@ module.exports = {
 };';
         file_put_contents('webpack.config.js', $output);
     }
+
+
 }

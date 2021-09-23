@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-class UpdateCommand extends Command
+class UpdateCommand extends BaseCommand
 {
     /**
      * Configure the command.

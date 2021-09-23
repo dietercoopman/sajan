@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-class ToolsCheck extends Command
+class ToolsCheck extends BaseCommand
 {
     /**
      * Configure the command.

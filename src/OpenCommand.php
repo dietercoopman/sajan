@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-class OpenCommand extends Command
+class OpenCommand extends BaseCommand
 {
     /**
      * Configure the command.

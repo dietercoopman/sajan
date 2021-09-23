@@ -2,13 +2,12 @@
 
 namespace Dietercoopman\SajanPhp;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Process\Process;
 
-class AliasCreateCommand extends Command
+class AliasCreateCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -32,12 +31,12 @@ class AliasCreateCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $question = new Question('<fg=green>Which program/command do you want to alias ?</> ', '');
-        $command = $this->getHelper('question')->ask($input, $output, $question);
+        $command  = $this->getHelper('question')->ask($input, $output, $question);
 
-        $question = new Question('<fg=green>How do you want to name your alias ?</> ', '');
+        $question  = new Question('<fg=green>How do you want to name your alias ?</> ', '');
         $aliasname = $this->getHelper('question')->ask($input, $output, $question);
 
-        $commandToRun = 'echo "alias '.$aliasname.'=\"'.$command.'\"" >> ~/.bash_profile';
+        $commandToRun = 'echo "alias ' . $aliasname . '=\"' . $command . '\"" >> ~/.bash_profile';
         Process::fromShellCommandline($commandToRun)->mustRun();
 
         $this->source();

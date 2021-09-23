@@ -2,12 +2,10 @@
 
 namespace Dietercoopman\SajanPhp;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
-class WebpackBuildCommand extends Command
+class WebpackBuildCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -31,7 +29,8 @@ class WebpackBuildCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            Process::fromShellCommandline('npm install && npm run build')->mustRun()->getOutput();
+            $this->runProcess('npm install', $output);
+            $this->runProcess('npm run build', $output);
         } catch (\Exception $e) {
             $output->writeln('<fg=red>Your assets could not build , please check your configuration</>');
         }

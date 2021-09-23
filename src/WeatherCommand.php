@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Process\Process;
 
-class WeatherCommand extends Command
+class WeatherCommand extends BaseCommand
 {
     /**
      * Configure the command.
