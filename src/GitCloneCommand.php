@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class VisitCommand extends BaseCommand
+class GitCloneCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -16,10 +16,10 @@ class VisitCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('visit')
-            ->addArgument('url', InputArgument::REQUIRED, 'The website you want to visit, including https://')
-            ->setDescription('Visit a website')
-            ->setAliases(['ml']);
+            ->setName('git:clone')
+            ->addArgument('repo', InputArgument::REQUIRED, 'The repo you want to clone')
+            ->setDescription('Clone a git repository to the current directory ( ! not into a new subdirectory )')
+            ->setAliases(['gc']);
     }
 
     /**
@@ -31,7 +31,8 @@ class VisitCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->runProcess('open -n '.$input->getArgument('url'), $output);
+        $this->runProcess('git clone '.$input->getArgument('repo').' .', $output);
+
         return 0;
     }
 }

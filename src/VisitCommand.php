@@ -2,10 +2,11 @@
 
 namespace Dietercoopman\SajanPhp;
 
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MiscLoveCommand extends BaseCommand
+class VisitCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -15,8 +16,9 @@ class MiscLoveCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('misc:love')
-            ->setDescription('Give sajan some love by staring on github')
+            ->setName('visit')
+            ->addArgument('url', InputArgument::REQUIRED, 'The website you want to visit, including https://')
+            ->setDescription('Visit a website')
             ->setAliases(['ml']);
     }
 
@@ -29,10 +31,7 @@ class MiscLoveCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('<fg=red>Thx for giving sajan some love</> 💕');
-        $this->runProcess('open -n https://github.com/dietercoopman/sajan', $output);
-
-
+        $this->runProcess('open -n '.$input->getArgument('url'), $output);
         return 0;
     }
 }

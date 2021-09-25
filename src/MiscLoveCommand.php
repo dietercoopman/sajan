@@ -2,13 +2,12 @@
 
 namespace Dietercoopman\SajanPhp;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Process\Process;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
-class MiscWeatherCommand extends BaseCommand
+class MiscLoveCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -18,9 +17,9 @@ class MiscWeatherCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('misc:weather')
-            ->setDescription('Get the weather in your city')
-            ->setAliases(['mw']);
+            ->setName('misc:love')
+            ->setDescription('Give sajan some love by staring on github')
+            ->setAliases(['ml']);
     }
 
     /**
@@ -32,12 +31,13 @@ class MiscWeatherCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $question = new Question('<fg=green>You want the weather in  ?</> ', '');
-        $location = $this->getHelper('question')->ask($input, $output, $question);
-        $location = str_replace(' ', '+', $location);
+        $io = new SymfonyStyle($input, $output);
+        $answer = $io->ask('Do you want to star sajan on Github ( this will open a browser ) ? (yes/no)', 'yes');
 
-        $output = Process::fromShellCommandline('curl wttr.in/'.$location)->mustRun()->getOutput();
-        echo $output;
+        if ($answer == 'yes') {
+            $output->writeln('<fg=red>Thx for giving sajan some love</> 💕');
+            $this->runProcess('open -n https://github.com/dietercoopman/sajan', $output);
+        }
 
         return 0;
     }

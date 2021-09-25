@@ -5,7 +5,7 @@ namespace Dietercoopman\SajanPhp;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GitCleanCommand extends BaseCommand
+class GitRevertCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -15,9 +15,9 @@ class GitCleanCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('git:clean')
+            ->setName('git:revert')
             ->setDescription('Revert the changes that you made and go back to the files that you had.')
-            ->setAliases(['gc']);
+            ->setAliases(['gr']);
     }
 
     /**
