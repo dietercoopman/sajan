@@ -37,5 +37,5 @@ class LaravelValetCommand extends BaseCommand
         $this->runProcess('valet install', $output);
         return 0;
     }
-    
+
 }

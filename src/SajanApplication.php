@@ -2,6 +2,7 @@
 
 namespace Dietercoopman\SajanPhp;
 
+use Illuminate\Support\Facades\File;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Process\Process;
 
@@ -53,8 +54,11 @@ This tool provides you with some automation tasks for Laravel, Git, PhpStorm and
     private function checkOutdated()
     {
         try {
-            $version = strstr(Process::fromShellCommandline('composer global outdated --direct | grep sajan')->mustRun()->getOutput(), 'sajan');
-            return explode(' ', explode(' ! ', $version)[1])[0];
+            $connected = @fsockopen('www.google.com', 80);
+            if ($connected) {
+                $version = strstr(Process::fromShellCommandline('composer global outdated --direct | grep sajan')->mustRun()->getOutput(), 'sajan');
+                return explode(' ', explode(' ! ', $version)[1])[0];
+            }
         } catch (\Exception $e) {
             return false;
         }
