@@ -4,7 +4,6 @@ namespace Dietercoopman\SajanPhp;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class StarCommand extends BaseCommand
@@ -18,8 +17,7 @@ class StarCommand extends BaseCommand
     {
         $this
             ->setName('star')
-            ->setDescription('Star the sajan repo on Github')
-            ->setAliases(['st']);
+            ->setDescription('Star the sajan repo on Github');
     }
 
     /**
@@ -31,7 +29,7 @@ class StarCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
+        $io     = new SymfonyStyle($input, $output);
         $answer = $io->ask('Do you want to star sajan on Github ( this will open a browser ) ? (yes/no)', 'yes');
 
         if ($answer == 'yes') {

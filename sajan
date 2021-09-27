@@ -2,16 +2,15 @@
 <?php
 
 use Dietercoopman\SajanPhp\DevPhpCommand;
-use Dietercoopman\SajanPhp\DevStartCommand;
 use Dietercoopman\SajanPhp\DnsFlushCommand;
 use Dietercoopman\SajanPhp\DnsUsingCommand;
 use Dietercoopman\SajanPhp\IpLanCommand;
 use Dietercoopman\SajanPhp\IpPublicCommand;
 use Dietercoopman\SajanPhp\LaravelInstallCommand;
-use Dietercoopman\SajanPhp\LaravelValetCommand;
 use Dietercoopman\SajanPhp\MiscSecretCommand;
 use Dietercoopman\SajanPhp\SajanApplication;
 use Dietercoopman\SajanPhp\StarCommand;
+use Dietercoopman\SajanPhp\TipsCommand;
 use Dietercoopman\SajanPhp\ToolsCheck;
 use Dietercoopman\SajanPhp\ToolsInstall;
 use Dietercoopman\SajanPhp\ToolsUpdate;
@@ -19,10 +18,10 @@ use Dietercoopman\SajanPhp\UpdateCommand;
 use Dietercoopman\SajanPhp\WebpackInitCommand;
 use Symfony\Component\Process\Process;
 
-if (file_exists(__DIR__.'/../../autoload.php')) {
-    require __DIR__.'/../../autoload.php';
+if (file_exists(__DIR__ . '/../../autoload.php')) {
+    require __DIR__ . '/../../autoload.php';
 } else {
-    require __DIR__.'/vendor/autoload.php';
+    require __DIR__ . '/vendor/autoload.php';
 }
 
 /**
@@ -39,6 +38,7 @@ $app->add(new IpPublicCommand());
 $app->add(new LaravelInstallCommand());
 $app->add(new MiscSecretCommand());
 $app->add(new StarCommand());
+$app->add(new TipsCommand());
 $app->add(new ToolsInstall());
 $app->add(new ToolsCheck());
 $app->add(new ToolsUpdate());
