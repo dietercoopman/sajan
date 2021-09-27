@@ -19,7 +19,7 @@ class LaravelInstallCommand extends BaseCommand
         $this
             ->setName('laravel:install')
             ->addArgument('directory', InputArgument::REQUIRED, 'Specify the directory for your new Laravel installation')
-            ->setDescription('Install a specific version of Laravel')
+            ->setDescription('Install the latest version of Laravel')
             ->setAliases(['li']);
     }
 
@@ -33,17 +33,8 @@ class LaravelInstallCommand extends BaseCommand
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $process = $this->runProcess('git ls-remote --heads https://github.com/laravel/laravel.git | cut -f 2 | cut -b 12-20', $output, null, null, false);
-        $versions = $this->parseVersions($process);
+        $version = $this->getLatestVersion($process);
 
-        $helper = $this->getHelper('question');
-        $question = new ChoiceQuestion(
-            '<fg=yellow>Please choose the Laravel version you want to install (defaults to '.$versions[count($versions)].')</>',
-            $versions,
-            $versions[count($versions)]
-        );
-        $question->setErrorMessage('Version %s is invalid.');
-
-        $version = $helper->ask($input, $output, $question);
         $directory = $input->getArgument('directory');
 
         $output->writeln('Installing Laravel '.$version.' into directory "'.$directory.'"');
@@ -58,12 +49,11 @@ class LaravelInstallCommand extends BaseCommand
     /**
      * @param \Symfony\Component\Process\Process $process
      */
-    private function parseVersions(\Symfony\Component\Process\Process $process): array
+    private function getLatestVersion(\Symfony\Component\Process\Process $process): string
     {
         $versions = array_filter(explode('|', str_replace(['<br />', "\n"], ['|'], nl2br($process->getOutput()))));
-        unset($versions[0]);
-        unset($versions[count($versions)]);
-
-        return $versions;
+        //Remove master
+        array_pop($versions);
+        return end($versions);
     }
 }

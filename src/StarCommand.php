@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class MiscLoveCommand extends BaseCommand
+class StarCommand extends BaseCommand
 {
     /**
      * Configure the command.
@@ -17,9 +17,9 @@ class MiscLoveCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('misc:love')
-            ->setDescription('Give sajan some love by staring on github')
-            ->setAliases(['ml']);
+            ->setName('star')
+            ->setDescription('Star the sajan repo on Github')
+            ->setAliases(['st']);
     }
 
     /**
