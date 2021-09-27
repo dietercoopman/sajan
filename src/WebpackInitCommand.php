@@ -23,7 +23,7 @@ class WebpackInitCommand extends BaseCommand
     {
         $this
             ->setName('webpack:init')
-            ->setDescription('Create a basic webpack setup with a style.scc file')
+            ->setDescription('Create a basic webpack setup with a style.scss file')
             ->setAliases(['wi']);
     }
 
