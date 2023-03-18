@@ -31,20 +31,15 @@ class SajanApplication extends \Symfony\Component\Console\Application
 
     private function getBrand()
     {
-        $brand = '
-<fg=yellow>          ****     **********           *****             ***          *****          ****         ***
-         ****    **************        *******            ****         ******         *****        ****
-        ****     ****                 ********            ****        ********        *******      ****
-       ****     ****                  **** ****           ****       **** ****        ********     ****
-       ****      ****                ****  ****           ****      ****   ****       **** ****    ****
-      ****       *************      ****    ****          ****      ****    ****      ****  ****   ****
-     ****                 *****     ****    *****         ****     *****    ****      ****   **********
-     ****                  ****    ***************        ****    ***************     ****    *********
-    ****                   ****   ****        ****       *****    ****       *****    ****      *******
-   ****          **************   ****         ****  ********    ****         ****    ****       ******
-   ****            *********     ****           ***    ****      ***           ***    ***          ****
 
-</><fg=green>Sajan</> is a lightweight tool to automize some web development tasks
+        $brand = '<fg=yellow>             
+
+    █▀▀ █▀▀█ ░░▀ █▀▀█ █▀▀▄ 
+    ▀▀█ █▄▄█ ░░█ █▄▄█ █░░█ 
+    ▀▀▀ ▀░░▀ █▄█ ▀░░▀ ▀░░▀
+
+
+</><fg=green>Sajan</> is a lightweight tool to automate some web development tasks
 This tool provides you with some automation tasks for Laravel, Git, PhpStorm and Webpack
 ';
 

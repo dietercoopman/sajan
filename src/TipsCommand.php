@@ -29,6 +29,8 @@ class TipsCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->title();
+
         $io = new SymfonyStyle($input, $output);
         $io->title('Aliases');
         $io->writeln('Show all available aliases:  <fg=green>alias</>');

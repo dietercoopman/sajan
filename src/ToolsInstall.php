@@ -32,6 +32,8 @@ class ToolsInstall extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->title();
+
         $io = new SymfonyStyle($input, $output);
         $answer = $io->ask('Are you sure you want to install homebrew, node, git and composer? (yes/no)', 'yes');
 

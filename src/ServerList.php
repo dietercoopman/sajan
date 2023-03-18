@@ -35,8 +35,11 @@ class ServerList extends BaseCommand
      */
     public function execute( InputInterface $input, OutputInterface $output): int
     {
-        render('<div class="bg-green-800 m-1 p-1">Here\'s a list of all saved servers.</div>');
+        $this->title();
+
+        render('<div class="ml-1 mb-1">Here\'s a list of all saved servers.</div>');
         (new Configurator())->list();
+
         return 0;
     }
 

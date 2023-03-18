@@ -29,6 +29,8 @@ class StarCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->title();
+
         $io     = new SymfonyStyle($input, $output);
         $answer = $io->ask('Do you want to star sajan on Github ( this will open a browser ) ? (yes/no)', 'yes');
 

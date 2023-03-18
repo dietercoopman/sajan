@@ -20,8 +20,8 @@ class ServerCreate extends BaseCommand
     {
         $this
             ->setName('server:create')
-            ->setDescription('Create and save a server')
-            ->setAliases(['si']);
+            ->setDescription('Create and save a new server configuration')
+            ->setAliases(['sc']);
     }
 
     /**
@@ -33,34 +33,39 @@ class ServerCreate extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $helper = $this->getHelper('question');
+        $this->title();
 
-        render('<div class="bg-green-800 m-1 p-1">Initialise a new server</div>');
+        $helper       = $this->getHelper('question');
+        $configurator = (new Configurator());
+
         $name     = ask("<span class='ml-1 mr-1'>What name do you want for the server: </span>");
         $host     = ask("<span class='ml-1 mr-1'>What is the ip/hostname of the server: ");
         $username = ask("<span class='ml-1 mr-1'>What is your username: ");
         $question = new ConfirmationQuestion(' Do you want to connect with an ssh key (y/n) ? ', true, '/^(y|j)/i');
 
         if ($helper->ask($input, $output, $question)) {
-            $possibleKeys = Process::fromShellCommandline('ls ~/.ssh')->mustRun()->getOutput();
-            $possibleKeys = collect(explode("\n", $possibleKeys))->filter(function ($key) {
-                return strstr($key, '.pub');
-            })->transform(function ($key) {
-                return str_replace('.pub','',$key);
-            })->toArray();
-
-            $question = new ChoiceQuestion(
-                ' Please specify which key to use for this server:',
-                array_values($possibleKeys),
-                0
-            );
-            $question->setErrorMessage('Server %s is invalid.');
-            $keyfile = $helper->ask($input, $output, $question);
+            $keyfile = $configurator->askFor($helper, $input, $output, $this->getPossibleSshKeys(), 'Please select the ssh key you want to use');
         } else {
             $keyfile = null;
         }
-        (new Configurator())->store($name, $host, $username, '~/.ssh/'.$keyfile);
+
+        $configurator->store($name, $host, $username, '~/.ssh/' . $keyfile);
+
         return 0;
+    }
+
+    /**
+     * @return array
+     */
+    private function getPossibleSshKeys(): array
+    {
+        $possibleKeys = Process::fromShellCommandline('ls ~/.ssh')->mustRun()->getOutput();
+        $possibleKeys = collect(explode("\n", $possibleKeys))->filter(function ($key) {
+            return strstr($key, '.pub');
+        })->transform(function ($key) {
+            return str_replace('.pub', '', $key);
+        })->toArray();
+        return array_values($possibleKeys);
     }
 
 }

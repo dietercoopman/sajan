@@ -32,10 +32,12 @@ class ToolsUpdate extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->title();
+
         $io = new SymfonyStyle($input, $output);
         $answer = $io->ask('Are you sure you want to update all tools? (yes/no)', 'yes');
 
-        if ($answer === 'yes') {
+        if ($answer === 'yes' || $answer === 'y') {
             $this->updateViaHomeBrew($output);
         }
 

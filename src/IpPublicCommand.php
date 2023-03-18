@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Process\Process;
+use function Termwind\render;
 
 class IpPublicCommand extends BaseCommand
 {
@@ -19,7 +20,7 @@ class IpPublicCommand extends BaseCommand
     {
         $this
             ->setName('ip:public')
-            ->setDescription('Get your public ip address')
+            ->setDescription('Get the ip address of your computer as exposed to the internet')
             ->setAliases(['ip']);
     }
 
@@ -32,8 +33,11 @@ class IpPublicCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->title();
+
         $ip = Process::fromShellCommandline('curl https://ifconfig.me/')->mustRun()->getOutput();
-        $output->writeln('<fg=yellow>Your public ip address is : </><bg=red> '.$ip.' </>');
+        render("<span class='ml-1'>Your public ip address is: <span class='text-red-400'>" . trim($ip) . "</span></span>");
+        render('');
 
         return 0;
     }

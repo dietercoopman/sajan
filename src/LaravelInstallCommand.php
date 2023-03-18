@@ -32,16 +32,15 @@ class LaravelInstallCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $process = $this->runProcess('git ls-remote --heads https://github.com/laravel/laravel.git | cut -f 2 | cut -b 12-20', $output, null, null, false);
-        $version = $this->getLatestVersion($process);
+        $this->title();
 
+        $process   = $this->runProcess('git ls-remote --heads https://github.com/laravel/laravel.git | cut -f 2 | cut -b 12-20', $output, null, null, false);
+        $version   = $this->getLatestVersion($process);
         $directory = $input->getArgument('directory');
-
-        $output->writeln('Installing Laravel '.$version.' into directory "'.$directory.'"');
-
-        $this->runProcess('git clone --branch '.$version.' https://github.com/laravel/laravel.git '.$directory, $output);
-        $this->runProcess('cd '.$directory.' && composer install', $output);
-        $this->runProcess('cd '.$directory.' && cp .env.example .env && php artisan key:generate', $output);
+        $output->writeln('Installing Laravel ' . $version . ' into directory "' . $directory . '"');
+        $this->runProcess('git clone --branch ' . $version . ' https://github.com/laravel/laravel.git ' . $directory, $output);
+        $this->runProcess('cd ' . $directory . ' && composer install', $output);
+        $this->runProcess('cd ' . $directory . ' && cp .env.example .env && php artisan key:generate', $output);
 
         return 0;
     }

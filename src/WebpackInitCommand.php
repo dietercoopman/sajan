@@ -36,6 +36,8 @@ class WebpackInitCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->title();
+
         $progressBar = new ProgressBar($output, 100);
         $progressBar->start();
         $output->writeln('');

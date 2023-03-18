@@ -24,7 +24,7 @@ class ServerInfo extends BaseCommand
     {
         $this
             ->setName('server:info')
-            ->setDescription('Get the detailed information of a server')
+            ->setDescription('Get the detailed information of a saved server')
             ->setAliases(['si']);
     }
 
@@ -37,21 +37,14 @@ class ServerInfo extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        render('<div class="bg-green-800 m-1 p-1">You want more information of a server?</div>');
+        $this->title();
 
         $configurator = (new Configurator());
         $choices      = array_keys($configurator->getConfig()['servers']);
 
         if (count($choices) > 0) {
-
-            $helper   = $this->getHelper('question');
-            $question = new ChoiceQuestion(
-                ' Please select the server you want the info from',
-                $choices,
-                0
-            );
-            $question->setErrorMessage('Server %s is invalid.');
-            $server = $helper->ask($input, $output, $question);
+            $helper = $this->getHelper('question');
+            $server = $configurator->askFor($helper, $input, $output, $choices, 'Which server do you want the info for?');
             render('');
             $config = $configurator->getConfig()['servers'][$server];
             foreach ($config as $key => $value) {

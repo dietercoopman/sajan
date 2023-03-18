@@ -1,5 +1,7 @@
 <?php namespace Dietercoopman\SajanPhp\Services;
 
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use function Termwind\{ask, render};
 
 class Configurator
@@ -58,21 +60,48 @@ class Configurator
         fclose($file);
     }
 
-    public function validateForWebServer($servername)
+    public function validateServer($servername, $type = "apache")
     {
 
         $config       = $this->getConfig();
         $serverConfig = $config['servers'][$servername];
-        if (!isset($serverConfig['rootpath'])) {
-            $serverConfig['rootpath'] = ask("<span class='ml-1 mr-1'>What is the root path of your webserver ? </span>");
+
+        if ($type == "apache") {
+            if (!isset($serverConfig['rootpath'])) {
+                $serverConfig['rootpath'] = ask("<span class='ml-1 mr-1'>What is the root path of your server ? </span>");
+            }
+            if (!isset($serverConfig['configPath'])) {
+                $serverConfig['configPath'] = ask("<span class='ml-1 mr-1'>What is the config path of your server ? </span>");
+            }
         }
-        if (!isset($serverConfig['configPath'])) {
-            $serverConfig['configPath'] = ask("<span class='ml-1 mr-1'>What is the config path of your webserver ? </span>");
+        if($type == "mysql"){
+            if (!isset($serverConfig['mysql_port'])) {
+                $serverConfig['mysql_port'] = ask("<span class='ml-1 mr-1'>What is the mysql port for your server ? </span>");
+            }
+            if (!isset($serverConfig['mysql_user'])) {
+                $serverConfig['mysql_user'] = ask("<span class='ml-1 mr-1'>What is the mysql user for your server ? </span>");
+            }
+            if (!isset($serverConfig['mysql_password'])) {
+                $serverConfig['mysql_password'] = ask("<span class='ml-1 mr-1'>What is the mysql password for your server ? </span>");
+            }
         }
         $config['servers'][$servername] = $serverConfig;
         $this->save($config);
 
 
         return $config['servers'][$servername];
+    }
+
+
+    public function askFor($helper, $input, $output, $choices, $question)
+    {
+        $question = new ChoiceQuestion(
+            ' ' . $question,
+            $choices,
+            0
+        );
+        $question->setErrorMessage('Input %s is invalid.');
+        render('');
+        return $helper->ask($input, $output, $question);
     }
 }

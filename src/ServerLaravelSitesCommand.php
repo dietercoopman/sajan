@@ -21,7 +21,7 @@ class ServerLaravelSitesCommand extends BaseCommand
     {
         $this
             ->setName('server:laravelsites')
-            ->setDescription('List all laravel sites')
+            ->setDescription('Get Laravel applications with their version on a server')
             ->setAliases(['sla']);
     }
 
@@ -34,29 +34,23 @@ class ServerLaravelSitesCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-
-        render('<div class="bg-green-800 m-1 p-1">Get Laravel applications on a server </div>');
+        $this->title();
 
         $configurator = (new Configurator());
         $choices      = array_keys($configurator->getConfig()['servers']);
 
         if (count($choices) > 0) {
-            $helper   = $this->getHelper('question');
-            $question = new ChoiceQuestion(
-                ' Please select the server you want to run this command for',
-                $choices,
-                0
-            );
-            $question->setErrorMessage('Server %s is invalid.');
-            $servername = $helper->ask($input, $output, $question);
+            $helper     = $this->getHelper('question');
+            $servername = $configurator->askFor($helper, $input, $output, $choices, 'Please select the server you want to run this command for');
         } else {
             render('<div class="m-1">You have no saved servers, you can create one with the \'server:create\' command.</div>');
             return 0;
         }
 
-        $config = $configurator->validateForWebServer($servername);
+        $config = $configurator->validateServer($servername, 'apache');
         $server = (new Laravel())->init($config);
         $server->getLaravelApplications($servername);
+
         return 0;
     }
 

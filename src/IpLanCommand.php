@@ -2,11 +2,10 @@
 
 namespace Dietercoopman\SajanPhp;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Process\Process;
+use function Termwind\render;
 
 class IpLanCommand extends BaseCommand
 {
@@ -19,7 +18,7 @@ class IpLanCommand extends BaseCommand
     {
         $this
             ->setName('ip:lan')
-            ->setDescription('Get your lan ip address')
+            ->setDescription('Get the ip address of your computer in the local network')
             ->setAliases(['il']);
     }
 
@@ -32,8 +31,11 @@ class IpLanCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->title();
+
         $ip = Process::fromShellCommandline("ifconfig | grep \"inet \" | grep -Fv 127.0.0.1 | awk '{print $2}'")->mustRun()->getOutput();
-        $output->writeln('<fg=yellow>Your lan ip address is : </><bg=red> '.trim($ip).' </>');
+        render("<span class='ml-1'>Your lan ip address is: <span class='text-red-400'>" . trim($ip) . "</span></span>");
+        render('');
 
         return 0;
     }

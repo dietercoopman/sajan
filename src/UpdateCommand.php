@@ -28,6 +28,8 @@ class UpdateCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->title();
+
         $this->runProcess('composer global update dietercoopman/sajan', $output);
 
         return 0;

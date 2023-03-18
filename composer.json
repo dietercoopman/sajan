@@ -14,7 +14,8 @@
     "symfony/finder": "^5.3",
     "nunomaduro/termwind": "^1.15",
     "spatie/ssh": "^1.8",
-    "ext-json": "*"
+    "ext-json": "*",
+    "doctrine/dbal": "^3.6"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.1",

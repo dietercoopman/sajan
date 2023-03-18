@@ -24,7 +24,7 @@ class ServerDelete extends BaseCommand
     {
         $this
             ->setName('server:delete')
-            ->setDescription('Delete a server')
+            ->setDescription('Delete a saved server configuration')
             ->setAliases(['sd']);
     }
 
@@ -37,23 +37,14 @@ class ServerDelete extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        render('<div class="bg-green-800 m-1 p-1">You want to delete a server?</div>');
+        $this->title();
 
         $configurator = (new Configurator());
         $choices      = array_keys($configurator->getConfig()['servers']);
 
         if (count($choices) > 0) {
-
             $helper   = $this->getHelper('question');
-            $question = new ChoiceQuestion(
-                ' Please select the server you want to delete',
-                $choices,
-                0
-            );
-            $question->setErrorMessage('Server %s is invalid.');
-
-            $server = $helper->ask($input, $output, $question);
-            render('');
+            $server   = $configurator->askFor($helper, $input, $output, $choices, 'Please select the server you want to delete');
             $question = new ConfirmationQuestion(' Are you sure you want to delete ' . $server . ' (y/n) ? ', true, '/^(y|j)/i');
 
             if ($helper->ask($input, $output, $question)) {

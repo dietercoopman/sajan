@@ -5,6 +5,7 @@ namespace Dietercoopman\SajanPhp;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use function Termwind\render;
 
 class MiscSecretCommand extends BaseCommand
 {
@@ -30,8 +31,11 @@ class MiscSecretCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('<fg=yellow>Let\'s tell you a little secret</>');
-        $output->writeln('<fg=green>'.$this->randomPassword().'</>');
+        $this->title();
+
+        render('<span class="ml-1">Let\'s tell you a little secret</span>');
+        render('<span class="success">'.$this->randomPassword().'</span>');
+        render('');
 
         return 0;
     }
