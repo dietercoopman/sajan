@@ -38,6 +38,11 @@ class MysqlCompare extends BaseCommand
         $configurator = (new Configurator());
         $choices      = array_keys($configurator->getConfig()['servers']);
 
+        if(count($choices) == 0){
+            render('<div class="m-1">You have no saved servers, please create one first with the \'server:create\' command.</div>');
+            return 0;
+        }
+
         $source = $this->getMysqlServer('source', $input, $output, $configurator, $choices, $helper);
         $target = $this->getMysqlServer('target', $input, $output, $configurator, $choices, $helper);
 
