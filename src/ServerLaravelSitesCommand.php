@@ -3,6 +3,7 @@
 use Dietercoopman\SajanPhp\Services\Configurator;
 use Dietercoopman\SajanPhp\Services\Laravel;
 use Dietercoopman\SajanPhp\Services\Server;
+use Dietercoopman\SajanPhp\Traits\HasServer;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,6 +13,9 @@ use function Termwind\{render};
 
 class ServerLaravelSitesCommand extends BaseCommand
 {
+
+    use HasServer;
+
     /**
      * Configure the command.
      *
@@ -37,7 +41,7 @@ class ServerLaravelSitesCommand extends BaseCommand
         $this->title();
 
         $configurator = (new Configurator());
-        $choices      = array_keys($configurator->getConfig()['servers']);
+        $choices      = $this->getServers($configurator);
 
         if (count($choices) > 0) {
             $helper     = $this->getHelper('question');

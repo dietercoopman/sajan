@@ -20,8 +20,8 @@ class DatabaseManager
     public function __construct($sourceConfig, $targetConfig)
     {
 
-        $this->config['source'] = $this->validateForMysql($sourceConfig);
-        $this->config['target'] = $this->validateForMysql($targetConfig);
+        $this->config['source'] = $this->validateForMysql($sourceConfig, 'source');
+        $this->config['target'] = $this->validateForMysql($targetConfig, 'target');
     }
 
 
@@ -35,9 +35,9 @@ class DatabaseManager
 
         $sourceSchema = $this->getSchemaManager('source', true);
         $targetSchema = $this->getSchemaManager('target', true);
-        render('<div class="ml-1 bg-yellow-800 text-white">Getting difference</div>');
 
-        $schemaDiff = $targetSchema->createComparator()->compareSchemas($targetSchema->introspectSchema(),$sourceSchema->introspectSchema());
+
+        $schemaDiff = $targetSchema->createComparator()->compareSchemas($targetSchema->introspectSchema(), $sourceSchema->introspectSchema());
 
         $databasePlatform = $this->targetConnection->getDatabasePlatform();
         return $databasePlatform->getAlterSchemaSQL($schemaDiff);
@@ -61,15 +61,13 @@ class DatabaseManager
     public function getConnection($connectionName, $renewConnection = false): Connection
     {
         if (empty($this->{$connectionName . "Connection"}) || $renewConnection) {
-            $connection         = $this->config[$connectionName];
-            $ports              = ['source' => 13333, 'target' => 13334];
-            $connection['port'] = $ports[$connectionName];
+            $connection = $this->config[$connectionName];
             if (!$renewConnection) {
                 if (isset($connection['ssh']) && !empty($connection['ssh'])) {
-                    render('<div class="ml-1 mt-1 bg-green-800 text-white">Establishing ' . $connectionName . ' connection over ssh with ' . $connection['ssh'] . ' 🔐</div>');
+                    render('<div class="ml-1 mt-1">Establishing ' . $connectionName . ' connection over ssh with ' . $connection['ssh'] . ' 🔐</div>');
                     exec('ssh -f -L ' . $connection['port'] . ':127.0.0.1:3306 ' . $connection['ssh'] . ' sleep 10 > /dev/null');
                 } else {
-                    render('<div class="p-1 ml-1 bg-green-800 text-white">Establishing ' . $connectionName . ' connection</div>');
+                    render('<div class="ml-1">Establishing ' . $connectionName . ' connection</div>');
                 }
             }
 
@@ -82,10 +80,16 @@ class DatabaseManager
 
     }
 
-    private function validateForMysql($config): array
+    private function validateForMysql($config, $type): array
     {
-        $mysqlConfig             = [];
-        $mysqlConfig['ssh']      = $config['username'] . '@' . $config['host'];
+        $mysqlConfig = [];
+        if (!in_array($config['host'], ['localhost', '127.0.0.1'])) {
+            $ports               = ['source' => 13333, 'target' => 13334];
+            $mysqlConfig['port'] = $ports[$type];
+            $mysqlConfig['ssh']  = $config['username'] . '@' . $config['host'];
+        } else {
+            $mysqlConfig['port'] = $config['mysql_port'];
+        }
         $mysqlConfig['database'] = $config['database'] ?? '';
         $mysqlConfig['host']     = "127.0.0.1";
         $mysqlConfig['driver']   = 'pdo_mysql';

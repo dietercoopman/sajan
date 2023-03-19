@@ -2,6 +2,7 @@
 
 use Dietercoopman\SajanPhp\Services\Configurator;
 use Dietercoopman\SajanPhp\Services\DatabaseManager;
+use Dietercoopman\SajanPhp\Traits\HasServer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -9,6 +10,7 @@ use function Termwind\render;
 
 class MysqlCompare extends BaseCommand
 {
+    use HasServer;
     /**
      * Configure the command.
      *
@@ -33,18 +35,19 @@ class MysqlCompare extends BaseCommand
     {
         $this->title();
 
-        render('<div class="bg-green-800 m-1 p-1">Ok let\'s compare some databases</div>');
         $helper       = $this->getHelper('question');
         $configurator = (new Configurator());
-        $choices      = array_keys($configurator->getConfig()['servers']);
+        $choices      = $this->getServers($configurator);
 
-        if(count($choices) == 0){
+        if (count($choices) == 0) {
             render('<div class="m-1">You have no saved servers, please create one first with the \'server:create\' command.</div>');
             return 0;
         }
 
         $source = $this->getMysqlServer('source', $input, $output, $configurator, $choices, $helper);
         $target = $this->getMysqlServer('target', $input, $output, $configurator, $choices, $helper);
+
+        render('');
 
         $databaseManager = new DatabaseManager($source, $target);
         $sourceDatabases = $databaseManager->getDatabases('source');
@@ -60,9 +63,16 @@ class MysqlCompare extends BaseCommand
         $question->setAutocompleterValues($targetDatabases);
         $targetDatabase = $helper->ask($input, $output, $question);
 
-        render('<div class="ml-1">Ok i\'ll compare ' . $sourceDatabase . ' on ' . $source['host'] . ' with ' . $targetDatabase . ' on ' . $target['host'] . '</div>');
-        $html = implode(';<br />', $databaseManager->compare($sourceDatabase, $targetDatabase));
-        render('<span class="ml-1 text-sky-400">'.$html.'</span>');
+        render('<div class="mt-1 ml-1">Ok i\'ll compare ' . $sourceDatabase . ' on ' . $source['host'] . ' with ' . $targetDatabase . ' on ' . $target['host'] . '</div>');
+        render('<div class="mt-1 ml-1">Getting differences</div>');
+        $changes = $databaseManager->compare($sourceDatabase, $targetDatabase);
+
+        render('<div class="mt-1 ml-1 bg-green-800 text-white">Here are the resulting differences</div>');
+        render('');
+        foreach ($changes as $key => $change) {
+            render('<span class="ml-1 text-sky-400">' . $change . ';</span>');
+        }
+
 
         return 0;
     }

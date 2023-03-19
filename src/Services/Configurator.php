@@ -1,11 +1,15 @@
 <?php namespace Dietercoopman\SajanPhp\Services;
 
+use Dietercoopman\SajanPhp\Traits\HasServer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use function Termwind\{ask, render};
 
 class Configurator
 {
+
+    use HasServer;
+
     private $path = '/Users/dieter/.sajan';
 
 
@@ -33,7 +37,7 @@ class Configurator
     public function list()
     {
         $counter = 1;
-        collect($this->getConfig()['servers'])->each(function ($server) use (&$counter) {
+        collect($this->getServers())->each(function ($server) use (&$counter) {
             render("<span class='ml-1'>{$counter}. {$server['name']} ({$server['host']})</span>");
             $counter++;
         });
@@ -82,7 +86,7 @@ class Configurator
                 $serverConfig['mysql_user'] = ask("<span class='ml-1 mr-1'>What is the mysql user for your server ? </span>");
             }
             if (!isset($serverConfig['mysql_password'])) {
-                $serverConfig['mysql_password'] = ask("<span class='ml-1 mr-1'>What is the mysql password for your server ? </span>");
+                $serverConfig['mysql_password'] = ask("<span class='ml-1 mr-1'>What is the mysql password for your server ? </span>") ?? "";
             }
         }
         $config['servers'][$servername] = $serverConfig;

@@ -3,6 +3,7 @@
 use Dietercoopman\SajanPhp\Services\Configurator;
 use Dietercoopman\SajanPhp\Services\Laravel;
 use Dietercoopman\SajanPhp\Services\Server;
+use Dietercoopman\SajanPhp\Traits\HasServer;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,6 +16,8 @@ use function Termwind\{render};
 
 class ServerDelete extends BaseCommand
 {
+
+    use HasServer;
     /**
      * Configure the command.
      *
@@ -40,7 +43,7 @@ class ServerDelete extends BaseCommand
         $this->title();
 
         $configurator = (new Configurator());
-        $choices      = array_keys($configurator->getConfig()['servers']);
+        $choices      = $this->getServers($configurator);
 
         if (count($choices) > 0) {
             $helper   = $this->getHelper('question');
