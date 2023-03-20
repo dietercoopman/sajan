@@ -3,6 +3,7 @@
 use Dietercoopman\SajanPhp\Traits\HasServer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use function Termwind\{ask, render};
 
 class Configurator
@@ -87,6 +88,10 @@ class Configurator
             }
             if (!isset($serverConfig['mysql_password'])) {
                 $serverConfig['mysql_password'] = ask("<span class='ml-1 mr-1'>What is the mysql password for your server ? </span>") ?? "";
+            }
+            if (!isset($serverConfig['mysql_ssh'])) {
+                $question = ask(' Do you want to connect to this mysql server over ssh (y/n) ? ', ['y','n']);
+                $serverConfig['mysql_ssh'] = $question;
             }
         }
         $config['servers'][$servername] = $serverConfig;

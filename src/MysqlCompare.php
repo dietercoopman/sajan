@@ -20,7 +20,7 @@ class MysqlCompare extends BaseCommand
     {
         $this
             ->setName('mysql:compare')
-            ->setDescription('Compare two mysql databases and get the differences in sql statements')
+            ->setDescription('Compare two mysql database structures and get the differences in sql statements')
             ->setAliases(['mc']);
     }
 
@@ -67,7 +67,7 @@ class MysqlCompare extends BaseCommand
         render('<div class="mt-1 ml-1">Getting differences</div>');
         $changes = $databaseManager->compare($sourceDatabase, $targetDatabase);
 
-        render('<div class="mt-1 ml-1 bg-green-800 text-white">Here are the resulting differences</div>');
+        render('<div class="mt-1 ml-1 bg-green-800 text-white">Here are the resulting structure differences</div>');
         render('');
         foreach ($changes as $key => $change) {
             render('<span class="ml-1 text-sky-400">' . $change . ';</span>');

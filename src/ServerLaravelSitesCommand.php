@@ -51,7 +51,7 @@ class ServerLaravelSitesCommand extends BaseCommand
             return 0;
         }
 
-        $config = $configurator->validateServer($servername, 'apache');
+        $config = $configurator->validateServer($servername);
         $server = (new Laravel())->init($config);
         $server->getLaravelApplications($servername);
 

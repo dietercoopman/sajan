@@ -63,7 +63,8 @@ class DatabaseManager
         if (empty($this->{$connectionName . "Connection"}) || $renewConnection) {
             $connection = $this->config[$connectionName];
             if (!$renewConnection) {
-                if (isset($connection['ssh']) && !empty($connection['ssh'])) {
+
+                if (isset($connection['mysql_ssh']) && $connection['mysql_ssh'] == "y") {
                     render('<div class="ml-1 mt-1">Establishing ' . $connectionName . ' connection over ssh with ' . $connection['ssh'] . ' 🔐</div>');
                     exec('ssh -f -L ' . $connection['port'] . ':127.0.0.1:3306 ' . $connection['ssh'] . ' sleep 10 > /dev/null');
                 } else {
@@ -83,19 +84,21 @@ class DatabaseManager
     private function validateForMysql($config, $type): array
     {
         $mysqlConfig = [];
-        if (!in_array($config['host'], ['localhost', '127.0.0.1'])) {
+        if ($config['mysql_ssh'] == "y") {
             $ports               = ['source' => 13333, 'target' => 13334];
             $mysqlConfig['port'] = $ports[$type];
             $mysqlConfig['ssh']  = $config['username'] . '@' . $config['host'];
+            $mysqlConfig['host'] = "127.0.0.1";
         } else {
+            $mysqlConfig['host'] = $config['host'];
             $mysqlConfig['port'] = $config['mysql_port'];
         }
         $mysqlConfig['database'] = $config['database'] ?? '';
-        $mysqlConfig['host']     = "127.0.0.1";
         $mysqlConfig['driver']   = 'pdo_mysql';
         $mysqlConfig['user']     = $config['mysql_user'];
         $mysqlConfig['password'] = $config['mysql_password'];
 
+        $mysqlConfig['mysql_ssh'] = $config['mysql_ssh'];
         return $mysqlConfig;
     }
 }
