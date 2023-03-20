@@ -37,7 +37,7 @@ class Configurator
     public function list()
     {
         $counter = 1;
-        collect($this->getServers($this))->each(function ($server) use (&$counter) {
+        collect($this->getConfig()['servers'])->each(function ($server) use (&$counter) {
             render("<span class='ml-1'>{$counter}. {$server['name']} ({$server['host']})</span>");
             $counter++;
         });
