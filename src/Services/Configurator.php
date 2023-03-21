@@ -4,14 +4,13 @@ use Dietercoopman\SajanPhp\Traits\HasServer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Process\Process;
 use function Termwind\{ask, render};
 
 class Configurator
 {
 
     use HasServer;
-
-    private $path = '~/.sajan';
 
 
     public function store($name, $host, $username, $keyfile)
@@ -28,8 +27,10 @@ class Configurator
 
     public function getConfig()
     {
-        if (file_exists($this->path) && filesize($this->path) > 0) {
-            return json_decode(file_get_contents($this->path), true);
+
+        $path = $this->getPath();
+        if (file_exists($path) && filesize($path) > 0) {
+            return json_decode(file_get_contents($path), true);
         } else {
             return [];
         }
@@ -38,10 +39,12 @@ class Configurator
     public function list()
     {
         $counter = 1;
-        collect($this->getConfig()['servers'])->each(function ($server) use (&$counter) {
-            render("<span class='ml-1'>{$counter}. {$server['name']} ({$server['host']})</span>");
-            $counter++;
-        });
+        if (isset($this->getConfig()['servers'])) {
+            collect($this->getConfig()['servers'])->each(function ($server) use (&$counter) {
+                render("<span class='ml-1'>{$counter}. {$server['name']} ({$server['host']})</span>");
+                $counter++;
+            });
+        }
         if ($counter == 1) {
             render('<div class="m-1">You have no saved servers, you can create one with the \'server:create\' command.</div>');
         }
@@ -60,7 +63,7 @@ class Configurator
 
     private function save($config)
     {
-        $file = fopen($this->path, "w") or die("Unable to open file!");
+        $file = fopen($this->getPath(), "w") or die("Unable to open file!");
         fwrite($file, json_encode($config));
         fclose($file);
     }
@@ -79,7 +82,7 @@ class Configurator
                 $serverConfig['configPath'] = ask("<span class='ml-1 mr-1'>What is the config path of your server ? </span>");
             }
         }
-        if($type == "mysql"){
+        if ($type == "mysql") {
             if (!isset($serverConfig['mysql_port'])) {
                 $serverConfig['mysql_port'] = ask("<span class='ml-1 mr-1'>What is the mysql port for your server ? </span>");
             }
@@ -90,7 +93,7 @@ class Configurator
                 $serverConfig['mysql_password'] = ask("<span class='ml-1 mr-1'>What is the mysql password for your server ? </span>") ?? "";
             }
             if (!isset($serverConfig['mysql_ssh'])) {
-                $question = ask(' Do you want to connect to this mysql server over ssh (y/n) ? ', ['y','n']);
+                $question                  = ask(' Do you want to connect to this mysql server over ssh (y/n) ? ', ['y', 'n']);
                 $serverConfig['mysql_ssh'] = $question;
             }
         }
@@ -112,5 +115,11 @@ class Configurator
         $question->setErrorMessage('Input %s is invalid.');
         render('');
         return $helper->ask($input, $output, $question);
+    }
+
+    private function getPath()
+    {
+        $homeDir = trim(Process::fromShellCommandline("cd ~ && pwd")->mustRun()->getOutput());
+        return $homeDir . "/.sajan";
     }
 }
