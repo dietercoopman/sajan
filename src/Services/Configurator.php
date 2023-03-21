@@ -40,6 +40,8 @@ class Configurator
     {
         $counter = 1;
         if (isset($this->getConfig()['servers'])) {
+            render('<div class="ml-1 mb-1">Here\'s a list of all saved servers.</div>');
+            
             collect($this->getConfig()['servers'])->each(function ($server) use (&$counter) {
                 render("<span class='ml-1'>{$counter}. {$server['name']} ({$server['host']})</span>");
                 $counter++;

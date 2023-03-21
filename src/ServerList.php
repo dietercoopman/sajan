@@ -37,7 +37,6 @@ class ServerList extends BaseCommand
     {
         $this->title();
 
-        render('<div class="ml-1 mb-1">Here\'s a list of all saved servers.</div>');
         (new Configurator())->list();
 
         return 0;

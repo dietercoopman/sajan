@@ -5,12 +5,15 @@ use function Termwind\{render};
 
 trait HasServer
 {
-    public function getServers($configurator){
+    public function getServers($configurator)
+    {
         $ret = [];
-        $counter = 1;
-        foreach($configurator->getConfig()['servers'] as $key => $server){
-            $ret[$counter] = $server['name'];
-            $counter++;
+        if (isset($configurator->getConfig()['servers'])) {
+            $counter = 1;
+            foreach ($configurator->getConfig()['servers'] as $key => $server) {
+                $ret[$counter] = $server['name'];
+                $counter++;
+            }
         }
         return $ret;
     }
