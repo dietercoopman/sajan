@@ -11,7 +11,7 @@ class Configurator
 
     use HasServer;
 
-    private $path = '/Users/dieter/.sajan';
+    private $path = '~/.sajan';
 
 
     public function store($name, $host, $username, $keyfile)
