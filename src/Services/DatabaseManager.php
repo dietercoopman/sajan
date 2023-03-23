@@ -66,7 +66,7 @@ class DatabaseManager
 
                 if (isset($connection['mysql_ssh']) && $connection['mysql_ssh'] == "y") {
                     render('<div class="ml-1 mt-1">Establishing ' . $connectionName . ' connection over ssh with ' . $connection['ssh'] . ' 🔐</div>');
-                    exec('ssh -f -L ' . $connection['port'] . ':127.0.0.1:3306 ' . $connection['ssh'] . ' sleep 10 > /dev/null');
+                    exec('ssh -i '.$connection['keyfile'].' -f -L ' . $connection['port'] . ':127.0.0.1:3306 ' . $connection['ssh'] . ' sleep 10 > /dev/null');
                 } else {
                     render('<div class="ml-1">Establishing ' . $connectionName . ' connection</div>');
                 }
@@ -89,6 +89,7 @@ class DatabaseManager
             $mysqlConfig['port'] = $ports[$type];
             $mysqlConfig['ssh']  = $config['username'] . '@' . $config['host'];
             $mysqlConfig['host'] = "127.0.0.1";
+            $mysqlConfig['keyfile'] = $config['keyfile'];
         } else {
             $mysqlConfig['host'] = $config['host'];
             $mysqlConfig['port'] = $config['mysql_port'];
