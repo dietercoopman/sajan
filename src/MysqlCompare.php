@@ -11,6 +11,7 @@ use function Termwind\render;
 class MysqlCompare extends BaseCommand
 {
     use HasServer;
+
     /**
      * Configure the command.
      *
@@ -70,7 +71,14 @@ class MysqlCompare extends BaseCommand
         render('<div class="mt-1 ml-1 bg-green-800 text-white">Here are the resulting structure differences</div>');
         render('');
         foreach ($changes as $key => $change) {
-            render('<span class="ml-1 text-sky-400">' . $change . ';</span>');
+            if (substr($change, 0, 4) == 'DROP') {
+                $color = 'text-red-600';
+            }elseif (substr($change, 0, 5) == 'ALTER') {
+                    $color = 'text-orange-600';
+            }else{
+                $color = 'text-green-600';
+            }
+            render('<span class="ml-1 '.$color.'">' . $change . ';</span>');
         }
 
 

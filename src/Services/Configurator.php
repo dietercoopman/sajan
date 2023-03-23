@@ -2,6 +2,8 @@
 
 use Dietercoopman\SajanPhp\Traits\HasServer;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Process\Process;
@@ -12,8 +14,9 @@ class Configurator
 
     use HasServer;
 
+    const KEY = '7DFC491492EBA563FF0F2A3EEACE6A095EE628816290BC6D9B9034C2AF63B541';
 
-    public function store($name, $host, $username, $keyfile)
+    public function store($name)
     {
         $server                   = get_defined_vars();
         $config                   = $this->getConfig();
@@ -41,7 +44,7 @@ class Configurator
         $counter = 1;
         if (isset($this->getConfig()['servers'])) {
             render('<div class="ml-1 mb-1">Here\'s a list of all saved servers.</div>');
-            
+
             collect($this->getConfig()['servers'])->each(function ($server) use (&$counter) {
                 render("<span class='ml-1'>{$counter}. {$server['name']} ({$server['host']})</span>");
                 $counter++;
@@ -91,8 +94,11 @@ class Configurator
             if (!isset($serverConfig['mysql_user'])) {
                 $serverConfig['mysql_user'] = ask("<span class='ml-1 mr-1'>What is the mysql user for your server ? </span>");
             }
-            if (!isset($serverConfig['mysql_password'])) {
-                $serverConfig['mysql_password'] = ask("<span class='ml-1 mr-1'>What is the mysql password for your server ? </span>") ?? "";
+            if (!isset($serverConfig['mysql_password']) || $this->decrypt($serverConfig['mysql_password']) === false) {
+                if(isset($serverConfig['mysql_password'])){
+                    render("<span class='ml-1 mr-1 text-orange-400'>You might have given your password earlier, but we re-ask so we can encrypt it 🔐 </span>");
+                }
+                $serverConfig['mysql_password'] = $this->encrypt(ask("<span class='ml-1 mr-1'>What is the mysql password for your server ? </span>") ?? "");
             }
             if (!isset($serverConfig['mysql_ssh'])) {
                 $question                  = ask(' Do you want to connect to this mysql server over ssh (y/n) ? ', ['y', 'n']);
@@ -123,5 +129,32 @@ class Configurator
     {
         $homeDir = trim(Process::fromShellCommandline("cd ~ && pwd")->mustRun()->getOutput());
         return $homeDir . "/.sajan";
+    }
+
+    public function encrypt($plaintext)
+    {
+        $cipher = "aes-128-gcm";
+        if (in_array($cipher, openssl_get_cipher_methods())) {
+            $ivlen         = openssl_cipher_iv_length($cipher);
+            $iv            = openssl_random_pseudo_bytes($ivlen);
+            $encryptedText = openssl_encrypt($plaintext, $cipher, self::KEY, $options = 0, $iv, $tag);
+        }
+        return base64_encode(json_encode([base64_encode($encryptedText), base64_encode($iv), base64_encode($tag)]));
+    }
+
+    public function decrypt($encrypted)
+    {
+        $object = json_decode(base64_decode($encrypted));
+        if (is_null($object)) {
+            return false;
+        }
+        $ciphertext = base64_decode($object[0]);
+        $iv         = base64_decode($object[1]);
+        $tag        = base64_decode($object[2]);
+        $cipher     = "aes-128-gcm";
+        if (in_array($cipher, openssl_get_cipher_methods())) {
+            $original_plaintext = openssl_decrypt($ciphertext, $cipher, self::KEY, $options = 0, $iv, $tag);
+        }
+        return $original_plaintext;
     }
 }

@@ -97,8 +97,7 @@ class DatabaseManager
         $mysqlConfig['database'] = $config['database'] ?? '';
         $mysqlConfig['driver']   = 'pdo_mysql';
         $mysqlConfig['user']     = $config['mysql_user'];
-        $mysqlConfig['password'] = $config['mysql_password'];
-
+        $mysqlConfig['password'] = (new Configurator())->decrypt($config['mysql_password']);
         $mysqlConfig['mysql_ssh'] = $config['mysql_ssh'];
         return $mysqlConfig;
     }

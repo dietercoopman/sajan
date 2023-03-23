@@ -52,6 +52,9 @@ class ServerInfo extends BaseCommand
             render('');
             $config = $configurator->getConfig()['servers'][$server];
             foreach ($config as $key => $value) {
+                if($key ===  "mysql_password"){
+                    $value = '***********';
+                }
                 render("<div class='ml-1'>{$key}: {$value}</div>");
             }
             render('');

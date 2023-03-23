@@ -51,7 +51,7 @@ This tool provides you with some automation tasks for Laravel, Git, PhpStorm and
         try {
             $connected = @fsockopen('www.google.com', 80);
             if ($connected) {
-                $version = strstr(Process::fromShellCommandline('composer global outdated --direct | grep sajan')->mustRun()->getOutput(), 'sajan');
+                $version = strstr(Process::fromShellCommandline('composer global outdated --direct | grep sajan')->mustRun()->getOutput(), 'dietercoopman/sajan');
                 return explode(' ', explode(' ! ', $version)[1])[0];
             }
         } catch (\Exception $e) {
