@@ -72,9 +72,15 @@ class DatabaseManager
                 }
             }
 
-            $this->{$connectionName . "Connection"} = \Doctrine\DBAL\DriverManager::getConnection($connection);
-            $databasePlatform                       = $this->{$connectionName . "Connection"}->getDatabasePlatform();
-            $databasePlatform->registerDoctrineTypeMapping('enum', 'string');
+            try{
+                $this->{$connectionName . "Connection"} = \Doctrine\DBAL\DriverManager::getConnection($connection);
+                $databasePlatform                       = $this->{$connectionName . "Connection"}->getDatabasePlatform();
+                $databasePlatform->registerDoctrineTypeMapping('enum', 'string');
+            }catch (\Exception $e){
+                render('<div class="ml-1 text-orange-400">'.$e->getMessage().' ⚠️</div>');
+                exit();
+            }
+
         }
 
         return $this->{$connectionName . "Connection"};
