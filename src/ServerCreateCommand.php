@@ -9,7 +9,7 @@ use Symfony\Component\Process\Process;
 use function Termwind\{ask, render};
 
 
-class ServerCreate extends BaseCommand
+class ServerCreateCommand extends BaseCommand
 {
     /**
      * Configure the command.

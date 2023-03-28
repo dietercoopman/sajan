@@ -14,7 +14,7 @@ use Symfony\Component\Console\Question\Question;
 use function Termwind\{render};
 
 
-class ServerDelete extends BaseCommand
+class ServerDeleteCommand extends BaseCommand
 {
 
     use HasServer;

@@ -14,7 +14,7 @@ use Symfony\Component\Console\Question\Question;
 use function Termwind\{render};
 
 
-class ServerInfo extends BaseCommand
+class ServerInfoCommand extends BaseCommand
 {
 
     use HasServer;

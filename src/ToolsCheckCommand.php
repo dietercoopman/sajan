@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 use function Termwind\render;
 
-class ToolsCheck extends BaseCommand
+class ToolsCheckCommand extends BaseCommand
 {
     /**
      * Configure the command.

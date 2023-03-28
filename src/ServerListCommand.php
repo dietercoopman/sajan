@@ -11,7 +11,7 @@ use Symfony\Component\Console\Question\Question;
 use function Termwind\{render};
 
 
-class ServerList extends BaseCommand
+class ServerListCommand extends BaseCommand
 {
     /**
      * Configure the command.
