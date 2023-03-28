@@ -1,7 +1,6 @@
 #!/usr/bin/env php
 <?php
 
-use Dietercoopman\SajanPhp\DevPhpCommand;
 use Dietercoopman\SajanPhp\DnsFlushCommand;
 use Dietercoopman\SajanPhp\DnsUsingCommand;
 use Dietercoopman\SajanPhp\IpLanCommand;
@@ -38,7 +37,6 @@ if (file_exists(__DIR__ . '/../../autoload.php')) {
 $version = trim(array_values(array_filter(explode('   ', Process::fromShellCommandline('composer global info | grep sajan')->mustRun()->getOutput())))[1]);
 
 $app = new SajanApplication('<fg=green>Sajan</> version', $version, get_defined_vars()['argv']);
-$app->add(new DevPhpCommand());
 $app->add(new DnsFlushCommand());
 $app->add(new DnsUsingCommand());
 $app->add(new IpLanCommand());
