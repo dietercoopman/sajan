@@ -39,8 +39,8 @@ class KeyMakeCommand extends BaseCommand
         render('<div class="ml-1">Generating public/private rsa key pair.</div>');
         $file = ask('<div class="ml-1 mr-1">Enter file in which to save the key (~/.ssh/id_rsa):</div>');
         while (!$passwordsEqual) {
-            $passphrase      = ask('<div class="ml-1 mr-1">Enter passphrase (empty for no passphrase):</div>', ishidden: true);
-            $passphrasecheck = ask('<div class="ml-1 mr-1">Enter same passphrase again:</div>', ishidden: true);
+            $passphrase      = ask('<div class="ml-1 mr-1">Enter passphrase (empty for no passphrase):</div>');
+            $passphrasecheck = ask('<div class="ml-1 mr-1">Enter same passphrase again:</div>');
             $passwordsEqual = $passphrasecheck === $passphrase;
         }
 
