@@ -38,7 +38,7 @@ class KeyCopyCommand extends BaseCommand
         $this->title();
         $keyfile = '~/.ssh/' . $configurator->askFor($helper, $input, $output, $this->getPossibleSshKeys(), 'Please select the ssh key you want to use');
         Process::fromShellCommandline('cat '.$keyfile.'.pub | pbcopy')->mustRun()->getOutput();
-        render('<span class="success mt-1 mb-1">The public key '.$keyfile.' has been copied to your clipboard.</span>');
+        render('<span class="success mt-1 mb-1">The public key '.$keyfile.'.pub has been copied to your clipboard.</span>');
 
         return 0;
     }
