@@ -16,7 +16,7 @@ class Configurator
 
     const KEY = '7DFC491492EBA563FF0F2A3EEACE6A095EE628816290BC6D9B9034C2AF63B541';
 
-    public function store($name)
+    public function store($name, $host,$username,$keyfile)
     {
         $server                   = get_defined_vars();
         $config                   = $this->getConfig();
