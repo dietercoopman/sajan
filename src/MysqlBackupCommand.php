@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use function Termwind\render;
 
-class MysqlCompareCommand extends BaseCommand
+class MysqlBackupCommand extends BaseCommand
 {
     use HasServer;
 
@@ -20,9 +20,9 @@ class MysqlCompareCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('mysql:compare')
-            ->setDescription('Compare two mysql database structures and get the differences in sql statements')
-            ->setAliases(['mc']);
+            ->setName('mysql:backup')
+            ->setDescription('Get a structure backup from a database')
+            ->setAliases(['mb']);
     }
 
     /**
@@ -45,51 +45,29 @@ class MysqlCompareCommand extends BaseCommand
             return 0;
         }
 
-        $source = $this->getMysqlServer('source', $input, $output, $configurator, $choices, $helper);
-        $target = $this->getMysqlServer('target', $input, $output, $configurator, $choices, $helper);
+        $source   = $this->getMysqlServer('source', $input, $output, $configurator, $choices, $helper);
         $outputTo = $configurator->askFor($helper, $input, $output, [1 => 'screen', 2 => 'file'], 'Do you want to output the result to screen or to a file?');
         render('');
 
         $databaseManager = new DatabaseManager();
-        $databaseManager->setConfigFor('source',$source);
-        $databaseManager->setConfigFor('target',$target);
-
+        $databaseManager->setConfigFor('source', $source);
         $sourceDatabases = $databaseManager->getDatabases('source');
-        $targetDatabases = $databaseManager->getDatabases('target');
 
         render('');
 
-        $question = new Question(' Which database do you want as source database? ');
+        $question = new Question(' Which database do you want to get the backup from? ');
         $question->setAutocompleterValues($sourceDatabases);
         $sourceDatabase = $helper->ask($input, $output, $question);
+        $changes        = $databaseManager->getFullSchema($sourceDatabase);
 
-        $question = new Question(' Which database do you want as target database? ');
-        $question->setAutocompleterValues($targetDatabases);
-        $targetDatabase = $helper->ask($input, $output, $question);
-
-        render('<div class="mt-1 ml-1">Ok i\'ll compare ' . $sourceDatabase . ' on ' . $source['host'] . ' with ' . $targetDatabase . ' on ' . $target['host'] . '</div>');
-        render('<div class="mt-1 ml-1">Getting differences</div>');
-
-        $changes = $databaseManager->compare($sourceDatabase, $targetDatabase);
-
-        render('<div class="mt-1 ml-1 bg-green-800 text-white">Here are the resulting structure differences</div>');
-        render('');
-
-        if($outputTo == "screen"){
-        foreach ($changes as $key => $change) {
-            if (substr($change, 0, 4) == 'DROP') {
-                $color = 'text-red-600';
-            }elseif (substr($change, 0, 5) == 'ALTER') {
-                    $color = 'text-orange-600';
-            }else{
+        if ($outputTo == "screen") {
+            foreach ($changes as $key => $change) {
                 $color = 'text-green-600';
+                render('<span class="ml-1 ' . $color . '">' . $change . ';</span>');
             }
-            render('<span class="ml-1 '.$color.'">' . $change . ';</span>');
+        } else {
+            $databaseManager->saveToFile($changes,$sourceDatabase);
         }
-        }else{
-            $databaseManager->saveToFile($changes,$targetDatabase);
-        }
-
 
         return 0;
     }
