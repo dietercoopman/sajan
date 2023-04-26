@@ -39,8 +39,7 @@ class SajanApplication extends \Symfony\Component\Console\Application
     ▀▀▀ ▀░░▀ █▄█ ▀░░▀ ▀░░▀
 
 
-</><fg=green>Sajan</> is a lightweight tool to automate some web development tasks
-This tool provides you with some automation tasks for Laravel, Git, PhpStorm and Webpack
+</><fg=green>Sajan</> enhances your use of the command line by providing some shortcuts. 
 ';
 
         return $brand;

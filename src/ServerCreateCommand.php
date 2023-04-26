@@ -41,8 +41,8 @@ class ServerCreateCommand extends BaseCommand
         $name = ask("<span class='ml-1 mr-1'>What name do you want for the server: </span>");
         $host = ask("<span class='ml-1 mr-1'>What is the ip/hostname of the server: ");
         if (!in_array($host, ['localhost', '127.0.0.1'])) {
-            $username = ask("<span class='ml-1 mr-1'>What is your username: ");
-            $question = new ConfirmationQuestion(' Do you want to connect with an ssh key (y/n) ? ', true, '/^(y|j)/i');
+            $username = ask("<span class='ml-1 mr-1'>What is your server username: ");
+            $question = new ConfirmationQuestion(' Do you want to connect to your server with an ssh key (y/n) ? ', true, '/^(y|j)/i');
 
             if ($helper->ask($input, $output, $question)) {
                 $keyfile = '~/.ssh/' . $configurator->askFor($helper, $input, $output, $this->getPossibleSshKeys(), 'Please select the ssh key you want to use');

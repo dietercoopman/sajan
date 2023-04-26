@@ -1,6 +1,7 @@
 <?php namespace Dietercoopman\SajanPhp\Services;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Comparator;
 use Doctrine\DBAL\Schema\Schema;
@@ -122,5 +123,37 @@ class DatabaseManager
         fclose($file);
         render('<div class="ml-1">File stored to "' . $filename . '"</div>');
         render('');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function exportTables($databasename)
+    {
+        $homeDir = trim(Process::fromShellCommandline("cd ~ && pwd")->mustRun()->getOutput());
+        $dir     = $homeDir . '/Downloads/' . date('Y-m-d-His') . '-' . $databasename . '-data';
+        mkdir($dir);
+
+        $this->config['source']['dbname'] = $databasename;
+        $schemaManager                    = $this->getSchemaManager('source', true);
+
+        foreach ($schemaManager->listTables() as $table) {
+
+            render('<div class="ml-1">Storing data for table ' . $table->getName() . '</div>');
+            $filename = $dir . '/' . $table->getName() . '.csv';
+
+            $query  = "select * from {$table->getName()}";
+            $result = $this->sourceConnection->executeQuery($query)->fetchAllAssociative();
+            if (count($result) == 0) {
+                continue;
+            }
+            //transform the array of result to csv and save it to file with the name $filename
+            $fp = fopen($filename, 'w');
+            fputcsv($fp, array_keys($result[0]));
+            foreach ($result as $row) {
+                fputcsv($fp, $row);
+            }
+            fclose($fp);
+        }
     }
 }
