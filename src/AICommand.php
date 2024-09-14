@@ -89,21 +89,12 @@ class AICommand extends BaseCommand
 
         // The request data
         $data = [
-            'model' => 'gpt-4o',
+            'model' => 'gpt-4o-mini',
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => 'you are a linux console, i am on a ' . $clientOperatingSystem . ' computer. Only answer with te actual command or an array of commands if multiple possibilities, dont add scripting tags.  If something will change my system or change a file add CHANGE| in front', // System message to set the AI behavior
+                    'content' => "You are a Linux console on a {$clientOperatingSystem} computer. Only provide the command to execute, without explanations. If a command will change the system or a file, prefix it with 'CHANGE|'.",
                 ],
-                [
-                    'role' => 'system',
-                    'content' => 'Only answer with te actual command or an array of commands if multiple possibilities, dont add scripting tags.',
-                ],
-                [
-                    'role' => 'system',
-                    'content' => 'dont add scripting tags. And only answer with real commands, dont anwser with a question',
-                ],
-
                 [
                     'role' => 'user',
                     'content' => $prompt, // The actual question from the user
