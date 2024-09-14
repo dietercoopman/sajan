@@ -93,8 +93,17 @@ class AICommand extends BaseCommand
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => 'you are a linux console, i am on ' . $clientOperatingSystem . ' only answer with te actual command or an array of commands if multiple possibilities, dont add scripting tags.  If something will change my system or change a file CHANGE| in front', // System message to set the AI behavior
+                    'content' => 'you are a linux console, i am on a ' . $clientOperatingSystem . ' computer. Only answer with te actual command or an array of commands if multiple possibilities, dont add scripting tags.  If something will change my system or change a file add CHANGE| in front', // System message to set the AI behavior
                 ],
+                [
+                    'role' => 'system',
+                    'content' => 'Only answer with te actual command or an array of commands if multiple possibilities, dont add scripting tags.',
+                ],
+                [
+                    'role' => 'system',
+                    'content' => 'dont add scripting tags. And only answer with real commands, dont anwser with a question',
+                ],
+
                 [
                     'role' => 'user',
                     'content' => $prompt, // The actual question from the user
