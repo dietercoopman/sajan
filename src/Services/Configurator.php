@@ -16,22 +16,24 @@ class Configurator
 
     const KEY = '7DFC491492EBA563FF0F2A3EEACE6A095EE628816290BC6D9B9034C2AF63B541';
 
-    public function store($name, $host,$username,$keyfile)
+    public function store($group, $name, $value)
     {
-        $server                   = get_defined_vars();
+
         $config                   = $this->getConfig();
-        $config['servers'][$name] = $server;
+        $config[$group][$name] = $value;
 
         $this->save($config);
 
-        render("<span class='m-1'>Server with name {$name} is saved!</span>");
-
+        render("<span class='m-1'>Configuration for {$group} {$name} is saved!</span>");
     }
+
+
 
     public function getConfig()
     {
 
         $path = $this->getPath();
+
         if (file_exists($path) && filesize($path) > 0) {
             return json_decode(file_get_contents($path), true);
         } else {

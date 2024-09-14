@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+use Dietercoopman\SajanPhp\AICommand;
 use Dietercoopman\SajanPhp\DnsFlushCommand;
 use Dietercoopman\SajanPhp\DnsUsingCommand;
 use Dietercoopman\SajanPhp\IpLanCommand;
@@ -46,4 +47,5 @@ $app->add(new MiscSecretCommand());
 $app->add(new StarCommand());
 $app->add(new TipsCommand());
 $app->add(new UpdateCommand());
+$app->add(new AICommand());
 $app->run();

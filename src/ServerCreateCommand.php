@@ -52,7 +52,8 @@ class ServerCreateCommand extends BaseCommand
         } else {
             $username = $keyfile = "";
         }
-        $configurator->store($name, $host, $username, $keyfile);
+        $server                   = get_defined_vars();
+        $configurator->store('servers',$name, $server);
 
         return 0;
     }
