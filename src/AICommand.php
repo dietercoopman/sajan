@@ -24,7 +24,6 @@ class AICommand extends BaseCommand
             ->setName('ai')
             ->setDescription('Ask a question to the AI and get the command')
             ->addArgument('question', InputArgument::IS_ARRAY, 'The question you want to ask the AI');
-
     }
 
     /**
@@ -40,11 +39,30 @@ class AICommand extends BaseCommand
         $questionParts = $input->getArgument('question');
         $question = implode(' ', $questionParts);
         if (empty($question)) {
-            $question = 'What is the weather in Antwerp';
+            $question = 'What time is it?';
         }
 
-        $answer = $this->askOpenAI($input, $output, $question);
-        render($answer);
+        $command = $this->askOpenAI($input, $output, $question);
+
+        //if the command includs the CHANGE| tag, set the command in red
+        if (str_contains($command, 'CHANGE|')) {
+            $color = 'yellow';
+        } else {
+            $color = 'green';
+        }
+        //replace the CHANGE| tag with an empty string
+        $command = str_replace('CHANGE|', '', $command);
+
+        $helper = $this->getHelper('question');
+
+        //ask the user if the command can be executed and set the command in red
+        $question = new Question('Can i run <fg='.$color.'>' . $command . '</> (y/n) ? ', true, '/^(y|j)/i');
+        $answer = $helper->ask($input, $output, $question);
+
+        //if the user wants to execute the command ( y , yes , j ), run it
+        if ($answer == 'yes' or $answer == 'y' or $answer == 'j') {
+            $this->runProcess($command, $output);
+        }
 
         return 0;
     }
