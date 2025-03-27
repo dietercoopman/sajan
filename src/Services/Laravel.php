@@ -23,22 +23,26 @@ class Laravel extends Server
                 'path'    => $applicationPath,
                 'config'  => json_encode($configs),
                 'laravel' => $this->checkVersion($applicationPath),
-                'php'     => $this->getPhpVersion($applicationPath),
+                'php'     => $this->getPhpVersion($hostname),
                 'ip'      => $ip,
                 'url'     => $hostname
             ];
 
             $alertText         = 'orange-600';
-            $rawLaravelVersion = str_pad(preg_replace('/[^0-9]+/', '', $application['laravel']), 5, 0);
-            $laravelColor      = ($rawLaravelVersion < 80000) ? $alertText : 'green';
+
+            $rawLaravelVersion = preg_replace('/[^0-9.]+/', '', $application['laravel']);
+            //get the part of the version number before the first dot
+            $rawLaravelVersion = explode('.', $rawLaravelVersion)[0];
+
+            $laravelColor      = ($rawLaravelVersion < 11) ? $alertText : 'green';
             if ($laravelColor == $alertText) {
-                $laravelColor = ($rawLaravelVersion < 70000) ? 'red' : $alertText;
+                $laravelColor = ($rawLaravelVersion < 9) ? 'red' : $alertText;
             }
 
-            $rawPhpVersion = str_pad(preg_replace('/[^0-9]+/', '', $application['php']), 4, 0);
-            $phpColor      = ($rawPhpVersion < 8000) ? $alertText : 'green';
+            $rawPhpVersion = $application['php'];
+            $phpColor      = ($rawPhpVersion < 80) ? $alertText : 'green';
             if ($phpColor == $alertText) {
-                $phpColor = ($rawPhpVersion < 7000) ? 'red' : $alertText;
+                $phpColor = ($rawPhpVersion < 70) ? 'red' : $alertText;
             }
 
             render("<span>
@@ -64,13 +68,32 @@ class Laravel extends Server
         return str_replace(['"', ','], '', last(explode(" ", trim(preg_replace('/\s+/', ' ', $version)))));
     }
 
-    private function getPhpVersion($applicationPath)
+    private function getPhpVersion($domain)
     {
-        $command     = 'cd ' . $applicationPath . ' && cat composer.json | grep \'"php":\'';
+        //get the php version
+
+        $command     = "plesk db \"SELECT dom.name, hosting.php_handler_id FROM domains dom JOIN hosting ON dom.id=hosting.dom_id WHERE dom.name='".$domain."' and php_handler_id like '%php%'\"";
         $exec        = $this->connect()->execute(['sudo su', $command]);
-        $phpversions = $exec->getOutput();
-        $phpversions = str_replace(['"php":', '^', ';', '"', ','], '', $phpversions);
-        $phpversions = trim(str_replace(["|"], ' or ', $phpversions));
+        $output = $exec->getOutput();
+        $phpversions = "unknown";
+        // Ensure output is valid
+        if ($output) {
+            // Extract the relevant line (last row before the table border)
+            $lines = explode("\n", trim($output));
+
+            if (count($lines) >= 3) {
+                $data_row = trim($lines[3]); // The third line contains the actual data
+
+                // Split by '|' and extract PHP handler column
+                $columns = array_map('trim', explode('|', $data_row));
+
+                $phpversions = $columns[2];
+            }
+        }
+
+// Use regular expression to extract the numbers after 'php'
+        $phpversions = preg_replace('/\D/', '', $phpversions);
+
 
         return !empty($phpversions) ? $phpversions : "unknown";
     }
