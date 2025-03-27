@@ -7,11 +7,11 @@
     "sajan","s"
   ],
   "require": {
-    "illuminate/filesystem": "^8.61",
-    "illuminate/support": "^8.61",
-    "symfony/console": "^5.3",
-    "symfony/process": "^5.3",
-    "symfony/finder": "^5.3",
+    "illuminate/filesystem": "^8.0|^9.0|^10.0|^11.0|^12.0",
+    "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
+    "symfony/console": "^5.0|^6.0",
+    "symfony/process": "^5.0|^6.0",
+    "symfony/finder": "^5.0|^6.0",
     "nunomaduro/termwind": "^1.15",
     "spatie/ssh": "^1.8",
     "ext-json": "*",
