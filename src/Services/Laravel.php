@@ -9,7 +9,9 @@ class Laravel extends Server
     {
 
         render('<div class="bg-green-800 m-1 p-1">Retreiving Laravel applications on server \''.$server .'\'</div>');
-        collect($this->getLaravels())->each(function ($applicationPath) use (&$applications) {
+
+        $counter = 1;
+        collect($this->getLaravels())->each(function ($applicationPath) use (&$applications, &$counter) {
             $name     = str_replace('/httpdocs', '', $applicationPath);
             $configs  = $this->getConfig($applicationPath);
             $hostname = $ip = "";
@@ -46,6 +48,7 @@ class Laravel extends Server
             }
 
             render("<span>
+                            <span class='ml-2 w-40'>| $counter </span>
                             <span class='ml-2 w-40'>| Name: {$application['name']}</span>
                             <span class='ml-2 w-40'>| Url: {$application['url']}</span>
                             |<span class='ml-2 pl-2 w-30 font-normal bg-{$laravelColor}-800'>Laravel version: {$application['laravel']}</span>
@@ -56,6 +59,8 @@ class Laravel extends Server
                           </span>");
 
             render('<hr>');
+
+            $counter++;
         });
 
     }
