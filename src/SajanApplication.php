@@ -50,15 +50,29 @@ class SajanApplication extends \Symfony\Component\Console\Application
         try {
             $connected = @fsockopen('www.google.com', 80);
             if ($connected) {
-                $outdated = strstr(Process::fromShellCommandline('composer global outdated --direct | grep sajan')->mustRun()->getOutput(), 'dietercoopman/sajan');
-                //if sajan is not in the outdated string then it is up to date
-                if (strstr($outdated, 'dietercoopman/sajan')) {
-                    return true;
+                fclose($connected);
+                
+                $process = Process::fromShellCommandline('composer global outdated --direct --format=json');
+                $process->run();
+                
+                if ($process->isSuccessful()) {
+                    $data = json_decode($process->getOutput(), true);
+                    
+                    // Look for sajan in the outdated packages
+                    if (isset($data['installed'])) {
+                        foreach ($data['installed'] as $package) {
+                            if ($package['name'] === 'dietercoopman/sajan') {
+                                // Return the latest version available
+                                return $package['latest'] ?? $package['latest-status'] ?? null;
+                            }
+                        }
+                    }
                 }
-
             }
         } catch (\Exception $e) {
-            return false;
+            return null;
         }
+        
+        return null;
     }
 }
