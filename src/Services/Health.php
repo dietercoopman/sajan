@@ -104,4 +104,27 @@ class Health extends Server
         $exec = $this->connect()->execute(['sudo su', $command]);
         return trim($exec->getOutput());
     }
+
+    /**
+     * Get server IP addresses (public and local).
+     *
+     * @return array
+     */
+    public function getIpAddresses(): array
+    {
+        // Get public IP
+        $command = "curl -s https://api.ipify.org";
+        $exec = $this->connect()->execute(['sudo su', $command]);
+        $publicIp = trim($exec->getOutput());
+
+        // Get local IP
+        $command = "hostname -I | awk '{print $1}'";
+        $exec = $this->connect()->execute(['sudo su', $command]);
+        $localIp = trim($exec->getOutput());
+
+        return [
+            'public' => !empty($publicIp) ? $publicIp : 'N/A',
+            'local' => !empty($localIp) ? $localIp : 'N/A'
+        ];
+    }
 }

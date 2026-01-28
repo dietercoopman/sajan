@@ -29,7 +29,7 @@ class ServerHealthCommand extends BaseCommand
                 'i',
                 InputOption::VALUE_OPTIONAL,
                 'Refresh interval in seconds',
-                1
+                0.5
             )
             ->setAliases(['sh']);
     }
@@ -69,17 +69,20 @@ class ServerHealthCommand extends BaseCommand
         // Show uptime (static)
         $uptime = $health->getUptime();
         render("<div class='ml-1'><span class='font-bold'>System Uptime:</span> <span class='text-cyan'>{$uptime}</span></div>");
+        
+        // Show IP addresses (static)
+        $ips = $health->getIpAddresses();
+        render("<div class='ml-1'><span class='font-bold'>Public IP:</span> <span class='text-cyan'>{$ips['public']}</span></div>");
+        render("<div class='ml-1'><span class='font-bold'>Local IP:</span> <span class='text-cyan'>{$ips['local']}</span></div>");
         render('');
 
         // Initial disk space check (static)
         $this->showDiskSpace($health);
-        render('');
         
         // Print static labels once
         render("<div class='ml-1 text-white font-bold'>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>");
         render("<div class='ml-1 text-white font-bold'>LIVE MONITORING (refreshes every second)</div>");
         render("<div class='ml-1 text-white font-bold'>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>");
-        render("<div class='ml-1 mt-1'> </div>");
 
         // Live monitoring loop
         $iteration = 0;
@@ -108,8 +111,6 @@ class ServerHealthCommand extends BaseCommand
 
         if (!empty($diskOutput)) {
             $lines = explode("\n", $diskOutput);
-            
-            render("<div class='ml-1 mt-1'> </div>");
             
             foreach ($lines as $line) {
                 if (empty(trim($line))) continue;
@@ -174,14 +175,15 @@ class ServerHealthCommand extends BaseCommand
         $swapStats = $health->getSwapUsage();
 
         if ($iteration > 0) {
-            // Move cursor up 6 lines to overwrite previous values
-            echo "\033[6A";
+            // Move cursor up 6 lines and clear from cursor to end of screen
+            echo "\033[6A\033[J";
         }
 
         // Display CPU
         $cpuColor = $this->getUsageColor($cpuStats['usage']);
         render("<div class='ml-1'><span class='font-bold'>CPU Usage:</span> <span class='{$cpuColor}'>{$cpuStats['usage']}%</span> {$this->getBar($cpuStats['usage'])}</div>");
         render("<div class='ml-1 text-gray'>Load Average: {$cpuStats['load_avg']}</div>");
+        render('');
 
         // Display Memory
         $memColor = $this->getUsageColor($memoryStats['percent']);
