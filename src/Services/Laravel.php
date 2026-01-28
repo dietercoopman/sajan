@@ -25,7 +25,7 @@ class Laravel extends Server
                 'path'    => $applicationPath,
                 'config'  => json_encode($configs),
                 'laravel' => $this->checkVersion($applicationPath),
-                'php'     => $this->getPhpVersion($hostname),
+                'php'     => $this->getPhpVersion($hostname, $applicationPath),
                 'ip'      => $ip,
                 'url'     => $hostname
             ];
@@ -73,34 +73,48 @@ class Laravel extends Server
         return str_replace(['"', ','], '', last(explode(" ", trim(preg_replace('/\s+/', ' ', $version)))));
     }
 
-    private function getPhpVersion($domain)
+    private function getPhpVersion($domain, $applicationPath = null)
     {
-        //get the php version
-
-        $command     = "plesk db \"SELECT dom.name, hosting.php_handler_id FROM domains dom JOIN hosting ON dom.id=hosting.dom_id WHERE dom.name='".$domain."' and php_handler_id like '%php%'\"";
-        $exec        = $this->connect()->execute(['sudo su', $command]);
-        $output = $exec->getOutput();
-        $phpversions = "unknown";
-        // Ensure output is valid
-        if ($output) {
-            // Extract the relevant line (last row before the table border)
-            $lines = explode("\n", trim($output));
-
-            if (count($lines) >= 3) {
-                $data_row = trim($lines[3]); // The third line contains the actual data
-
-                // Split by '|' and extract PHP handler column
-                $columns = array_map('trim', explode('|', $data_row));
-
-                $phpversions = $columns[2];
+        // Skip if no domain
+        if (empty($domain)) {
+            return "unknown";
+        }
+        
+        $phpversion = "unknown";
+        
+        // Method 1: Try to get from Apache VirtualHost config
+        $command = "grep -r '{$domain}' /etc/apache2/sites-available/ /etc/apache2/sites-enabled/ /etc/httpd/conf.d/ 2>/dev/null | head -1 | awk '{print \$1}' | cut -d':' -f1";
+        $exec = $this->connect()->execute(['sudo su', $command]);
+        $configFile = trim($exec->getOutput());
+        
+        if (!empty($configFile)) {
+            // Read the config file and look for PHP version
+            $command = "cat {$configFile} | grep -E 'php|PHP|SetHandler|FilesMatch' | head -5";
+            $exec = $this->connect()->execute(['sudo su', $command]);
+            $configContent = $exec->getOutput();
+            
+            // Look for PHP version patterns in config
+            // Examples: php8.2-fpm, php82, application/x-httpd-php74, etc.
+            if (preg_match('/php[_-]?(\d)\.?(\d)/', $configContent, $matches)) {
+                $phpversion = $matches[1] . $matches[2];
+            } elseif (preg_match('/php(\d{2})/', $configContent, $matches)) {
+                $phpversion = $matches[1];
+            }
+        }
+        
+        // Method 2: If still unknown, try running php -v in the application directory
+        if ($phpversion === "unknown" && !empty($applicationPath)) {
+            $command = "cd {$applicationPath} && php -v 2>/dev/null | head -1";
+            $exec = $this->connect()->execute(['sudo su', $command]);
+            $output = $exec->getOutput();
+            
+            // Parse output like "PHP 8.2.10 (cli)..."
+            if (preg_match('/PHP (\d)\.(\d)/', $output, $matches)) {
+                $phpversion = $matches[1] . $matches[2];
             }
         }
 
-// Use regular expression to extract the numbers after 'php'
-        $phpversions = preg_replace('/\D/', '', $phpversions);
-
-
-        return !empty($phpversions) ? $phpversions : "unknown";
+        return $phpversion;
     }
 
     private function getLaravels()
