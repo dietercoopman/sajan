@@ -66,6 +66,11 @@ class ServerHealthCommand extends BaseCommand
         render("<div class='ml-1 text-yellow'>Press Ctrl+C to stop monitoring</div>");
         render('');
 
+        // Show uptime (static)
+        $uptime = $health->getUptime();
+        render("<div class='ml-1'><span class='font-bold'>System Uptime:</span> <span class='text-cyan'>{$uptime}</span></div>");
+        render('');
+
         // Initial disk space check (static)
         $this->showDiskSpace($health);
         render('');
@@ -74,6 +79,7 @@ class ServerHealthCommand extends BaseCommand
         render("<div class='ml-1 text-white font-bold'>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>");
         render("<div class='ml-1 text-white font-bold'>LIVE MONITORING (refreshes every second)</div>");
         render("<div class='ml-1 text-white font-bold'>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>");
+        render("<div class='ml-1 mt-1'> </div>");
 
         // Live monitoring loop
         $iteration = 0;
@@ -142,9 +148,9 @@ class ServerHealthCommand extends BaseCommand
                 $emptyBars = $barWidth - $filledBars;
                 $bar = str_repeat('█', $filledBars) . str_repeat('░', $emptyBars);
                 
-                // Compact format - everything on 2 lines
-                render("<div class='ml-2'><span class='text-white font-bold'>•</span> <span class='text-cyan'>{$device}</span> <span class='text-gray'>({$size} total)</span></div>");
-                render("<div class='ml-4'><span class='{$color}'>[{$bar}]</span> <span class='{$bgColor} px-1'>{$usePercent}</span> <span class='text-gray ml-2'>{$used} used, {$free} free</span></div>");
+                // Compact format - aligned to the left like live monitoring
+                render("<div class='ml-1'><span class='text-cyan'>{$device}</span> <span class='text-gray'>({$size} total)</span></div>");
+                render("<div class='ml-1'><span class='{$color}'>[{$bar}]</span> <span class='{$bgColor} px-1'>{$usePercent}</span> <span class='text-gray ml-2'>{$used} used, {$free} free</span></div>");
             }
         }
     }
@@ -163,13 +169,16 @@ class ServerHealthCommand extends BaseCommand
         
         // Get memory usage
         $memoryStats = $health->getMemoryUsage();
+        
+        // Get swap usage
+        $swapStats = $health->getSwapUsage();
 
         if ($iteration > 0) {
-            // Move cursor up 4 lines to overwrite previous values
-            echo "\033[4A";
+            // Move cursor up 6 lines to overwrite previous values
+            echo "\033[6A";
         }
 
-        // Display CPU (only the values, labels are already printed)
+        // Display CPU
         $cpuColor = $this->getUsageColor($cpuStats['usage']);
         render("<div class='ml-1'><span class='font-bold'>CPU Usage:</span> <span class='{$cpuColor}'>{$cpuStats['usage']}%</span> {$this->getBar($cpuStats['usage'])}</div>");
         render("<div class='ml-1 text-gray'>Load Average: {$cpuStats['load_avg']}</div>");
@@ -177,6 +186,14 @@ class ServerHealthCommand extends BaseCommand
         // Display Memory
         $memColor = $this->getUsageColor($memoryStats['percent']);
         render("<div class='ml-1'><span class='font-bold'>Memory:</span> <span class='{$memColor}'>{$memoryStats['percent']}%</span> {$this->getBar($memoryStats['percent'])} ({$memoryStats['used']} / {$memoryStats['total']})</div>");
+        
+        // Display Swap
+        if ($swapStats['total'] !== '0MB') {
+            $swapColor = $this->getUsageColor($swapStats['percent']);
+            render("<div class='ml-1'><span class='font-bold'>Swap:</span> <span class='{$swapColor}'>{$swapStats['percent']}%</span> {$this->getBar($swapStats['percent'])} ({$swapStats['used']} / {$swapStats['total']})</div>");
+        } else {
+            render("<div class='ml-1'><span class='font-bold'>Swap:</span> <span class='text-gray'>Not configured</span></div>");
+        }
         
         render("<div class='ml-1 text-gray'>Last updated: " . date('H:i:s') . "</div>");
     }

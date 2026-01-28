@@ -65,4 +65,43 @@ class Health extends Server
             'percent' => 0
         ];
     }
+
+    /**
+     * Get swap usage statistics.
+     *
+     * @return array
+     */
+    public function getSwapUsage(): array
+    {
+        $command = "free -m | awk 'NR==3{printf \"%.0f %.0f %.1f\", \$3, \$2, (\$2>0?\$3*100/\$2:0)}'";
+        $exec = $this->connect()->execute(['sudo su', $command]);
+        $output = trim($exec->getOutput());
+
+        if (!empty($output)) {
+            $parts = explode(' ', $output);
+            return [
+                'used' => $parts[0] . 'MB',
+                'total' => $parts[1] . 'MB',
+                'percent' => round((float)$parts[2], 1)
+            ];
+        }
+
+        return [
+            'used' => '0MB',
+            'total' => '0MB',
+            'percent' => 0
+        ];
+    }
+
+    /**
+     * Get system uptime.
+     *
+     * @return string
+     */
+    public function getUptime(): string
+    {
+        $command = "uptime -p | sed 's/up //'";
+        $exec = $this->connect()->execute(['sudo su', $command]);
+        return trim($exec->getOutput());
+    }
 }
