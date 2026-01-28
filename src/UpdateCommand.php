@@ -47,7 +47,6 @@ class UpdateCommand extends BaseCommand
 
         // Check if update is available
         render("<span class='ml-1'>Checking for updates...</span>");
-        render('');
         
         $latestVersion = $this->getLatestVersion();
         
@@ -59,14 +58,14 @@ class UpdateCommand extends BaseCommand
 
         if ($latestVersion && $currentVersion) {
             render("<span class='ml-1'>Latest version available: <span class='text-green'>{$latestVersion}</span></span>");
-            render('');
         }
+        render('');
 
         // Ask for confirmation unless --no-interaction is specified
         if ($input->isInteractive()) {
             $helper = $this->getHelper('question');
             $question = new ConfirmationQuestion(
-                '<fg=yellow>Are you sure you want to update sajan? (yes/no) [yes]:</> ',
+                ' <fg=yellow>Are you sure you want to update sajan? (yes/no) [yes]:</> ',
                 true
             );
 
