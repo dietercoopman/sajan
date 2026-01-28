@@ -15,12 +15,19 @@ class SajanApplication extends \Symfony\Component\Console\Application
             $this->brand($output);
         }
 
-        $newVersion = $this->checkOutdated();
-        if ($newVersion) {
-            $output->writeln('');
-            $output->writeln('<bg=red>Your version of sajan is outdated, version <bg=red;options=bold>'.$newVersion.'</> available , please update via the command : sajan self-update</>');
-            $output->writeln('');
+        // Check if running update/self-update command
+        $isUpdateCommand = isset($args[1]) && in_array($args[1], ['update', 'self-update']);
+        
+        // Only show outdated message if not running the update command
+        if (!$isUpdateCommand) {
+            $newVersion = $this->checkOutdated();
+            if ($newVersion) {
+                $output->writeln('');
+                $output->writeln('<bg=red>Your version of sajan is outdated, version <bg=red;options=bold>'.$newVersion.'</> available , please update via the command : sajan self-update</>');
+                $output->writeln('');
+            }
         }
+        
         parent::__construct($name, $version);
     }
 
